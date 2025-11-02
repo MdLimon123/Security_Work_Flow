@@ -18,4 +18,7 @@ class AppAssets {
   static const String pauseIcon = "assets/icons/pause_icon.svg";
   static const String cancelIcon = "assets/icons/cancel_icon.svg";
   static const String pdfIcon = "assets/icons/pdf_icon.svg";
+
+  static const String cautionIcon = "assets/images/caution_icon.svg";
+  static const String navyBlueTickIcon = "assets/icons/navy_blue_tick_icon.svg";
 }

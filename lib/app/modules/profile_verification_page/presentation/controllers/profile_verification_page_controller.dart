@@ -1,14 +1,23 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_four_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_one_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_three_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_two_page.dart';
 import 'package:get/get.dart';
 
 class ProfileVerificationPageController extends GetxController {
+  List<Widget> pages = [
+    StepOnePage(),
+    StepTwoPage(),
+    StepThreePage(),
+    StepFourPage(),
+  ];
+
   final TextEditingController fullNameTEC = TextEditingController();
   final TextEditingController phoneTEC = TextEditingController();
   final TextEditingController summaryTEC = TextEditingController();
   final TextEditingController licenseExpireTEC = TextEditingController();
+  final TextEditingController accreditationTEC = TextEditingController();
 
   int pageIndex = 0;
 
@@ -24,7 +33,12 @@ class ProfileVerificationPageController extends GetxController {
 
   String selectedLicenseType = "";
 
-  List<Widget> pages = [StepOnePage(), StepTwoPage(), StepThreePage()];
+  String selectedAccreditation = "";
+
+  void setSelectedAccreditation(String value) {
+    selectedAccreditation = value;
+    update();
+  }
 
   void setGender(String value) {
     selectedGender = value;
@@ -74,6 +88,7 @@ class ProfileVerificationPageController extends GetxController {
     phoneTEC.dispose();
     summaryTEC.dispose();
     licenseExpireTEC.dispose();
+    accreditationTEC.dispose();
     super.onClose();
   }
 }

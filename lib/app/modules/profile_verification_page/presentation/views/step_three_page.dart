@@ -82,7 +82,7 @@ class StepThreePage extends StatelessWidget {
         ),
         SizedBox(height: 8.h),
         TextFormField(
-          keyboardType: TextInputType.text,
+          keyboardType: TextInputType.datetime,
           controller: controller.licenseExpireTEC,
           decoration: InputDecoration(
             hintText: "Enter your licence expiry date",

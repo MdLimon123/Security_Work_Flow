@@ -6,7 +6,7 @@ import 'package:flutter_security_workforce/app/modules/profile_verification_page
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_two_page.dart';
 import 'package:get/get.dart';
 
-import '../views/step_six_page.dart';
+import '../views/in_review_message_page.dart';
 
 class ProfileVerificationPageController extends GetxController {
   List<Widget> pages = [
@@ -15,7 +15,7 @@ class ProfileVerificationPageController extends GetxController {
     StepThreePage(),
     StepFourPage(),
     StepFivePage(),
-    StepSixPage(),
+    InReviewMessagePage(),
   ];
 
   final TextEditingController fullNameTEC = TextEditingController();

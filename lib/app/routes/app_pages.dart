@@ -12,8 +12,12 @@ import 'package:flutter_security_workforce/app/modules/on_boarding_page/presenta
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/views/on_boarding_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/binding/profile_verification_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/profile_verification_page.dart';
+import 'package:flutter_security_workforce/app/modules/refer_and_benefits_page/binding/refer_and_benefits_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/refer_and_benefits_page/views/refer_and_benefits_page.dart';
 import 'package:flutter_security_workforce/app/modules/splash_page/presentation/binding/slpash_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/splash_page/presentation/views/splash_page.dart';
+import 'package:flutter_security_workforce/app/modules/subscription_page/binding/subscription_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/subscription_page/views/subscription_page.dart';
 import 'package:get/get.dart';
 import '../modules/auth/signup_page/presentation/binding/signup_page_binding.dart';
 import '../modules/auth/signup_page/presentation/binding/verify_registration_otp_page_binding.dart';
@@ -89,6 +93,18 @@ class AppPages {
       name: AppRoutes.profileVerificationRoute,
       page: () => ProfileVerificationPage(),
       binding: ProfileVerificationPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.subscriptionRoute,
+      page: () => SubscriptionPage(),
+      binding: SubscriptionPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.referAndBenefitRoute,
+      page: () => ReferAndBenefitsPage(),
+      binding: ReferAndBenefitsPageBinding(),
     ),
   ];
 }

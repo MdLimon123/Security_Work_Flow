@@ -21,4 +21,11 @@ class AppAssets {
 
   static const String cautionIcon = "assets/images/caution_icon.svg";
   static const String navyBlueTickIcon = "assets/icons/navy_blue_tick_icon.svg";
+  static const String orangeCircleTickIcon =
+      "assets/icons/orange_circle_tick.svg";
+
+  static const String giftImage = "assets/images/gift_img.png";
+
+  static const String copyClipboardIcon =
+      "assets/icons/copy_clipboard_icon.svg";
 }

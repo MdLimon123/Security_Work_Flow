@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
+import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../controllers/profile_verification_page_controller.dart';
 
-class StepSixPage extends StatelessWidget {
-  const StepSixPage({super.key});
+class InReviewMessagePage extends StatelessWidget {
+  const InReviewMessagePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class StepSixPage extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          controller.increasePageIndex();
+          Get.toNamed(AppRoutes.subscriptionRoute);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.secondaryNavyBlue,

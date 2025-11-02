@@ -47,7 +47,7 @@ class StepTwoPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
-                color: AppColors.primaryBlack,
+                color: AppColors.secondaryNavyBlue,
               ),
             ),
 
@@ -70,29 +70,35 @@ class StepTwoPage extends StatelessWidget {
               ],
             ),
 
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.secondaryNavyBlue,
-                  foregroundColor: AppColors.primaryWhite,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                ),
-                child: Text(
-                  "Next",
-                  style: TextStyle(color: AppColors.primaryWhite),
-                ),
-              ),
-            ),
+            _buildNextButton(controller),
 
             SizedBox(height: 12.h),
           ],
         );
       },
     );
+  }
+
+  SizedBox _buildNextButton(ProfileVerificationPageController controller) {
+    return SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                controller.increasePageIndex();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.secondaryNavyBlue,
+                foregroundColor: AppColors.primaryWhite,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
+              ),
+              child: Text(
+                "Next",
+                style: TextStyle(color: AppColors.primaryWhite),
+              ),
+            ),
+          );
   }
 
   FlutterSlider _buildPreferedJobRadiusSlider() {
@@ -142,11 +148,11 @@ class StepTwoPage extends StatelessWidget {
       children: [
         Text(
           "Experience Summary",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
+          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
         SizedBox(height: 8.h),
         TextFormField(
-          maxLines: 4,
+          maxLines: 3,
           maxLength: 400,
           keyboardType: TextInputType.multiline,
           controller: controller.summaryTEC,
@@ -175,7 +181,7 @@ class StepTwoPage extends StatelessWidget {
       children: [
         Text(
           "Years of Experience",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
+          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
         PopupMenuButton<String>(
           color: AppColors.primaryWhite,
@@ -222,7 +228,7 @@ class StepTwoPage extends StatelessWidget {
       children: [
         Text(
           "Language",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
+          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
         PopupMenuButton<String>(
           color: AppColors.primaryWhite,

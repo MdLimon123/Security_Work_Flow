@@ -9,4 +9,10 @@ class AppAssets {
   static String getProfileVerifyProgressImg({required int progressCompleted}) {
     return "assets/images/profile_verify_progress_img_0${progressCompleted + 1}.svg";
   }
+
+  static const String uploadBackFrontImageLicenseImage =
+      "assets/images/upload_back_front_image_license.svg";
+
+  static const String pauseIcon = "assets/icons/pause_icon.svg";
+  static const String cancelIcon = "assets/icons/cancel_icon.svg";
 }

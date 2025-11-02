@@ -150,7 +150,7 @@ class LoginPage extends StatelessWidget {
       children: [
         Text(
           "Email",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
+          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
         SizedBox(height: 8.h),
         TextFormField(
@@ -179,7 +179,7 @@ class LoginPage extends StatelessWidget {
       children: [
         Text(
           "Password",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
+          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
         SizedBox(height: 8.h),
         TextFormField(

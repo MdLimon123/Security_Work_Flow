@@ -81,7 +81,7 @@ class StepOnePage extends StatelessWidget {
       children: [
         Text(
           "Gender",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
+          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
         PopupMenuButton<String>(
           color: AppColors.primaryWhite,
@@ -133,7 +133,7 @@ class StepOnePage extends StatelessWidget {
       children: [
         Text(
           "Full Name",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
+          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
         SizedBox(height: 8.h),
         TextFormField(
@@ -161,7 +161,7 @@ class StepOnePage extends StatelessWidget {
       children: [
         Text(
           "Phone Number",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
+          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
         SizedBox(height: 8.h),
         TextFormField(

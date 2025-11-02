@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_one_page.dart';
+import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_three_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_two_page.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +8,7 @@ class ProfileVerificationPageController extends GetxController {
   final TextEditingController fullNameTEC = TextEditingController();
   final TextEditingController phoneTEC = TextEditingController();
   final TextEditingController summaryTEC = TextEditingController();
+  final TextEditingController licenseExpireTEC = TextEditingController();
 
   int pageIndex = 0;
 
@@ -18,20 +20,34 @@ class ProfileVerificationPageController extends GetxController {
 
   String selectedYearsOfExperience = "";
 
-  List<Widget> pages = [StepOnePage(), StepTwoPage()];
+  String selectedStateOrTerritory = "";
+
+  String selectedLicenseType = "";
+
+  List<Widget> pages = [StepOnePage(), StepTwoPage(), StepThreePage()];
 
   void setGender(String value) {
     selectedGender = value;
     update();
   }
 
-  void toggleSendNotifications(){
+  void toggleSendNotifications() {
     sendNotifications = !sendNotifications;
     update();
   }
 
   void setLanguage(String value) {
     selectedLanguage = value;
+    update();
+  }
+
+  void setStateOrTerritory(String value) {
+    selectedStateOrTerritory = value;
+    update();
+  }
+
+  void setSelectedLicenseType(String value) {
+    selectedLicenseType = value;
     update();
   }
 
@@ -57,6 +73,7 @@ class ProfileVerificationPageController extends GetxController {
     fullNameTEC.dispose();
     phoneTEC.dispose();
     summaryTEC.dispose();
+    licenseExpireTEC.dispose();
     super.onClose();
   }
 }

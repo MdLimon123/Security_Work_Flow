@@ -13,4 +13,5 @@ abstract class AppRoutes {
   static const String profileVerificationRoute = "/profileVerificationRoute";
   static const String subscriptionRoute = "/subscriptionRoute";
   static const String referAndBenefitRoute = "/referAndBenefitRoute";
+  static const String bottomNavbarRoute = "/bottomNavbarRoute";
 }

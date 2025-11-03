@@ -28,4 +28,25 @@ class AppAssets {
 
   static const String copyClipboardIcon =
       "assets/icons/copy_clipboard_icon.svg";
+
+  static const String contactSelectedIcon =
+      "assets/icons/contact_selected_icon.svg";
+  static const String contactUnSelectedIcon =
+      "assets/icons/contact_unselected_icon.svg";
+  static const String homeSelectedIcon = "assets/icons/home_selected_icon.svg";
+  static const String homeUnSelectedIcon =
+      "assets/icons/home_unselected_icon.svg";
+  static const String messageSelectedIcon =
+      "assets/icons/message_selected_icon.svg";
+  static const String messageUnSelectedIcon =
+      "assets/icons/message_unselected_icon.svg";
+  static const String myJobsSelectedIcon =
+      "assets/icons/my_jobs_selected_icon.svg";
+  static const String myJobsUnSelectedIcon =
+      "assets/icons/my_jobs_unselected_icon.svg";
+
+  static const String profileSelectedIcon =
+      "assets/icons/profile_selected_icon.svg";
+  static const String profileUnSelectedIcon =
+      "assets/icons/profile_unselected_icon.svg";
 }

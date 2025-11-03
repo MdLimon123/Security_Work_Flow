@@ -6,6 +6,8 @@ import 'package:flutter_security_workforce/app/modules/auth/login_page/presentat
 import 'package:flutter_security_workforce/app/modules/auth/login_page/presentation/views/login_page.dart';
 import 'package:flutter_security_workforce/app/modules/auth/new_password_page/presentation/binding/new_password_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/auth/new_password_page/presentation/views/new_password_page.dart';
+import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/binding/bottom_navbar_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/views/bottom_navbar_page.dart';
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/bindings/on_boarding_get_started_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/bindings/on_boarding_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/views/on_boarding_get_started_page.dart';
@@ -105,6 +107,12 @@ class AppPages {
       name: AppRoutes.referAndBenefitRoute,
       page: () => ReferAndBenefitsPage(),
       binding: ReferAndBenefitsPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.bottomNavbarRoute,
+      page: () => BottomNavbarPage(),
+      binding: BottomNavbarPageBinding(),
     ),
   ];
 }

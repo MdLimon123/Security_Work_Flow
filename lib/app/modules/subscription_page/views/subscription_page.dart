@@ -98,7 +98,9 @@ class SubscriptionPage extends StatelessWidget {
 
                 Center(
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Get.offAllNamed(AppRoutes.bottomNavbarRoute);
+                    },
                     child: Text(
                       "Do It Later",
                       style: TextStyle(

@@ -49,4 +49,14 @@ class AppAssets {
       "assets/icons/profile_selected_icon.svg";
   static const String profileUnSelectedIcon =
       "assets/icons/profile_unselected_icon.svg";
+
+  static const String earningThisWeekIcon =
+      "assets/icons/earning_this_week_icon.svg";
+  static const String jobAppliedIcon = "assets/icons/job_applied_icon.svg";
+  static const String jobCompletedIcon = "assets/icons/job_completed_icon.svg";
+  static const String pastJobIcon = "assets/icons/past_jobs_icon.svg";
+  static const String upComingJobIcon = "assets/icons/upcoming_jobs.svg";
+  static const String starIcon = "assets/icons/star_icon.svg";
+  static const String averageIcon = "assets/icons/average_rating.svg";
+  static const String securityIcon = "assets/icons/security_icon.png";
 }

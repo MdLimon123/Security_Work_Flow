@@ -12,4 +12,7 @@ class AppColors {
   static const Color primaryBlue = Color(0xff1849D6);
   static const Color lightGrey = Color(0xffFAFAFA);
   static const Color secondaryGray = Color(0xff737373);
+  static const Color primaryBorderColor = Color(0xffEBEBEB);
+  static const Color primaryRed = Color(0xffE53935);
+  static const Color primaryGreen = Color(0xff00CD07);
 }

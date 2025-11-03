@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
+import 'package:flutter_security_workforce/app/modules/home_page/presentation/views/home_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +12,7 @@ class BottomNavbarPageController extends GetxController {
     BottomNavigationBarItem(
       icon: SvgPicture.asset(
         width: 70.w,
-        height:70.h,
+        height: 70.h,
         (index == 0)
             ? AppAssets.homeSelectedIcon
             : AppAssets.homeUnSelectedIcon,
@@ -21,7 +22,7 @@ class BottomNavbarPageController extends GetxController {
     BottomNavigationBarItem(
       icon: SvgPicture.asset(
         width: 70.w,
-        height:70.h,
+        height: 70.h,
         (index == 1)
             ? AppAssets.myJobsSelectedIcon
             : AppAssets.myJobsUnSelectedIcon,
@@ -31,7 +32,7 @@ class BottomNavbarPageController extends GetxController {
     BottomNavigationBarItem(
       icon: SvgPicture.asset(
         width: 70.w,
-        height:70.h,
+        height: 70.h,
         (index == 2)
             ? AppAssets.contactSelectedIcon
             : AppAssets.contactUnSelectedIcon,
@@ -39,10 +40,9 @@ class BottomNavbarPageController extends GetxController {
       label: "",
     ),
     BottomNavigationBarItem(
-
       icon: SvgPicture.asset(
         width: 70.w,
-        height:70.h,
+        height: 70.h,
         (index == 3)
             ? AppAssets.messageSelectedIcon
             : AppAssets.messageUnSelectedIcon,
@@ -52,7 +52,7 @@ class BottomNavbarPageController extends GetxController {
     BottomNavigationBarItem(
       icon: SvgPicture.asset(
         width: 70.w,
-        height:70.h,
+        height: 70.h,
         (index == 4)
             ? AppAssets.profileSelectedIcon
             : AppAssets.profileUnSelectedIcon,
@@ -62,7 +62,7 @@ class BottomNavbarPageController extends GetxController {
   ];
 
   List<Widget> pages = [
-    Text("Home"),
+    HomePage(),
     Text("Home"),
     Text("Home"),
     Text("Home"),

@@ -22,9 +22,9 @@ class BottomNavbarPage extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primaryBlack,
+                    color: AppColors.primaryBlack.withValues(alpha: 0.2),
                     blurRadius: 12,
-                    offset: Offset(0, 8),
+                    offset: Offset(0, -8),
                   ),
                 ],
               ),

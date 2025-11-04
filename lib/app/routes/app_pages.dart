@@ -16,6 +16,8 @@ import 'package:flutter_security_workforce/app/modules/profile_verification_page
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/profile_verification_page.dart';
 import 'package:flutter_security_workforce/app/modules/refer_and_benefits_page/binding/refer_and_benefits_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/refer_and_benefits_page/views/refer_and_benefits_page.dart';
+import 'package:flutter_security_workforce/app/modules/search_page/binding/search_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/search_page/views/search_page.dart';
 import 'package:flutter_security_workforce/app/modules/splash_page/presentation/binding/slpash_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/splash_page/presentation/views/splash_page.dart';
 import 'package:flutter_security_workforce/app/modules/subscription_page/binding/subscription_page_binding.dart';
@@ -113,6 +115,12 @@ class AppPages {
       name: AppRoutes.bottomNavbarRoute,
       page: () => BottomNavbarPage(),
       binding: BottomNavbarPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.searchPageRoute,
+      page: () => SearchPage(),
+      binding: SearchPageBinding(),
     ),
   ];
 }

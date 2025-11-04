@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,6 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 _buildAppbarSection(),
-
                 SizedBox(height: 32.h),
                 _buildFirstStatRow(),
                 SizedBox(height: 16.h),
@@ -587,7 +587,7 @@ class HomePage extends StatelessWidget {
               style: TextStyle(fontSize: 18.sp, color: AppColors.primaryBlack),
             ),
             Text(
-              "Johnson Mate",
+              "MD. Sajid Hossain",
               style: TextStyle(
                 fontSize: 14.sp,
                 color: AppColors.secondaryTextColor,
@@ -603,7 +603,9 @@ class HomePage extends StatelessWidget {
               side: BorderSide(color: AppColors.primaryBorderColor),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(AppRoutes.searchPageRoute);
+          },
           icon: Icon(Icons.search),
         ),
         IconButton(

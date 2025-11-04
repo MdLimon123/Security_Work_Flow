@@ -59,4 +59,5 @@ class AppAssets {
   static const String starIcon = "assets/icons/star_icon.svg";
   static const String averageIcon = "assets/icons/average_rating.svg";
   static const String securityIcon = "assets/icons/security_icon.png";
+  static const String filterCircleIcon = "assets/icons/filter_circle_icon.svg";
 }

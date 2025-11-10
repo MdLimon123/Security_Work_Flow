@@ -4,6 +4,6 @@ import 'package:get/get.dart';
 class MyJobsPageBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => MyJobsPageController());
+    Get.lazyPut(() => MyJobsPageController(), fenix: true);
   }
 }

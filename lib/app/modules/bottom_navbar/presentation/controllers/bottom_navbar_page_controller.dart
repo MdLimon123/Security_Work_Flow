@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
+import 'package:flutter_security_workforce/app/modules/contact_page/presentation/views/contact_page.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/presentation/views/home_page.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/views/my_jobs_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -65,7 +66,7 @@ class BottomNavbarPageController extends GetxController {
   List<Widget> pages = [
     HomePage(),
     MyJobsPage(),
-    Text("Home"),
+    ContactPage(),
     Text("Home"),
     Text("Home"),
   ];

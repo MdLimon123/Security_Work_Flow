@@ -8,6 +8,8 @@ import 'package:flutter_security_workforce/app/modules/auth/new_password_page/pr
 import 'package:flutter_security_workforce/app/modules/auth/new_password_page/presentation/views/new_password_page.dart';
 import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/binding/bottom_navbar_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/views/bottom_navbar_page.dart';
+import 'package:flutter_security_workforce/app/modules/job_details_page/presentation/binding/job_details_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/job_details_page/presentation/views/job_details_page.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/binding/my_jobs_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/views/my_jobs_page.dart';
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/bindings/on_boarding_get_started_page_binding.dart';
@@ -129,6 +131,12 @@ class AppPages {
       name: AppRoutes.myJobsRoute,
       page: () => MyJobsPage(),
       binding: MyJobsPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.jobDetailsRoute,
+      page: () => JobDetailsPage(),
+      binding: JobDetailsPageBinding(),
     ),
   ];
 }

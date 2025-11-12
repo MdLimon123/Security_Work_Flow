@@ -60,6 +60,7 @@ class AppAssets {
   static const String averageIcon = "assets/icons/average_rating.svg";
   static const String securityIcon = "assets/icons/security_icon.png";
   static const String filterCircleIcon = "assets/icons/filter_circle_icon.svg";
+  static const String doubleLocationIcon = "assets/icons/double_location_icon.svg";
   static const String mapViewButtonImg =
       "assets/images/map_view_button_img.svg";
 }

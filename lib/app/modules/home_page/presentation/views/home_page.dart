@@ -615,7 +615,9 @@ class HomePage extends StatelessWidget {
               side: BorderSide(color: AppColors.primaryBorderColor),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(AppRoutes.notificationRoute);
+          },
           icon: Icon(Icons.notifications_outlined),
         ),
       ],

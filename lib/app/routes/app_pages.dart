@@ -14,6 +14,8 @@ import 'package:flutter_security_workforce/app/modules/job_details_page/presenta
 import 'package:flutter_security_workforce/app/modules/job_details_page/presentation/views/job_details_page.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/binding/my_jobs_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/views/my_jobs_page.dart';
+import 'package:flutter_security_workforce/app/modules/notification_page/presentation/binding/notification_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/notification_page/presentation/views/notification_page.dart';
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/bindings/on_boarding_get_started_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/bindings/on_boarding_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/views/on_boarding_get_started_page.dart';
@@ -145,6 +147,12 @@ class AppPages {
       name: AppRoutes.finishShiftRoute,
       page: () => FinishShiftPage(),
       binding: FinishShiftPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.notificationRoute,
+      page: () => NotificationPage(),
+      binding: NotificationPageBinding(),
     ),
   ];
 }

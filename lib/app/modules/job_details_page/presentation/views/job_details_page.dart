@@ -21,7 +21,9 @@ class JobDetailsPage extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(AppRoutes.notificationRoute);
+            },
             icon: Icon(Icons.notifications_outlined),
           ),
         ],

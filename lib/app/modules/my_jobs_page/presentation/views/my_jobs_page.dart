@@ -24,7 +24,9 @@ class MyJobsPage extends StatelessWidget {
           IconButton(
             onPressed: () {},
             icon: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(AppRoutes.notificationRoute);
+              },
               icon: Icon(Icons.notifications_outlined),
             ),
           ),

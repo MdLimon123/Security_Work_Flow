@@ -17,4 +17,5 @@ abstract class AppRoutes {
   static const String searchPageRoute = "/searchPageRoute";
   static const String myJobsRoute = "/myJobsRoute";
   static const String jobDetailsRoute = "/jobDetailsRoute";
+  static const String finishShiftRoute = "/finishShiftRoute";
 }

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:get/get.dart';
 
 class JobDetailsPage extends StatelessWidget {
   const JobDetailsPage({super.key});
@@ -130,7 +133,9 @@ class JobDetailsPage extends StatelessWidget {
         SizedBox(width: 16.w),
         Expanded(
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(AppRoutes.finishShiftRoute);
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.secondaryNavyBlue,
               foregroundColor: AppColors.primaryWhite,

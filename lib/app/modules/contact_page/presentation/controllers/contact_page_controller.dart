@@ -14,6 +14,7 @@ class ContactPageController extends GetxController {
   @override
   void onClose() {
     searchTEC.dispose();
+
     super.onClose();
   }
 }

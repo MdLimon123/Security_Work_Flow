@@ -20,4 +20,5 @@ abstract class AppRoutes {
   static const String finishShiftRoute = "/finishShiftRoute";
   static const String notificationRoute = "/notificationRoute";
   static const String contactRoute = "/contactRoute";
+  static const String openContactRoute = "/openContactRoute";
 }

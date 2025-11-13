@@ -70,21 +70,23 @@ class MyJobsPage extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Job ID: ",
-                            style: TextStyle(
-                              color: AppColors.primaryBlack,
-                              fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Job ID: ",
+                              style: TextStyle(
+                                color: AppColors.primaryBlack,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text: "#232025",
-                            style: TextStyle(color: AppColors.primaryOrange),
-                          ),
-                        ],
+                            TextSpan(
+                              text: "#232025",
+                              style: TextStyle(color: AppColors.primaryOrange),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 
@@ -105,31 +107,45 @@ class MyJobsPage extends StatelessWidget {
 
                 Row(
                   children: [
-                    Text("Job Role : "),
+                    Expanded(child: Text("Job Role : ")),
 
                     Spacer(),
 
-                    Text("Event Security"),
+                    Expanded(child: Text("Event Security")),
                   ],
                 ),
+
+                SizedBox(height: 12.h),
 
                 Row(
                   children: [
-                    Text("Company Name : "),
+                    Expanded(child: Text("Company Name : ")),
                     Spacer(),
-                    Text("SafeGuard Security Pty Ltd"),
+                    Expanded(child: Text("SafeGuard Security Pty Ltd")),
                   ],
                 ),
+
+                SizedBox(height: 12.h),
 
                 Row(
                   children: [
-                    Text("Date & Time :"),
+                    Expanded(child: Text("Date & Time :")),
                     Spacer(),
-                    Text("20 Oct, 2025 | 8:00 PM – 4:00 AM"),
+                    Expanded(child: Text("20 Oct, 2025 | 8:00 PM – 4:00 AM")),
                   ],
                 ),
 
-                Row(children: [Text("Duration : "), Spacer(), Text("8 Hours")]),
+                SizedBox(height: 12.h),
+
+                Row(
+                  children: [
+                    Expanded(child: Text("Duration : ")),
+                    Spacer(),
+                    Expanded(child: Text("8 Hours")),
+                  ],
+                ),
+
+                SizedBox(height: 12.h),
 
                 Row(
                   children: [

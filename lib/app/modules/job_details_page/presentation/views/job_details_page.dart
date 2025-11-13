@@ -6,6 +6,7 @@ import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobDetailsPage extends StatelessWidget {
   const JobDetailsPage({super.key});
@@ -73,7 +74,19 @@ class JobDetailsPage extends StatelessWidget {
                     Text("Job Locations", style: TextStyle(fontSize: 20.sp)),
                     Spacer(),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        String googleMapsUrl =
+                            "https://www.google.com/maps?q=${23.780860837403864},${90.40757911256006}";
+                        if (await canLaunchUrl(Uri.parse(googleMapsUrl))) {
+                          await launchUrl(Uri.parse(googleMapsUrl));
+                        } else {
+                          Get.snackbar(
+                            "Something went wrong",
+                            "Location error",
+                            backgroundColor: AppColors.primaryRed,
+                          );
+                        }
+                      },
                       child: SvgPicture.asset(AppAssets.mapViewButtonImg),
                     ),
                     SizedBox(height: 17.h),

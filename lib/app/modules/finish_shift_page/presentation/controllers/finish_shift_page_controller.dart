@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 
 class FinishShiftPageController extends GetxController {
-  int communicationSelectedIndex = 5;
-  int paymentSelectedIndex = 5;
-  int payRatesSelectedIndex = 5;
-  int professionalismSelectedIndex = 5;
-  int jobSupportSelectedIndex = 5;
+  int communicationSelectedIndex = 1;
+  int paymentSelectedIndex = 1;
+  int payRatesSelectedIndex = 1;
+  int professionalismSelectedIndex = 1;
+  int jobSupportSelectedIndex = 1;
 
   void updateCommunicationSelectedIndex({required int value}) {
     communicationSelectedIndex = value;

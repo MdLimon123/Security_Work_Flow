@@ -13,6 +13,8 @@ import 'package:flutter_security_workforce/app/modules/search_page/controllers/s
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../routes/app_routes.dart';
+
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
 
@@ -157,7 +159,9 @@ class SearchPage extends StatelessWidget {
                   SizedBox(width: 24.w),
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.openJobsDetailsRoute);
+                      },
                       style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.r),

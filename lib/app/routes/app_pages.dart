@@ -24,6 +24,8 @@ import 'package:flutter_security_workforce/app/modules/on_boarding_page/presenta
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/views/on_boarding_page.dart';
 import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/binding/open_contact_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/views/open_contact_page.dart';
+import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/presentation/binding/open_jobs_details_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/presentation/views/open_jobs_details_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/binding/profile_verification_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/profile_verification_page.dart';
 import 'package:flutter_security_workforce/app/modules/refer_and_benefits_page/binding/refer_and_benefits_page_binding.dart';
@@ -169,6 +171,12 @@ class AppPages {
       name: AppRoutes.openContactRoute,
       page: () => OpenContactPage(),
       binding: OpenContactPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.openJobsDetailsRoute,
+      page: () => OpenJobsDetailsPage(),
+      binding: OpenJobsDetailsPageBinding(),
     ),
   ];
 }

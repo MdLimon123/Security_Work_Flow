@@ -144,7 +144,9 @@ class HomePage extends StatelessWidget {
                     SizedBox(width: 24.w),
                     Expanded(
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.openJobsDetailsRoute);
+                        },
                         style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.r),

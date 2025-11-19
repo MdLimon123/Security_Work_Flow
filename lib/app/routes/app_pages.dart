@@ -28,6 +28,8 @@ import 'package:flutter_security_workforce/app/modules/open_contact_page/present
 import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/views/open_contact_page.dart';
 import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/presentation/binding/open_jobs_details_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/presentation/views/open_jobs_details_page.dart';
+import 'package:flutter_security_workforce/app/modules/profile_page/binding/profile_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/profile_page/views/profile_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/binding/profile_verification_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/profile_verification_page.dart';
 import 'package:flutter_security_workforce/app/modules/refer_and_benefits_page/binding/refer_and_benefits_page_binding.dart';
@@ -185,6 +187,12 @@ class AppPages {
       name: AppRoutes.messageRoute,
       page: () => MessagePage(),
       binding: MessagePageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.profileRoute,
+      page: () => ProfilePage(),
+      binding: ProfilePageBinding(),
     ),
   ];
 }

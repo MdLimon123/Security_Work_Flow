@@ -69,4 +69,18 @@ class AppAssets {
       "assets/icons/circular_green_tick.svg";
   static const String mapViewButtonImg =
       "assets/images/map_view_button_img.svg";
+
+  static const String achievementIcon = "assets/icons/achievement_icon.svg";
+  static const String bankIcon = "assets/icons/bank_icon.svg";
+  static const String cardIcon = "assets/icons/card_icon.svg";
+  static const String historyIcon = "assets/icons/history_icon.svg";
+  static const String listIcon = "assets/icons/list_icon.svg";
+  static const String lockIcon = "assets/icons/lock_icon.svg";
+  static const String logoutIcon = "assets/icons/logout_icon.svg";
+  static const String notificationIcon = "assets/icons/notification_icon.svg";
+  static const String profileIcon = "assets/icons/profile_icon.svg";
+  static const String referralIcon = "assets/icons/referral_icon.svg";
+  static const String subscriptionIcon = "assets/icons/subscription_icon.svg";
+  static const String supportIcon = "assets/icons/support_icon.svg";
+  static const String timerIcon = "assets/icons/timer_icon.svg";
 }

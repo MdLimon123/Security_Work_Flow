@@ -5,6 +5,7 @@ import 'package:flutter_security_workforce/app/modules/contact_page/presentation
 import 'package:flutter_security_workforce/app/modules/home_page/presentation/views/home_page.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/views/message_page.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/views/my_jobs_page.dart';
+import 'package:flutter_security_workforce/app/modules/profile_page/views/profile_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -69,7 +70,7 @@ class BottomNavbarPageController extends GetxController {
     MyJobsPage(),
     ContactPage(),
     MessagePage(),
-    Text("Home"),
+    ProfilePage(),
   ];
 
   void changePage(int i) {

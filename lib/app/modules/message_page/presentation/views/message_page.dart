@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/controllers/message_page_controller.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/views/message_inbox.dart';
+import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class MessagePage extends StatelessWidget {
@@ -18,7 +19,14 @@ class MessagePage extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
         ),
         centerTitle: true,
-        actions: [Icon(Icons.notifications_outlined)],
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.toNamed(AppRoutes.notificationRoute);
+            },
+            icon: Icon(Icons.notifications_outlined),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Padding(

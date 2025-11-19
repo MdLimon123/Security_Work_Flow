@@ -22,4 +22,5 @@ abstract class AppRoutes {
   static const String contactRoute = "/contactRoute";
   static const String openContactRoute = "/openContactRoute";
   static const String openJobsDetailsRoute = "/openJobsDetailsRoute";
+  static const String messageRoute = "/messageRoute";
 }

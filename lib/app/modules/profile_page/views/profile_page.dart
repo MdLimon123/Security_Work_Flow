@@ -158,7 +158,50 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 16.h),
 
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.defaultDialog(
+                  title: "",
+                  backgroundColor: AppColors.primaryWhite,
+                  content: Column(
+                    children: [
+                      SvgPicture.asset(AppAssets.shutdownIcon),
+                      SizedBox(height: 16.h),
+                      Text(
+                        "Logout Account",
+                        style: TextStyle(
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 24.h),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Cancel",
+                                style: TextStyle(color: AppColors.primaryBlack),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 16.w),
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryRed,
+                                foregroundColor: AppColors.primaryWhite,
+                              ),
+                              onPressed: () {},
+                              child: Text("Logout"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
               title: "Logout",
               appAsset: AppAssets.logoutIcon,
               isLogout: true,

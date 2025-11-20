@@ -199,7 +199,9 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 16.h),
 
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.superannuationRoute);
+              },
               title: "Superannuation Details",
               appAsset: AppAssets.timerIcon,
             ),

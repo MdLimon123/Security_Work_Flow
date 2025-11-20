@@ -25,4 +25,5 @@ abstract class AppRoutes {
   static const String messageRoute = "/messageRoute";
   static const String profileRoute = "/profileRoute";
   static const String editProfileRoute = "/editProfileRoute";
+  static const String superannuationRoute = "/superannuationRoute";
 }

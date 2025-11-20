@@ -180,7 +180,9 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           children: [
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.editProfileRoute);
+              },
               title: "Edit Profile info",
               appAsset: AppAssets.profileIcon,
             ),

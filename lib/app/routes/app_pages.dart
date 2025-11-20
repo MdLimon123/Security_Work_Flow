@@ -10,6 +10,8 @@ import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentatio
 import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/views/bottom_navbar_page.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/presentation/binding/contact_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/presentation/views/contact_page.dart';
+import 'package:flutter_security_workforce/app/modules/edit_profile_info_page/presentation/binding/edit_profile_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/edit_profile_info_page/presentation/views/edit_profile_info_page.dart';
 import 'package:flutter_security_workforce/app/modules/finish_shift_page/presentation/bindings/finish_shift_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/finish_shift_page/presentation/views/finish_shift_page.dart';
 import 'package:flutter_security_workforce/app/modules/job_details_page/presentation/binding/job_details_page_binding.dart';
@@ -193,6 +195,12 @@ class AppPages {
       name: AppRoutes.profileRoute,
       page: () => ProfilePage(),
       binding: ProfilePageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.editProfileRoute,
+      page: () => EditProfileInfoPage(),
+      binding: EditProfilePageBinding(),
     ),
   ];
 }

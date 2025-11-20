@@ -83,4 +83,5 @@ class AppAssets {
   static const String subscriptionIcon = "assets/icons/subscription_icon.svg";
   static const String supportIcon = "assets/icons/support_icon.svg";
   static const String timerIcon = "assets/icons/timer_icon.svg";
+  static const String editIcon = "assets/icons/edit_icon.svg";
 }

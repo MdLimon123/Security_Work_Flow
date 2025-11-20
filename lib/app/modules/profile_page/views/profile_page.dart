@@ -127,7 +127,9 @@ class ProfilePage extends StatelessWidget {
             ),
             SizedBox(height: 16.h),
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.subscriptionRoute);
+              },
               title: "Subscription",
               appAsset: AppAssets.subscriptionIcon,
             ),
@@ -188,7 +190,9 @@ class ProfilePage extends StatelessWidget {
             ),
             SizedBox(height: 16.h),
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.forgetPassRoute);
+              },
               title: "Password Change",
               appAsset: AppAssets.lockIcon,
             ),

@@ -160,7 +160,7 @@ class ProfilePage extends StatelessWidget {
             _buildActionableButton(
               onTap: () {},
               title: "Logout",
-              appAsset: AppAssets.cardIcon,
+              appAsset: AppAssets.logoutIcon,
               isLogout: true,
             ),
           ],

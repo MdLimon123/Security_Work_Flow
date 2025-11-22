@@ -30,4 +30,5 @@ abstract class AppRoutes {
   static const String otherAccrediationsPage = "/otherAccrediationsPage";
   static const String licencesAndCertificatesRoute =
       "/licencesAndCertificatesRoute";
+  static const String wagesToBePaidRoute = "/wagesToBePaidRoute";
 }

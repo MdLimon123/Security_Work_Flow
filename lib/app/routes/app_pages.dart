@@ -50,6 +50,8 @@ import 'package:flutter_security_workforce/app/modules/subscription_page/binding
 import 'package:flutter_security_workforce/app/modules/subscription_page/views/subscription_page.dart';
 import 'package:flutter_security_workforce/app/modules/superannuation_details_page/presentation/binding/superannuation_details_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/superannuation_details_page/presentation/views/superannuation_details_page.dart';
+import 'package:flutter_security_workforce/app/modules/wages_to_be_paid_page/presentation/binding/wages_to_be_paid_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/wages_to_be_paid_page/presentation/views/wages_to_be_paid_page.dart';
 import 'package:get/get.dart';
 import '../modules/auth/signup_page/presentation/binding/signup_page_binding.dart';
 import '../modules/auth/signup_page/presentation/binding/verify_registration_otp_page_binding.dart';
@@ -233,6 +235,12 @@ class AppPages {
       name: AppRoutes.cardEditPageRoute,
       page: () => CardEditPage(),
       binding: CardEditPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.wagesToBePaidRoute,
+      page: () => WagesToBePaidPage(),
+      binding: WagesToBePaidPageBinding(),
     ),
   ];
 }

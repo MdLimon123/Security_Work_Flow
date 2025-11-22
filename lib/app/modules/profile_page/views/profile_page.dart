@@ -279,7 +279,9 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 16.h),
 
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.wagesToBePaidRoute);
+              },
               title: "Wages to be paid",
               appAsset: AppAssets.bankIcon,
             ),

@@ -44,25 +44,29 @@ class CardEditPage extends StatelessWidget {
                 SizedBox(height: 42.h),
                 _buildSaveAndUpdateButton(),
                 SizedBox(height: 18.h),
-                Center(
-                  child: InkWell(
-                    onTap: () {},
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(
-                        color: AppColors.secondaryNavyBlue,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
+                _buildCancelButton(),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Center _buildCancelButton() {
+    return Center(
+                child: InkWell(
+                  onTap: () {},
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                      color: AppColors.secondaryNavyBlue,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              );
   }
 
   SizedBox _buildSaveAndUpdateButton() {

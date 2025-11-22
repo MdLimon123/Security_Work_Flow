@@ -27,96 +27,99 @@ class MyReferralUserPage extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: ListView.separated(
-          itemBuilder: (context, index) => Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.r),
-              border: Border.all(color: AppColors.primaryBorderColor),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h),
-              child: Column(
-                children: [
-                  _buildInfoElementRow(
-                    leftString: "User Name :",
-                    rightString: "Jhone",
-                  ),
-                  SizedBox(height: 8.h),
-                  _buildInfoElementRow(
-                    leftString: "Email :",
-                    rightString: "name@gmail.com",
-                  ),
-                  SizedBox(height: 8.h),
-                  _buildInfoElementRow(
-                    leftString: "Address : ",
-                    rightString: "Uk",
-                  ),
-                  SizedBox(height: 8.h),
-                  _buildInfoElementRow(
-                    leftString: "Join Date : ",
-                    rightString: "22 Oct 2025",
-                  ),
-                  SizedBox(height: 8.h),
-                  _buildInfoElementRow(
-                    leftString: "Subscribed : ",
-                    rightString: "Yes",
-                  ),
-                  SizedBox(height: 8.h),
-                  _buildInfoElementRow(
-                    leftString: "Purchase Date :",
-                    rightString: "22 Oct 2025",
-                  ),
-                  SizedBox(height: 8.h),
-                  Row(
-                    children: [
-                      Text(
-                        "Status :",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.secondaryTextColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Spacer(),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryBlue.withValues(
-                            alpha: .15,
-                          ),
-                          foregroundColor: AppColors.primaryBlue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadiusGeometry.circular(8.r),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: Text("Earned"),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 24.h),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusGeometry.circular(16.r),
-                        ),
-                        backgroundColor: AppColors.secondaryNavyBlue,
-                        foregroundColor: AppColors.primaryWhite,
-                      ),
-                      onPressed: () {
-                        Get.toNamed(AppRoutes.messageRoute);
-                      },
-                      child: Text("Message"),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: ListView.separated(
+            itemBuilder: (context, index) => Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.r),
+                border: Border.all(color: AppColors.primaryBorderColor),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h),
+                child: Column(
+                  children: [
+                    _buildInfoElementRow(
+                      leftString: "User Name :",
+                      rightString: "Jhone",
                     ),
-                  ),
-                ],
+                    SizedBox(height: 8.h),
+                    _buildInfoElementRow(
+                      leftString: "Email :",
+                      rightString: "name@gmail.com",
+                    ),
+                    SizedBox(height: 8.h),
+                    _buildInfoElementRow(
+                      leftString: "Address : ",
+                      rightString: "Uk",
+                    ),
+                    SizedBox(height: 8.h),
+                    _buildInfoElementRow(
+                      leftString: "Join Date : ",
+                      rightString: "22 Oct 2025",
+                    ),
+                    SizedBox(height: 8.h),
+                    _buildInfoElementRow(
+                      leftString: "Subscribed : ",
+                      rightString: "Yes",
+                    ),
+                    SizedBox(height: 8.h),
+                    _buildInfoElementRow(
+                      leftString: "Purchase Date :",
+                      rightString: "22 Oct 2025",
+                    ),
+                    SizedBox(height: 8.h),
+                    Row(
+                      children: [
+                        Text(
+                          "Status :",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: AppColors.secondaryTextColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Spacer(),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primaryBlue.withValues(
+                              alpha: .15,
+                            ),
+                            foregroundColor: AppColors.primaryBlue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadiusGeometry.circular(8.r),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Text("Earned"),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 24.h),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(16.r),
+                          ),
+                          backgroundColor: AppColors.secondaryNavyBlue,
+                          foregroundColor: AppColors.primaryWhite,
+                        ),
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.messageRoute);
+                        },
+                        child: Text("Message"),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
+            separatorBuilder: (context, index) => SizedBox(height: 24.h),
+            itemCount: 20,
           ),
-          separatorBuilder: (context, index) => SizedBox(height: 24.h),
-          itemCount: 20,
         ),
       ),
     );

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/controllers/open_contact_page_controller.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
-import 'package:signature/signature.dart';
 
 class OpenContactPage extends StatelessWidget {
   const OpenContactPage({super.key});
@@ -187,154 +186,11 @@ class OpenContactPage extends StatelessWidget {
 
                 SizedBox(height: 22.h),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Party A — Employer",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.sp,
-                        color: AppColors.secondaryNavyBlue,
-                      ),
-                    ),
-
-                    SizedBox(height: 16.h),
-
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(23.r),
-                        // border: Border.all(color: AppColors.primaryBorderColor),
-                      ),
-
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "Full Name :",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  "Michael Ross",
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(height: 8.h),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "Signature Statues :",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  "Pending",
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.primaryYellow,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(height: 8.h),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "Signature Timestamp  :",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  "14 Oct 2025, 18.03",
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 32.h),
-
-                GetBuilder<OpenContactPageController>(
-                  builder: (controller) {
-                    return Center(
-                      child: Container(
-                        width: 283.w,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.primaryBorderColor,
-                          ),
-                        ),
-                        child: Signature(
-                          controller: controller.signatureController,
-                          height: 57.h,
-                          width: 283.w,
-                          backgroundColor: AppColors.primaryWhite,
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                _buildPartyWithSignAvailable(),
 
                 SizedBox(height: 12.h),
 
-                Center(
-                  child: SizedBox(
-                    width: 148.w,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.secondaryNavyBlue,
-                        foregroundColor: AppColors.primaryWhite,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Text("Sign"),
-                    ),
-                  ),
-                ),
+                _buildPartyWithoutSign(),
 
                 SizedBox(height: 34.h),
               ],
@@ -342,6 +198,259 @@ class OpenContactPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Column _buildPartyWithoutSign() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Party B — Employer",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18.sp,
+            color: AppColors.secondaryNavyBlue,
+          ),
+        ),
+
+        SizedBox(height: 16.h),
+
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(23.r),
+            // border: Border.all(color: AppColors.primaryBorderColor),
+          ),
+
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Full Name :",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "Michael Ross",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 8.h),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Signature Statues :",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "Pending",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primaryYellow,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 8.h),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Signature Timestamp  :",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "14 Oct 2025, 18.03",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        SizedBox(height: 32.h),
+
+        Center(
+          child: SizedBox(
+            width: 148.w,
+            height: 41.h,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.secondaryNavyBlue,
+                foregroundColor: AppColors.primaryWhite,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusGeometry.circular(12.r),
+                ),
+              ),
+              child: Text("Sign", style: TextStyle(fontSize: 16.sp)),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _buildPartyWithSignAvailable() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Party A — Employer",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18.sp,
+            color: AppColors.secondaryNavyBlue,
+          ),
+        ),
+
+        SizedBox(height: 16.h),
+
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(23.r),
+            // border: Border.all(color: AppColors.primaryBorderColor),
+          ),
+
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Full Name :",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "Michael Ross",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 8.h),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Signature Statues :",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "Signed",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primaryGreen,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 8.h),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Signature Timestamp  :",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "14 Oct 2025, 18.03",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 32.h),
+
+        Center(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(color: AppColors.primaryBorderColor),
+            ),
+            child: Image.asset(
+              width: Get.width / 1.5,
+              height: 57.h,
+              AppAssets.signatureImg,
+            ),
+          ),
+        ),
+      ],
     );
   }
 

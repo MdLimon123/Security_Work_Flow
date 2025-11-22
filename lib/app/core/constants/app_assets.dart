@@ -85,4 +85,5 @@ class AppAssets {
   static const String timerIcon = "assets/icons/timer_icon.svg";
   static const String editIcon = "assets/icons/edit_icon.svg";
   static const String shutdownIcon = "assets/icons/shutdown_icon.svg";
+  static const String signatureImg = "assets/images/signature.png";
 }

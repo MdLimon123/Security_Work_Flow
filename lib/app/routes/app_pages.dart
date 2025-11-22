@@ -8,6 +8,8 @@ import 'package:flutter_security_workforce/app/modules/auth/new_password_page/pr
 import 'package:flutter_security_workforce/app/modules/auth/new_password_page/presentation/views/new_password_page.dart';
 import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/binding/bottom_navbar_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/views/bottom_navbar_page.dart';
+import 'package:flutter_security_workforce/app/modules/card_edit_page/presentation/binding/card_edit_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/card_edit_page/presentation/views/card_edit_page.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/presentation/binding/contact_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/presentation/views/contact_page.dart';
 import 'package:flutter_security_workforce/app/modules/edit_profile_info_page/presentation/binding/edit_profile_page_binding.dart';
@@ -225,6 +227,12 @@ class AppPages {
       name: AppRoutes.otherAccrediationsPage,
       page: () => OtherAccrediationsPage(),
       binding: OtherAccrediationsPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.cardEditPageRoute,
+      page: () => CardEditPage(),
+      binding: CardEditPageBinding(),
     ),
   ];
 }

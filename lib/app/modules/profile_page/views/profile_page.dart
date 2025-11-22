@@ -269,7 +269,9 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 16.h),
 
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.cardEditPageRoute);
+              },
               title: "Card Payment Details ",
               appAsset: AppAssets.cardIcon,
             ),

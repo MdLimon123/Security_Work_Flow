@@ -260,7 +260,9 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 16.h),
 
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.otherAccrediationsPage);
+              },
               title: "Other Accreditations",
               appAsset: AppAssets.achievementIcon,
             ),

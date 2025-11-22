@@ -32,6 +32,8 @@ import 'package:flutter_security_workforce/app/modules/open_contact_page/present
 import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/views/open_contact_page.dart';
 import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/presentation/binding/open_jobs_details_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/presentation/views/open_jobs_details_page.dart';
+import 'package:flutter_security_workforce/app/modules/other_accreditations_page/presentation/binding/other_accrediations_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/other_accreditations_page/presentation/views/other_accrediations_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_page/binding/profile_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/profile_page/views/profile_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/binding/profile_verification_page_binding.dart';
@@ -217,6 +219,12 @@ class AppPages {
       name: AppRoutes.licencesAndCertificatesRoute,
       page: () => LicenseAndCertificatesPage(),
       binding: LicenseAndCertificatesPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.otherAccrediationsPage,
+      page: () => OtherAccrediationsPage(),
+      binding: OtherAccrediationsPageBinding(),
     ),
   ];
 }

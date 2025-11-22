@@ -251,7 +251,9 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 16.h),
 
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.licencesAndCertificatesRoute);
+              },
               title: "Licences & Certificates",
               appAsset: AppAssets.listIcon,
             ),

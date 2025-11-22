@@ -26,4 +26,6 @@ abstract class AppRoutes {
   static const String profileRoute = "/profileRoute";
   static const String editProfileRoute = "/editProfileRoute";
   static const String superannuationRoute = "/superannuationRoute";
+  static const String licencesAndCertificatesRoute =
+      "/licencesAndCertificatesRoute";
 }

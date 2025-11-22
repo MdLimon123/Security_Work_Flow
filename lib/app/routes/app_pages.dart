@@ -16,6 +16,8 @@ import 'package:flutter_security_workforce/app/modules/finish_shift_page/present
 import 'package:flutter_security_workforce/app/modules/finish_shift_page/presentation/views/finish_shift_page.dart';
 import 'package:flutter_security_workforce/app/modules/job_details_page/presentation/binding/job_details_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/job_details_page/presentation/views/job_details_page.dart';
+import 'package:flutter_security_workforce/app/modules/license_and_certificates_page/binding/license_and_certificates_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/license_and_certificates_page/views/license_and_certificates_page.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/binding/message_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/views/message_page.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/binding/my_jobs_page_binding.dart';
@@ -209,6 +211,12 @@ class AppPages {
       name: AppRoutes.superannuationRoute,
       page: () => SuperannuationDetailsPage(),
       binding: SuperannuationDetailsPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.licencesAndCertificatesRoute,
+      page: () => LicenseAndCertificatesPage(),
+      binding: LicenseAndCertificatesPageBinding(),
     ),
   ];
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/widgets/signature_dialog_widget.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -190,7 +191,7 @@ class OpenContactPage extends StatelessWidget {
 
                 SizedBox(height: 12.h),
 
-                _buildPartyWithoutSign(),
+                _buildPartyWithoutSign(context: context),
 
                 SizedBox(height: 34.h),
               ],
@@ -201,7 +202,7 @@ class OpenContactPage extends StatelessWidget {
     );
   }
 
-  Column _buildPartyWithoutSign() {
+  Column _buildPartyWithoutSign({required BuildContext context}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -314,7 +315,12 @@ class OpenContactPage extends StatelessWidget {
             width: 148.w,
             height: 41.h,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => const SignatureDialogWidget(),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.secondaryNavyBlue,
                 foregroundColor: AppColors.primaryWhite,

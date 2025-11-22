@@ -24,6 +24,8 @@ import 'package:flutter_security_workforce/app/modules/message_page/presentation
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/views/message_page.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/binding/my_jobs_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/views/my_jobs_page.dart';
+import 'package:flutter_security_workforce/app/modules/my_refferal_user_page/presentation/binding/my_referral_user_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/my_refferal_user_page/presentation/views/my_referral_user_page.dart';
 import 'package:flutter_security_workforce/app/modules/notification_page/presentation/binding/notification_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/notification_page/presentation/views/notification_page.dart';
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/bindings/on_boarding_get_started_page_binding.dart';
@@ -241,6 +243,12 @@ class AppPages {
       name: AppRoutes.wagesToBePaidRoute,
       page: () => WagesToBePaidPage(),
       binding: WagesToBePaidPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.myReferralUserRoute,
+      page: () => MyReferralUserPage(),
+      binding: MyReferralUserPageBinding(),
     ),
   ];
 }

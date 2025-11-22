@@ -31,4 +31,5 @@ abstract class AppRoutes {
   static const String licencesAndCertificatesRoute =
       "/licencesAndCertificatesRoute";
   static const String wagesToBePaidRoute = "/wagesToBePaidRoute";
+  static const String myReferralUserRoute = "/myReferralUserRoute";
 }

@@ -121,7 +121,9 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           children: [
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.myReferralUserRoute);
+              },
               title: "My Referral user",
               appAsset: AppAssets.referralIcon,
             ),

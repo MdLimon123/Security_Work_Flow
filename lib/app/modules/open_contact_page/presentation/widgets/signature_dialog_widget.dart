@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 import '../../../../core/constants/app_colors.dart';
 
@@ -13,6 +12,13 @@ class SignatureDialogWidget extends StatefulWidget {
 class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
   int _selectedTab = 0; // 0: Draw, 1: Upload, 2: Save
   final SignaturePainter _signaturePainter = SignaturePainter();
+  int _repaintKey = 0; // Add this to force repaint
+
+  void _triggerRepaint() {
+    setState(() {
+      _repaintKey++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +114,6 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
 
   Widget _buildTab(int index, IconData icon, String label) {
     final isSelected = _selectedTab == index;
-    final isUpload = index == 1;
 
     return Expanded(
       child: GestureDetector(
@@ -119,9 +124,7 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
             border: Border(
               bottom: BorderSide(
                 color: isSelected
-                    ? (isUpload
-                          ? AppColors.primaryOrange
-                          : AppColors.primaryOrange)
+                    ? AppColors.primaryOrange
                     : Colors.transparent,
                 width: 2,
               ),
@@ -134,9 +137,7 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
                 icon,
                 size: 18,
                 color: isSelected
-                    ? (isUpload
-                          ? AppColors.primaryOrange
-                          : AppColors.primaryOrange)
+                    ? AppColors.primaryOrange
                     : AppColors.primaryGray,
               ),
               const SizedBox(width: 8),
@@ -144,9 +145,7 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
                 label,
                 style: TextStyle(
                   color: isSelected
-                      ? (isUpload
-                            ? AppColors.primaryOrange
-                            : AppColors.primaryOrange)
+                      ? AppColors.primaryOrange
                       : AppColors.primaryGray,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                 ),
@@ -166,7 +165,7 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
           Container(
             height: 200,
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.primaryGray),
+              border: Border.all(color: AppColors.primaryBorderColor),
               borderRadius: BorderRadius.circular(8),
               color: AppColors.primaryWhite,
             ),
@@ -175,14 +174,18 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
                 GestureDetector(
                   onPanStart: (details) {
                     _signaturePainter.addPoint(details.localPosition);
+                    _triggerRepaint();
                   },
                   onPanUpdate: (details) {
                     _signaturePainter.addPoint(details.localPosition);
+                    _triggerRepaint();
                   },
                   onPanEnd: (details) {
                     _signaturePainter.endStroke();
+                    _triggerRepaint();
                   },
                   child: CustomPaint(
+                    key: ValueKey(_repaintKey),
                     painter: _signaturePainter,
                     size: Size.infinite,
                   ),
@@ -209,11 +212,10 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
       // Upload Tab
       return Container(
         height: 200,
-
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: AppColors.primaryBorderColor),
           borderRadius: BorderRadius.circular(8),
-          color: Colors.grey.shade50,
+          color: AppColors.lightGrey,
         ),
         child: Center(
           child: Column(
@@ -221,16 +223,22 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
             children: [
               Text(
                 'Upload a photo of your signature.',
-                style: TextStyle(color: Colors.grey.shade600),
+                style: TextStyle(color: AppColors.secondaryTextColor),
               ),
               const SizedBox(height: 4),
               Text(
                 'Max file size: 1MB',
-                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                style: TextStyle(
+                  color: AppColors.secondaryTextColor,
+                  fontSize: 12,
+                ),
               ),
               Text(
                 'png, jpg, jpeg, bmp, gif',
-                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                style: TextStyle(
+                  color: AppColors.secondaryTextColor,
+                  fontSize: 12,
+                ),
               ),
               const SizedBox(height: 16),
               ElevatedButton.icon(
@@ -238,8 +246,8 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
                 icon: const Icon(Icons.upload, size: 16),
                 label: const Text('Upload photo'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0F3460),
-                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.secondaryNavyBlue,
+                  foregroundColor: AppColors.primaryWhite,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 10,
@@ -258,13 +266,14 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
       return Column(
         children: [
           _buildSavedSignature(),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () => Navigator.pop(context),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF0F3460),
+                backgroundColor: AppColors.secondaryNavyBlue,
+                foregroundColor: AppColors.primaryWhite,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -273,7 +282,7 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
               child: const Text(
                 'Submit',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.primaryWhite,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -289,12 +298,13 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
     return Container(
       height: 200,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: AppColors.primaryBorderColor),
         borderRadius: BorderRadius.circular(8),
-        color: Colors.white,
+        color: AppColors.primaryWhite,
       ),
       child: Center(
         child: CustomPaint(
+          key: ValueKey(_repaintKey),
           painter: _signaturePainter,
           size: const Size(double.infinity, 200),
         ),
@@ -305,9 +315,8 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
   Widget _buildColorButton(Color color) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _signaturePainter.setColor(color);
-        });
+        _signaturePainter.setColor(color);
+        _triggerRepaint();
       },
       child: Container(
         width: 20,
@@ -317,7 +326,7 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
           shape: BoxShape.circle,
           border: Border.all(
             color: _signaturePainter.currentColor == color
-                ? Colors.blue
+                ? AppColors.primaryBlue
                 : Colors.transparent,
             width: 2,
           ),
@@ -326,7 +335,9 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
     );
   }
 
-  Future<void> _pickImage() async {}
+  Future<void> _pickImage() async {
+    // Image picker implementation
+  }
 
   void _handleSubmit() {
     setState(() {
@@ -338,7 +349,7 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
 class SignaturePainter extends CustomPainter {
   final List<List<Offset?>> _strokes = [];
   final List<Color> _strokeColors = [];
-  Color currentColor = Colors.black;
+  Color currentColor = AppColors.primaryBlack;
 
   void addPoint(Offset point) {
     if (_strokes.isEmpty || _strokes.last.last == null) {
@@ -366,7 +377,9 @@ class SignaturePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     for (int i = 0; i < _strokes.length; i++) {
-      paint.color = i < _strokeColors.length ? _strokeColors[i] : Colors.black;
+      paint.color = i < _strokeColors.length
+          ? _strokeColors[i]
+          : AppColors.primaryBlack;
 
       for (int j = 0; j < _strokes[i].length - 1; j++) {
         if (_strokes[i][j] != null && _strokes[i][j + 1] != null) {

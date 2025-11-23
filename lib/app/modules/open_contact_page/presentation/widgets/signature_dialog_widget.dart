@@ -40,12 +40,14 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Create Your Signature',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primaryBlack,
+                Expanded(
+                  child: const Text(
+                    'Create Your Signature',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryBlack,
+                    ),
                   ),
                 ),
                 IconButton(

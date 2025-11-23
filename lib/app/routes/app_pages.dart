@@ -12,6 +12,8 @@ import 'package:flutter_security_workforce/app/modules/card_edit_page/presentati
 import 'package:flutter_security_workforce/app/modules/card_edit_page/presentation/views/card_edit_page.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/presentation/binding/contact_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/presentation/views/contact_page.dart';
+import 'package:flutter_security_workforce/app/modules/customer_support_page/presentation/binding/customer_support_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/customer_support_page/presentation/views/customer_support_page.dart';
 import 'package:flutter_security_workforce/app/modules/edit_profile_info_page/presentation/binding/edit_profile_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/edit_profile_info_page/presentation/views/edit_profile_info_page.dart';
 import 'package:flutter_security_workforce/app/modules/finish_shift_page/presentation/bindings/finish_shift_page_binding.dart';
@@ -257,6 +259,12 @@ class AppPages {
       name: AppRoutes.jobHistoryRoute,
       page: () => JobHistoryPage(),
       binding: JobHistoryPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.customerSupportRoute,
+      page: () => CustomerSupportPage(),
+      binding: CustomerSupportPageBinding(),
     ),
   ];
 }

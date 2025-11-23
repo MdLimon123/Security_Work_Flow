@@ -155,7 +155,9 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 16.h),
 
             _buildActionableButton(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.customerSupportRoute);
+              },
               title: "Customer Support ",
               appAsset: AppAssets.supportIcon,
             ),

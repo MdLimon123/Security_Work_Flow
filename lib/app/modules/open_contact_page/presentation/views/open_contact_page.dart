@@ -59,18 +59,15 @@ class OpenContactPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryYellow.withValues(
-                          alpha: .15,
-                        ),
-                        foregroundColor: AppColors.primaryYellow,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
+
+                    Chip(
+                      label: Text(
+                        "Pending",
+                        style: TextStyle(color: AppColors.primaryYellow),
                       ),
-                      child: Text("Pending"),
+                      backgroundColor: AppColors.primaryYellow.withValues(
+                        alpha: .15,
+                      ),
                     ),
                   ],
                 ),

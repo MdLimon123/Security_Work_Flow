@@ -26,7 +26,9 @@ class SearchPage extends StatelessWidget {
         title: Text("Search", style: TextStyle(fontSize: 20.sp)),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(AppRoutes.notificationRoute);
+            },
             icon: Icon(Icons.notifications_outlined),
           ),
         ],

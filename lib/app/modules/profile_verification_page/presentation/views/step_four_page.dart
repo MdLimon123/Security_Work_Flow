@@ -49,6 +49,8 @@ class StepFourPage extends StatelessWidget {
               ),
             ),
 
+            SizedBox(height: 4.h),
+
             _buildUploadedElementStatus(),
 
             SizedBox(height: 16.h),

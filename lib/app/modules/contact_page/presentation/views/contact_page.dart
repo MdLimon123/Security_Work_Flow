@@ -117,22 +117,19 @@ class ContactPage extends StatelessWidget {
                                       color: AppColors.secondaryTextColor,
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.primaryGreen
-                                          .withValues(alpha: 0.15),
-                                      foregroundColor: AppColors.primaryGreen,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          12.r,
-                                        ),
+
+                                  Chip(
+                                    color: WidgetStatePropertyAll(
+                                      AppColors.primaryGreen.withValues(
+                                        alpha: 0.10,
                                       ),
                                     ),
-                                    child: Text(
+                                    label: Text(
                                       "Signed",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
+                                        // backgroundColor: ,
+                                        color: AppColors.primaryGreen,
                                       ),
                                     ),
                                   ),

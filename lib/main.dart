@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.primaryWhite,
           appBarTheme: AppBarTheme(backgroundColor: AppColors.primaryWhite),
-          fontFamily: GoogleFonts.inter().fontFamily,
+          fontFamily: GoogleFonts
+              .inter()
+              .fontFamily,
         ),
       ),
     );

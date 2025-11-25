@@ -94,8 +94,10 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Get.offAllNamed(AppRoutes.profileVerificationRoute);
+                        onPressed: () async {
+                          await controller.login(context: context);
+
+                          // Get.offAllNamed(AppRoutes.profileVerificationRoute);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.secondaryNavyBlue,
@@ -104,10 +106,17 @@ class LoginPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16.r),
                           ),
                         ),
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(color: AppColors.primaryWhite),
-                        ),
+                        child: controller.signInInProgress
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.primaryWhite,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Text(
+                                "Sign In",
+                                style: TextStyle(color: AppColors.primaryWhite),
+                              ),
                       ),
                     ),
 

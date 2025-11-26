@@ -34,7 +34,7 @@ class LoginPageController extends GetxController {
     signInInProgress = true;
     update();
 
-    DioClient dioClient = DioClient(baseUrl: ApiEndpoints.loginUrl);
+    DioClient dioClient = DioClient();
 
     try {
       dynamic data = await dioClient.post(

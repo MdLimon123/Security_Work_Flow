@@ -5,6 +5,6 @@ import '../controllers/verify_registration_otp_page_controller.dart';
 class VerifyRegistrationOtpPageBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => VerifyRegistrationOtpPageController());
+    Get.lazyPut(() => VerifyRegistrationOtpPageController(), fenix: true);
   }
 }

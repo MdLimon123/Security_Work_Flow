@@ -51,13 +51,17 @@ class SignupPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          _buildNameInput(controller),
+                          SizedBox(height: 16.h),
                           _buildEmailInput(controller),
                           SizedBox(height: 16.h),
                           _buildPasswordInput(controller),
                           SizedBox(height: 16.h),
                           _buildConfirmPasswordInput(controller),
+                          SizedBox(height: 16.h),
+                          _buildReferInput(controller),
                           SizedBox(height: 32.h),
-                          _buildSignupButton(),
+                          _buildSignupButton(context: context),
                           SizedBox(height: 16.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -91,24 +95,95 @@ class SignupPage extends StatelessWidget {
     );
   }
 
-  SizedBox _buildSignupButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          Get.toNamed(AppRoutes.verifyRegistrationOtpRoute);
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.secondaryNavyBlue,
-          foregroundColor: AppColors.primaryWhite,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.r),
+  Column _buildNameInput(SignupPageController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Name",
+          style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
+        ),
+        SizedBox(height: 8.h),
+        TextFormField(
+          controller: controller.nameTec,
+          keyboardType: TextInputType.text,
+          decoration: InputDecoration(
+            hintText: "Name",
+            hintStyle: TextStyle(color: AppColors.primaryGray),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.secondaryWhite),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.secondaryWhite),
+            ),
           ),
         ),
-        child: Text(
-          "Sign Up",
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+      ],
+    );
+  }
+
+  Column _buildReferInput(SignupPageController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Refer code (optional)",
+          style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
         ),
+        SizedBox(height: 8.h),
+        TextFormField(
+          controller: controller.referTec,
+          decoration: InputDecoration(
+            hintText: "Refer code",
+            hintStyle: TextStyle(color: AppColors.primaryGray),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.secondaryWhite),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.secondaryWhite),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  SizedBox _buildSignupButton({required BuildContext context}) {
+    return SizedBox(
+      width: double.infinity,
+      child: GetBuilder<SignupPageController>(
+        builder: (controller) {
+          return ElevatedButton(
+            onPressed: () async {
+              await controller.signup(context: context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.secondaryNavyBlue,
+              foregroundColor: AppColors.primaryWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+            ),
+            child: controller.signupInProgress
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryWhite,
+                      strokeWidth: 2,
+                    ),
+                  )
+                : Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+          );
+        },
       ),
     );
   }
@@ -202,6 +277,7 @@ class SignupPage extends StatelessWidget {
         SizedBox(height: 8.h),
         TextFormField(
           controller: controller.emailTec,
+          keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             hintText: "Enter your email address",
             hintStyle: TextStyle(color: AppColors.primaryGray),

@@ -7,7 +7,6 @@ import 'package:pinput/pinput.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../controllers/verify_registration_otp_page_controller.dart';
 
-
 class VerifyRegistrationOtpPage extends StatelessWidget {
   const VerifyRegistrationOtpPage({super.key});
 
@@ -24,7 +23,7 @@ class VerifyRegistrationOtpPage extends StatelessWidget {
               children: [
                 Center(child: Image.asset(AppAssets.securiverseIcon)),
                 SizedBox(height: 56.h),
-            
+
                 RichText(
                   text: TextSpan(
                     style: TextStyle(
@@ -44,7 +43,7 @@ class VerifyRegistrationOtpPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 48.h),
-            
+
                 GetBuilder<VerifyRegistrationOtpPageController>(
                   builder: (controller) {
                     return Pinput(
@@ -53,13 +52,13 @@ class VerifyRegistrationOtpPage extends StatelessWidget {
                     );
                   },
                 ),
-            
+
                 SizedBox(height: 32.h),
-            
-                _buildVerifyButton(),
-            
+
+                _buildVerifyButton(context: context),
+
                 SizedBox(height: 16.h),
-            
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -84,23 +83,38 @@ class VerifyRegistrationOtpPage extends StatelessWidget {
     );
   }
 
-  SizedBox _buildVerifyButton() {
+  SizedBox _buildVerifyButton({required BuildContext context}) {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.secondaryNavyBlue,
-          foregroundColor: AppColors.primaryWhite,
+      child: GetBuilder<VerifyRegistrationOtpPageController>(
+        builder: (controller) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.secondaryNavyBlue,
+              foregroundColor: AppColors.primaryWhite,
 
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-        ),
-        onPressed: () {},
-        child: Text(
-          "Verify",
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-        ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+            ),
+            onPressed: () async {
+              await controller.verify(email: Get.arguments, context: context);
+            },
+            child: controller.verifyInProgress
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryWhite,
+                    ),
+                  )
+                : Text(
+                    "Verify",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+          );
+        },
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_keys.dart';
@@ -48,7 +50,7 @@ class LoginPageController extends GetxController {
 
         await sharedPreferences.setString(
           AppKeys.loginKey,
-          loginResponse.toJson().toString(),
+          jsonEncode(loginResponse.toJson()),
         );
       }
 

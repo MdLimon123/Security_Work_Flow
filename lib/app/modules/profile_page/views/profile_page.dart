@@ -193,13 +193,19 @@ class ProfilePage extends StatelessWidget {
                           ),
                           SizedBox(width: 16.w),
                           Expanded(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryRed,
-                                foregroundColor: AppColors.primaryWhite,
-                              ),
-                              onPressed: () {},
-                              child: Text("Logout"),
+                            child: GetBuilder<ProfilePageController>(
+                              builder: (controller) {
+                                return ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.primaryRed,
+                                    foregroundColor: AppColors.primaryWhite,
+                                  ),
+                                  onPressed: () async {
+                                    await controller.logout();
+                                  },
+                                  child: Text("Logout"),
+                                );
+                              },
                             ),
                           ),
                         ],

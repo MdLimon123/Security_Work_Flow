@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/modules/auth/new_password_page/presentation/controllers/new_password_page_controller.dart';
-import 'package:flutter_security_workforce/app/modules/auth/new_password_page/presentation/views/password_changed_message_page.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/app_assets.dart';
@@ -57,7 +56,7 @@ class NewPasswordPage extends StatelessWidget {
 
                     SizedBox(height: 32.h),
 
-                    _buildResetPasswordButton(),
+                    _buildResetPasswordButton(context: context),
 
                     SizedBox(height: 16.h),
                   ],
@@ -149,25 +148,40 @@ class NewPasswordPage extends StatelessWidget {
     );
   }
 
-  SizedBox _buildResetPasswordButton() {
+  SizedBox _buildResetPasswordButton({required BuildContext context}) {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-
-          Get.to(PasswordChangedMessagePage());
+      child: GetBuilder<NewPasswordPageController>(
+        builder: (controller) {
+          return ElevatedButton(
+            onPressed: () async {
+              await controller.reset(
+                context: context,
+                accessToken: Get.arguments,
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.secondaryNavyBlue,
+              foregroundColor: AppColors.primaryWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+            ),
+            child: controller.resetPassInProgress
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryWhite,
+                    ),
+                  )
+                : Text(
+                    "Reset Password",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+          );
         },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.secondaryNavyBlue,
-          foregroundColor: AppColors.primaryWhite,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-        ),
-        child: Text(
-          "Reset Password",
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-        ),
       ),
     );
   }

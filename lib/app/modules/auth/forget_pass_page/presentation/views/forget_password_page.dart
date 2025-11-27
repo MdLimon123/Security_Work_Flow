@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/modules/auth/forget_pass_page/presentation/controllers/forget_password_page_controller.dart';
-import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/constants/app_assets.dart';
@@ -46,7 +45,7 @@ class ForgetPasswordPage extends StatelessWidget {
                 SizedBox(height: 20.h),
                 GetBuilder<ForgetPasswordPageController>(
                   builder: (controller) {
-                    return _buildEmailInput(controller);
+                    return _buildEmailInput(controller, context: context);
                   },
                 ),
               ],
@@ -57,7 +56,10 @@ class ForgetPasswordPage extends StatelessWidget {
     );
   }
 
-  Column _buildEmailInput(ForgetPasswordPageController controller) {
+  Column _buildEmailInput(
+    ForgetPasswordPageController controller, {
+    required BuildContext context,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -86,8 +88,8 @@ class ForgetPasswordPage extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {
-              Get.toNamed(AppRoutes.verifyForgetPassRoute);
+            onPressed: () async {
+              await controller.forgetPass(context: context);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.secondaryNavyBlue,
@@ -96,10 +98,16 @@ class ForgetPasswordPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.r),
               ),
             ),
-            child: Text(
-              "Send OTP",
-              style: TextStyle(color: AppColors.primaryWhite),
-            ),
+            child: controller.forgetPassInProgress
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryWhite,
+                    ),
+                  )
+                : Text(
+                    "Send OTP",
+                    style: TextStyle(color: AppColors.primaryWhite),
+                  ),
           ),
         ),
       ],

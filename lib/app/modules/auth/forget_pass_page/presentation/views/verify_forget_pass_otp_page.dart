@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/modules/auth/forget_pass_page/presentation/controllers/verify_forget_pass_otp_page_controller.dart';
-import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
@@ -56,7 +55,7 @@ class VerifyForgetPassOtpPage extends StatelessWidget {
 
                 SizedBox(height: 32.h),
 
-                _buildVerifyButton(),
+                _buildVerifyButton(context: context),
 
                 SizedBox(height: 16.h),
 
@@ -84,25 +83,41 @@ class VerifyForgetPassOtpPage extends StatelessWidget {
     );
   }
 
-  SizedBox _buildVerifyButton() {
+  SizedBox _buildVerifyButton({required BuildContext context}) {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.secondaryNavyBlue,
-          foregroundColor: AppColors.primaryWhite,
+      child: GetBuilder<VerifyForgetPassOtpPageController>(
+        builder: (controller) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.secondaryNavyBlue,
+              foregroundColor: AppColors.primaryWhite,
 
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-        ),
-        onPressed: () {
-          Get.toNamed(AppRoutes.newPassRoute);
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+            ),
+            onPressed: () async {
+              await controller.verifyOTP(
+                context: context,
+                email: Get.arguments,
+              );
+            },
+            child: controller.verifyInProgress
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryWhite,
+                    ),
+                  )
+                : Text(
+                    "Verify",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+          );
         },
-        child: Text(
-          "Verify",
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-        ),
       ),
     );
   }

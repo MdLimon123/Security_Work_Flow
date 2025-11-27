@@ -27,9 +27,14 @@ class DioClient {
   Future<dynamic> get(
     String endpoint, {
     Map<String, dynamic>? queryParams,
+    Map<String, String>? headers,
   }) async {
     try {
-      final response = await _dio.get(endpoint, queryParameters: queryParams);
+      final response = await _dio.get(
+        endpoint,
+        queryParameters: queryParams,
+        options: Options(headers: headers),
+      );
       return response.data;
     } on DioException catch (e) {
       throw DioExceptionHandler.handle(e);
@@ -42,12 +47,14 @@ class DioClient {
     String endpoint, {
     dynamic data,
     Map<String, dynamic>? queryParams,
+    Map<String, String>? headers,
   }) async {
     try {
       final response = await _dio.post(
         endpoint,
         data: data,
         queryParameters: queryParams,
+        options: Options(headers: headers), // 👈 use it
       );
       return response.data;
     } on DioException catch (e) {
@@ -57,9 +64,17 @@ class DioClient {
     }
   }
 
-  Future<dynamic> put(String endpoint, {dynamic data}) async {
+  Future<dynamic> put(
+    String endpoint, {
+    dynamic data,
+    Map<String, String>? headers, // 👈 added
+  }) async {
     try {
-      final response = await _dio.put(endpoint, data: data);
+      final response = await _dio.put(
+        endpoint,
+        data: data,
+        options: Options(headers: headers), // 👈 use it
+      );
       return response.data;
     } on DioException catch (e) {
       throw DioExceptionHandler.handle(e);
@@ -68,9 +83,17 @@ class DioClient {
     }
   }
 
-  Future<dynamic> delete(String endpoint, {dynamic data}) async {
+  Future<dynamic> delete(
+    String endpoint, {
+    dynamic data,
+    Map<String, String>? headers, // 👈 added
+  }) async {
     try {
-      final response = await _dio.delete(endpoint, data: data);
+      final response = await _dio.delete(
+        endpoint,
+        data: data,
+        options: Options(headers: headers), // 👈 use it
+      );
       return response.data;
     } on DioException catch (e) {
       throw DioExceptionHandler.handle(e);

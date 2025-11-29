@@ -7,6 +7,8 @@ class ApiEndpoints {
 
   static const String resetPassUrl = "$_baseUrl/auth/reset_password/";
 
+  static const String profileUpdateUrl = "$_baseUrl/accounts/profile-update/";
+
   static String getSignupUrl({String? referCode}) {
     return "$_baseUrl/auth/signup/${referCode != null ? "?referral_token=$referCode" : ""}";
   }

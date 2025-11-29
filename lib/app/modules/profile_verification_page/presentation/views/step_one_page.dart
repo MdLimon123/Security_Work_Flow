@@ -44,7 +44,7 @@ class StepOnePage extends StatelessWidget {
 
             SizedBox(height: 40.h),
 
-            _buildNextButton(controller),
+            _buildNextButton(controller, context: context),
 
             SizedBox(height: 12.h),
           ],
@@ -53,12 +53,15 @@ class StepOnePage extends StatelessWidget {
     );
   }
 
-  SizedBox _buildNextButton(ProfileVerificationPageController controller) {
+  SizedBox _buildNextButton(
+    ProfileVerificationPageController controller, {
+    required BuildContext context,
+  }) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-          controller.increasePageIndex();
+        onPressed: () async {
+          await controller.submitFirstStepData(context: context);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.secondaryNavyBlue,

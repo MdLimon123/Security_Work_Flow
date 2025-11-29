@@ -1,3 +1,3 @@
 import 'package:get/get.dart';
 
-class JobHistoryPageController extends GetxController{}
+class JobHistoryPageController extends GetxController {}

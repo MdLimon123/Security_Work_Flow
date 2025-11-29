@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_security_workforce/app/core/constants/app_keys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../errors/app_exceptions.dart';
 import '../errors/dio_exception_handler.dart';
@@ -19,8 +21,25 @@ class DioClient {
           },
         ),
       ) {
+    // 👉 LogInterceptor (you already had)
     _dio.interceptors.add(
       LogInterceptor(requestBody: true, responseBody: true),
+    );
+
+    // 👉 Global Token Interceptor (NEW)
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final prefs = await SharedPreferences.getInstance();
+          final token = prefs.getString(AppKeys.accessTokenKey);
+
+          if (token != null && token.isNotEmpty) {
+            options.headers["Authorization"] = "Bearer $token";
+          }
+
+          return handler.next(options);
+        },
+      ),
     );
   }
 
@@ -54,7 +73,7 @@ class DioClient {
         endpoint,
         data: data,
         queryParameters: queryParams,
-        options: Options(headers: headers), // 👈 use it
+        options: Options(headers: headers),
       );
       return response.data;
     } on DioException catch (e) {
@@ -67,13 +86,13 @@ class DioClient {
   Future<dynamic> put(
     String endpoint, {
     dynamic data,
-    Map<String, String>? headers, // 👈 added
+    Map<String, String>? headers,
   }) async {
     try {
       final response = await _dio.put(
         endpoint,
         data: data,
-        options: Options(headers: headers), // 👈 use it
+        options: Options(headers: headers),
       );
       return response.data;
     } on DioException catch (e) {
@@ -86,13 +105,13 @@ class DioClient {
   Future<dynamic> delete(
     String endpoint, {
     dynamic data,
-    Map<String, String>? headers, // 👈 added
+    Map<String, String>? headers,
   }) async {
     try {
       final response = await _dio.delete(
         endpoint,
         data: data,
-        options: Options(headers: headers), // 👈 use it
+        options: Options(headers: headers),
       );
       return response.data;
     } on DioException catch (e) {

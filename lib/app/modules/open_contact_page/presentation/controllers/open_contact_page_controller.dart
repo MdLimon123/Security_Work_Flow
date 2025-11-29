@@ -10,8 +10,6 @@ class OpenContactPageController extends GetxController {
     exportBackgroundColor: AppColors.primaryWhite,
   );
 
-
-
   @override
   void onClose() {
     signatureController.dispose();

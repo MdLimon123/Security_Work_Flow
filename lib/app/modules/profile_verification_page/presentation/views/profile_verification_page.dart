@@ -5,7 +5,6 @@ import 'package:flutter_security_workforce/app/modules/profile_verification_page
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-
 class ProfileVerificationPage extends StatelessWidget {
   const ProfileVerificationPage({super.key});
 

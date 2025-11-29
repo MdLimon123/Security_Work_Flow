@@ -81,64 +81,72 @@ class StepTwoPage extends StatelessWidget {
 
   SizedBox _buildNextButton(ProfileVerificationPageController controller) {
     return SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                controller.increasePageIndex();
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.secondaryNavyBlue,
-                foregroundColor: AppColors.primaryWhite,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.r),
-                ),
-              ),
-              child: Text(
-                "Next",
-                style: TextStyle(color: AppColors.primaryWhite),
-              ),
-            ),
-          );
-  }
-
-  FlutterSlider _buildPreferedJobRadiusSlider() {
-    return FlutterSlider(
-      trackBar: FlutterSliderTrackBar(
-        activeTrackBar: BoxDecoration(color: AppColors.primaryOrange),
-        inactiveTrackBar: BoxDecoration(color: Colors.grey.shade300),
-      ),
-
-      values: [60],
-      max: 100,
-      min: 1,
-
-      tooltip: FlutterSliderTooltip(
-        alwaysShowTooltip: true,
-        format: (value) => "$value km",
-      ),
-
-      onDragging: (handlerIndex, lowerValue, upperValue) {},
-
-      // ✅ Circular Drag Handler
-      handler: FlutterSliderHandler(
-        decoration: BoxDecoration(), // remove default circle
-        child: Container(
-          height: 16.h,
-          width: 16.w,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.primaryWhite, // inner color
-            border: Border.all(color: AppColors.primaryOrange, width: 3),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primaryOrange,
-                blurRadius: 8,
-                spreadRadius: 1,
-              ),
-            ],
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          controller.increasePageIndex();
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.secondaryNavyBlue,
+          foregroundColor: AppColors.primaryWhite,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
           ),
         ),
+        child: Text("Next", style: TextStyle(color: AppColors.primaryWhite)),
       ),
+    );
+  }
+
+  GetBuilder<ProfileVerificationPageController>
+  _buildPreferedJobRadiusSlider() {
+    return GetBuilder<ProfileVerificationPageController>(
+      builder: (controller) {
+        return FlutterSlider(
+          trackBar: FlutterSliderTrackBar(
+            activeTrackBar: BoxDecoration(color: AppColors.primaryOrange),
+            inactiveTrackBar: BoxDecoration(color: Colors.grey.shade300),
+          ),
+
+          values: [controller.prefRadius],
+          max: 100,
+          min: 1,
+
+          tooltip: FlutterSliderTooltip(
+            alwaysShowTooltip: true,
+            format: (value) {
+              return "$value km";
+            },
+          ),
+
+          onDragging: (handlerIndex, lowerValue, upperValue) {
+            controller.prefRadius = lowerValue;
+            controller.update();
+            // print("sajid testing $lowerValue");
+          },
+
+          // ✅ Circular Drag Handler
+          handler: FlutterSliderHandler(
+            decoration: BoxDecoration(), // remove default circle
+            child: Container(
+              height: 16.h,
+              width: 16.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primaryWhite, // inner color
+                border: Border.all(color: AppColors.primaryOrange, width: 3),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primaryOrange,
+                    blurRadius: 8,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

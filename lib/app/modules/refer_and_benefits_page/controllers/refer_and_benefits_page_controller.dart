@@ -1,7 +1,3 @@
 import 'package:get/get.dart';
 
-class ReferAndBenefitsPageController extends GetxController {
-
-
-
-}
+class ReferAndBenefitsPageController extends GetxController {}

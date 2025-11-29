@@ -54,6 +54,16 @@ class LoginPageController extends GetxController {
         );
       }
 
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+
+      if (loginResponse.access != null) {
+        await sharedPreferences.setString(
+          AppKeys.accessTokenKey,
+          loginResponse.access ?? "",
+        );
+      }
+
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -63,7 +73,14 @@ class LoginPageController extends GetxController {
         );
       }
 
-      Get.offAllNamed(AppRoutes.bottomNavbarRoute);
+      if (loginResponse.verified ?? false) {
+        Get.offAllNamed(AppRoutes.bottomNavbarRoute);
+      } else {
+        Get.offAllNamed(
+          AppRoutes.profileVerificationRoute,
+          arguments: loginResponse.toJson(),
+        );
+      }
     } on AppException catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

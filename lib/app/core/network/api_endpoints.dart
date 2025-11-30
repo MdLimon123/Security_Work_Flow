@@ -1,23 +1,24 @@
 class ApiEndpoints {
-  static const String _baseUrl = "http://10.10.12.15:8001/api";
+  static const String _baseUrl = "http://10.10.12.15:8001";
 
-  static const String loginUrl = "$_baseUrl/auth/login/";
+  static const String loginUrl = "$_baseUrl/api/auth/login/";
 
-  static const String forgetPassUrl = "$_baseUrl/auth/forgetpassword/";
+  static const String forgetPassUrl = "$_baseUrl/api/auth/forgetpassword/";
 
-  static const String resetPassUrl = "$_baseUrl/auth/reset_password/";
+  static const String resetPassUrl = "$_baseUrl/api/auth/reset_password/";
 
-  static const String profileUpdateUrl = "$_baseUrl/accounts/profile-update/";
+  static const String profileUpdateUrl =
+      "$_baseUrl/api/accounts/profile-update/";
 
   static String getSignupUrl({String? referCode}) {
-    return "$_baseUrl/auth/signup/${referCode != null ? "?referral_token=$referCode" : ""}";
+    return "$_baseUrl/api/auth/signup/${referCode != null ? "?referral_token=$referCode" : ""}";
   }
 
   static String getVerifySignupUrl({required String email}) {
-    return "$_baseUrl/auth/verify/$email/";
+    return "$_baseUrl/api/auth/verify/$email/";
   }
 
   static String getVerifyForgetPassUrl({required String email}) {
-    return "$_baseUrl/auth/vefiry_for_forget/$email/";
+    return "$_baseUrl/api/auth/vefiry_for_forget/$email/";
   }
 }

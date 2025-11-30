@@ -1,5 +1,5 @@
-import 'dart:io';
-
+import 'package:dio/dio.dart' as dio;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
@@ -40,7 +40,7 @@ class ProfileVerificationPageController extends GetxController {
   final TextEditingController accountNumberTEC = TextEditingController();
   final TextEditingController bsbNumberTEC = TextEditingController();
 
-  File? imageFile;
+  FilePickerResult? profileImage;
 
   int pageIndex = 0;
 
@@ -61,6 +61,11 @@ class ProfileVerificationPageController extends GetxController {
   String selectedLicenseType = "";
 
   String selectedAccreditation = "";
+
+  Future<void> pickPicture() async {
+    profileImage = await FilePicker.platform.pickFiles(type: FileType.image);
+    update();
+  }
 
   void setSelectedAccreditation(String value) {
     selectedAccreditation = value;
@@ -110,19 +115,53 @@ class ProfileVerificationPageController extends GetxController {
   }
 
   Future<void> submitFirstStepData({required BuildContext context}) async {
+    if (profileImage == null) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("You must upload your profile picture."),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+      return;
+    }
+
     nextButtonInProgress = true;
     update();
 
     try {
       DioClient dioClient = DioClient();
 
+      dio.MultipartFile? profileMultiPartFile;
+
+      final path = profileImage!.files.single.path!;
+
+      profileMultiPartFile = await dio.MultipartFile.fromFile(
+        path,
+        filename: path.split('/').last,
+      );
+
+      // await dioClient.put(
+      //   ApiEndpoints.profileUpdateUrl,
+      //   data: {
+      //     "first_name": fullNameTEC.text.trim(),
+      //     "phone": phoneTEC.text.trim(),
+      //     "gender": selectedGender,
+      //     "image": profileMultiPartFile,
+      //   },
+      // );
+
+      final formData = dio.FormData.fromMap({
+        "first_name": fullNameTEC.text.trim(),
+        "phone": phoneTEC.text.trim(),
+        "gender": selectedGender,
+        "image": profileMultiPartFile,
+      });
+
       await dioClient.put(
         ApiEndpoints.profileUpdateUrl,
-        data: {
-          "first_name": fullNameTEC.text.trim(),
-          "phone": phoneTEC.text.trim(),
-          "gender": selectedGender,
-        },
+        data: formData,
       );
 
       if (context.mounted) {

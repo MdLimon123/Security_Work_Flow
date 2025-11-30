@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -27,11 +29,48 @@ class StepOnePage extends StatelessWidget {
 
             SizedBox(height: 32.h),
 
-            SvgPicture.asset(
-              AppAssets.uploadProfileImageImg,
-              width: 159.w,
-              height: 134.h,
-            ),
+            controller.profileImage == null
+                ? InkWell(
+                    onTap: () async {
+                      await controller.pickPicture();
+                    },
+                    child: SvgPicture.asset(
+                      AppAssets.uploadProfileImageImg,
+                      width: 159.w,
+                      height: 134.h,
+                    ),
+                  )
+                : InkWell(
+                    onTap: () async {
+                      await controller.pickPicture();
+                    },
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: ClipRRect(
+                            borderRadius: BorderRadiusGeometry.circular(100.r),
+                            child: Image.file(
+                              File(controller.profileImage!.paths.first ?? ""),
+                              width: 135.w,
+                              height: 135.h,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          child: Icon(
+                            Icons.change_circle_outlined,
+                            color: AppColors.primaryWhite,
+                            size: 45.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
             SizedBox(height: 60.h),
             _buildFullNameInput(controller),

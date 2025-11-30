@@ -70,7 +70,7 @@ class StepTwoPage extends StatelessWidget {
               ],
             ),
 
-            _buildNextButton(controller),
+            _buildNextButton(controller, context: context),
 
             SizedBox(height: 12.h),
           ],
@@ -79,21 +79,38 @@ class StepTwoPage extends StatelessWidget {
     );
   }
 
-  SizedBox _buildNextButton(ProfileVerificationPageController controller) {
+  SizedBox _buildNextButton(
+    ProfileVerificationPageController controller, {
+    required BuildContext context,
+  }) {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          controller.increasePageIndex();
+      child: GetBuilder<ProfileVerificationPageController>(
+        builder: (controller) {
+          return controller.nextButtonInProgress
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryWhite,
+                  ),
+                )
+              : ElevatedButton(
+                  onPressed: () async {
+                    await controller.submitSecondStepData(context: context);
+                    // controller.increasePageIndex();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.secondaryNavyBlue,
+                    foregroundColor: AppColors.primaryWhite,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                  ),
+                  child: Text(
+                    "Next",
+                    style: TextStyle(color: AppColors.primaryWhite),
+                  ),
+                );
         },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.secondaryNavyBlue,
-          foregroundColor: AppColors.primaryWhite,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-        ),
-        child: Text("Next", style: TextStyle(color: AppColors.primaryWhite)),
       ),
     );
   }
@@ -197,8 +214,8 @@ class StepTwoPage extends StatelessWidget {
             controller.setYearsOfExperience(value);
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(value: "0", child: Text("0")),
-            const PopupMenuItem(value: "1", child: Text("1")),
+            for (int i = 0; i <= 60; i++)
+              PopupMenuItem(value: "$i", child: Text("$i")),
           ],
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -245,7 +262,7 @@ class StepTwoPage extends StatelessWidget {
           },
           itemBuilder: (context) => [
             const PopupMenuItem(value: "English", child: Text("English")),
-            const PopupMenuItem(value: "English", child: Text("English")),
+            // const PopupMenuItem(value: "English", child: Text("English")),
           ],
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

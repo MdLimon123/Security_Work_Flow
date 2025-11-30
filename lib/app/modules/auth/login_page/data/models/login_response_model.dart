@@ -1,10 +1,9 @@
 /// success : true
 /// verified : false
 /// message : "login successfull!"
-/// access : ""
-/// refresh : ""
-/// guard_details : {}
-
+/// access : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY0NTc5NDMyLCJpYXQiOjE3NjQ0OTMwMzIsImp0aSI6ImE4YzZjNzczNmEwODQyN2JiZmUzY2M2ZDExNTY4YzI1IiwidXNlcl9pZCI6IjYifQ.eTkeKF7U7PTwUFBRsBP1CGyZNuTJD-6EfO0hM-o-vAc"
+/// refresh : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2NDc1MjIzMiwiaWF0IjoxNzY0NDkzMDMyLCJqdGkiOiIyNGQ4ZTRjYzY2MzA0M2E1YWYxNzdlOTI5OWI4M2NmNyIsInVzZXJfaWQiOiI2In0.WUrwg6HZfactjYMk4m_WsRykfvt4vRGtxPE95q_i1oU"
+/// guard_details : {"id":5,"candidate":{"id":6,"first_name":"sajid hossain","email":"sajidrec@gmail.com","phone":"+880 1771139444","user_type":"guard","image":"/media/profile/Dont_remove_Flutter_Sdk_or_any_sdk_YpD7YwB.png","licences":[],"accreditations":[],"gender":"male","language":"bangla","exprience_in_years":0,"exprience_summary":"","user_redus":10,"bank_name":null,"account_holder_name":null,"account_no":null,"bank_branch":null}}
 library;
 
 class LoginResponseModel {
@@ -42,9 +41,22 @@ class LoginResponseModel {
   String? _refresh;
   GuardDetails? _guardDetails;
 
-  // ------------------------------
-  // Getters
-  // ------------------------------
+  LoginResponseModel copyWith({
+    bool? success,
+    bool? verified,
+    String? message,
+    String? access,
+    String? refresh,
+    GuardDetails? guardDetails,
+  }) => LoginResponseModel(
+    success: success ?? _success,
+    verified: verified ?? _verified,
+    message: message ?? _message,
+    access: access ?? _access,
+    refresh: refresh ?? _refresh,
+    guardDetails: guardDetails ?? _guardDetails,
+  );
+
   bool? get success => _success;
 
   bool? get verified => _verified;
@@ -57,22 +69,6 @@ class LoginResponseModel {
 
   GuardDetails? get guardDetails => _guardDetails;
 
-  // ------------------------------
-  // Setters
-  // ------------------------------
-  void setSuccess(bool value) => _success = value;
-
-  void setVerified(bool value) => _verified = value;
-
-  void setMessage(String value) => _message = value;
-
-  void setAccess(String value) => _access = value;
-
-  void setRefresh(String value) => _refresh = value;
-
-  void setGuardDetails(GuardDetails value) => _guardDetails = value;
-
-  // ------------------------------
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['success'] = _success;
@@ -87,12 +83,11 @@ class LoginResponseModel {
   }
 }
 
-// ============================================================================
-// GUARD DETAILS
-// ============================================================================
+/// id : 5
+/// candidate : {"id":6,"first_name":"sajid hossain","email":"sajidrec@gmail.com","phone":"+880 1771139444","user_type":"guard","image":"/media/profile/Dont_remove_Flutter_Sdk_or_any_sdk_YpD7YwB.png","licences":[],"accreditations":[],"gender":"male","language":"bangla","exprience_in_years":0,"exprience_summary":"","user_redus":10,"bank_name":null,"account_holder_name":null,"account_no":null,"bank_branch":null}
 
 class GuardDetails {
-  GuardDetails({int? id, Candidate? candidate}) {
+  GuardDetails({num? id, Candidate? candidate}) {
     _id = id;
     _candidate = candidate;
   }
@@ -104,18 +99,15 @@ class GuardDetails {
         : null;
   }
 
-  int? _id;
+  num? _id;
   Candidate? _candidate;
 
-  // Getters
-  int? get id => _id;
+  GuardDetails copyWith({num? id, Candidate? candidate}) =>
+      GuardDetails(id: id ?? _id, candidate: candidate ?? _candidate);
+
+  num? get id => _id;
 
   Candidate? get candidate => _candidate;
-
-  // Setters
-  void setId(int value) => _id = value;
-
-  void setCandidate(Candidate value) => _candidate = value;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -127,24 +119,39 @@ class GuardDetails {
   }
 }
 
-// ============================================================================
-// CANDIDATE
-// ============================================================================
+/// id : 6
+/// first_name : "sajid hossain"
+/// email : "sajidrec@gmail.com"
+/// phone : "+880 1771139444"
+/// user_type : "guard"
+/// image : "/media/profile/Dont_remove_Flutter_Sdk_or_any_sdk_YpD7YwB.png"
+/// licences : []
+/// accreditations : []
+/// gender : "male"
+/// language : "bangla"
+/// exprience_in_years : 0
+/// exprience_summary : ""
+/// user_redus : 10
+/// bank_name : null
+/// account_holder_name : null
+/// account_no : null
+/// bank_branch : null
 
 class Candidate {
   Candidate({
-    int? id,
+    num? id,
     String? firstName,
     String? email,
-    dynamic phone,
+    String? phone,
     String? userType,
+    String? image,
     List<dynamic>? licences,
     List<dynamic>? accreditations,
     String? gender,
-    dynamic language,
-    int? exprienceInYears,
+    String? language,
+    num? exprienceInYears,
     String? exprienceSummary,
-    int? userRedus,
+    num? userRedus,
     dynamic bankName,
     dynamic accountHolderName,
     dynamic accountNo,
@@ -155,6 +162,7 @@ class Candidate {
     _email = email;
     _phone = phone;
     _userType = userType;
+    _image = image;
     _licences = licences;
     _accreditations = accreditations;
     _gender = gender;
@@ -174,8 +182,19 @@ class Candidate {
     _email = json['email'];
     _phone = json['phone'];
     _userType = json['user_type'];
-    _licences = json['licences'] ?? [];
-    _accreditations = json['accreditations'] ?? [];
+    _image = json['image'];
+    if (json['licences'] != null) {
+      _licences = [];
+      json['licences'].forEach((v) {
+        _licences?.add(v);
+      });
+    }
+    if (json['accreditations'] != null) {
+      _accreditations = [];
+      json['accreditations'].forEach((v) {
+        _accreditations?.add(v);
+      });
+    }
     _gender = json['gender'];
     _language = json['language'];
     _exprienceInYears = json['exprience_in_years'];
@@ -187,35 +206,73 @@ class Candidate {
     _bankBranch = json['bank_branch'];
   }
 
-  int? _id;
+  num? _id;
   String? _firstName;
   String? _email;
-  dynamic _phone;
+  String? _phone;
   String? _userType;
+  String? _image;
   List<dynamic>? _licences;
   List<dynamic>? _accreditations;
   String? _gender;
-  dynamic _language;
-  int? _exprienceInYears;
+  String? _language;
+  num? _exprienceInYears;
   String? _exprienceSummary;
-  int? _userRedus;
+  num? _userRedus;
   dynamic _bankName;
   dynamic _accountHolderName;
   dynamic _accountNo;
   dynamic _bankBranch;
 
-  // ------------------------------
-  // Getters
-  // ------------------------------
-  int? get id => _id;
+  Candidate copyWith({
+    num? id,
+    String? firstName,
+    String? email,
+    String? phone,
+    String? userType,
+    String? image,
+    List<dynamic>? licences,
+    List<dynamic>? accreditations,
+    String? gender,
+    String? language,
+    num? exprienceInYears,
+    String? exprienceSummary,
+    num? userRedus,
+    dynamic bankName,
+    dynamic accountHolderName,
+    dynamic accountNo,
+    dynamic bankBranch,
+  }) => Candidate(
+    id: id ?? _id,
+    firstName: firstName ?? _firstName,
+    email: email ?? _email,
+    phone: phone ?? _phone,
+    userType: userType ?? _userType,
+    image: image ?? _image,
+    licences: licences ?? _licences,
+    accreditations: accreditations ?? _accreditations,
+    gender: gender ?? _gender,
+    language: language ?? _language,
+    exprienceInYears: exprienceInYears ?? _exprienceInYears,
+    exprienceSummary: exprienceSummary ?? _exprienceSummary,
+    userRedus: userRedus ?? _userRedus,
+    bankName: bankName ?? _bankName,
+    accountHolderName: accountHolderName ?? _accountHolderName,
+    accountNo: accountNo ?? _accountNo,
+    bankBranch: bankBranch ?? _bankBranch,
+  );
+
+  num? get id => _id;
 
   String? get firstName => _firstName;
 
   String? get email => _email;
 
-  dynamic get phone => _phone;
+  String? get phone => _phone;
 
   String? get userType => _userType;
+
+  String? get image => _image;
 
   List<dynamic>? get licences => _licences;
 
@@ -223,13 +280,13 @@ class Candidate {
 
   String? get gender => _gender;
 
-  dynamic get language => _language;
+  String? get language => _language;
 
-  int? get exprienceInYears => _exprienceInYears;
+  num? get exprienceInYears => _exprienceInYears;
 
   String? get exprienceSummary => _exprienceSummary;
 
-  int? get userRedus => _userRedus;
+  num? get userRedus => _userRedus;
 
   dynamic get bankName => _bankName;
 
@@ -239,42 +296,6 @@ class Candidate {
 
   dynamic get bankBranch => _bankBranch;
 
-  // ------------------------------
-  // Setters
-  // ------------------------------
-  void setId(int value) => _id = value;
-
-  void setFirstName(String value) => _firstName = value;
-
-  void setEmail(String value) => _email = value;
-
-  void setPhone(dynamic value) => _phone = value;
-
-  void setUserType(String value) => _userType = value;
-
-  void setLicences(List<dynamic> value) => _licences = value;
-
-  void setAccreditations(List<dynamic> value) => _accreditations = value;
-
-  void setGender(String value) => _gender = value;
-
-  void setLanguage(dynamic value) => _language = value;
-
-  void setExprienceInYears(int value) => _exprienceInYears = value;
-
-  void setExprienceSummary(String value) => _exprienceSummary = value;
-
-  void setUserRedus(int value) => _userRedus = value;
-
-  void setBankName(dynamic value) => _bankName = value;
-
-  void setAccountHolderName(dynamic value) => _accountHolderName = value;
-
-  void setAccountNo(dynamic value) => _accountNo = value;
-
-  void setBankBranch(dynamic value) => _bankBranch = value;
-
-  // ------------------------------
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
@@ -282,8 +303,13 @@ class Candidate {
     map['email'] = _email;
     map['phone'] = _phone;
     map['user_type'] = _userType;
-    map['licences'] = _licences;
-    map['accreditations'] = _accreditations;
+    map['image'] = _image;
+    if (_licences != null) {
+      map['licences'] = _licences?.map((v) => v.toJson()).toList();
+    }
+    if (_accreditations != null) {
+      map['accreditations'] = _accreditations?.map((v) => v.toJson()).toList();
+    }
     map['gender'] = _gender;
     map['language'] = _language;
     map['exprience_in_years'] = _exprienceInYears;

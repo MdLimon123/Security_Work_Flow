@@ -1,6 +1,8 @@
 class ApiEndpoints {
   static const String _baseUrl = "http://10.10.12.15:8001";
 
+  static String get getBaseUrl => _baseUrl;
+
   static const String loginUrl = "$_baseUrl/api/auth/login/";
 
   static const String forgetPassUrl = "$_baseUrl/api/auth/forgetpassword/";

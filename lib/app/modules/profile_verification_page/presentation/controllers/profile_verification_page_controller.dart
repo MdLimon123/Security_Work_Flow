@@ -159,10 +159,7 @@ class ProfileVerificationPageController extends GetxController {
         "image": profileMultiPartFile,
       });
 
-      await dioClient.put(
-        ApiEndpoints.profileUpdateUrl,
-        data: formData,
-      );
+      await dioClient.put(ApiEndpoints.profileUpdateUrl, data: formData);
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -201,12 +198,60 @@ class ProfileVerificationPageController extends GetxController {
     }
 
     nextButtonInProgress = false;
+    increasePageIndex();
+  }
+
+  Future<void> submitSecondStepData({required BuildContext context}) async {
+    nextButtonInProgress = true;
     update();
+
+    try {
+      DioClient dioClient = DioClient();
+
+      await dioClient.put(
+        ApiEndpoints.profileUpdateUrl,
+        data: {
+          "language": selectedLanguage,
+          "exprience_in_years": selectedYearsOfExperience,
+          "exprience_summary": summaryTEC.text,
+          "user_redus": prefRadius.toString(),
+        },
+      );
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Updated"),
+            backgroundColor: AppColors.primaryGreen,
+          ),
+        );
+      }
+    } on AppException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+    }
+
+    nextButtonInProgress = false;
     increasePageIndex();
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
 
     fullNameTEC.text =

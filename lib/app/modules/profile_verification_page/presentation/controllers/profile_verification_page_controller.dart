@@ -159,7 +159,17 @@ class ProfileVerificationPageController extends GetxController {
         "image": profileMultiPartFile,
       });
 
-      await dioClient.put(ApiEndpoints.profileUpdateUrl, data: formData);
+      dynamic data = await dioClient.put(
+        ApiEndpoints.profileUpdateUrl,
+        data: formData,
+      );
+
+      // print("Sajid testing ${data["data"]}");
+
+      selectedLanguage = data["data"]["language"];
+      selectedYearsOfExperience = data["data"]["exprience_in_years"].toString();
+      summaryTEC.text = data["data"]["exprience_summary"];
+      prefRadius = data["data"]["user_redus"].toDouble();
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

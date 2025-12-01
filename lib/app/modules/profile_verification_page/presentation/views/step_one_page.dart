@@ -109,10 +109,14 @@ class StepOnePage extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
           ),
         ),
-        child: Text(
-          "Next",
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-        ),
+        child: controller.nextButtonInProgress
+            ? Center(
+                child: CircularProgressIndicator(color: AppColors.primaryWhite),
+              )
+            : Text(
+                "Next",
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+              ),
       ),
     );
   }

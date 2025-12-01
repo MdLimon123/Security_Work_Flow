@@ -9,6 +9,8 @@ class ApiEndpoints {
 
   static const String resetPassUrl = "$_baseUrl/api/auth/reset_password/";
 
+  static const String licenceTypeListUrl = "$_baseUrl/api/jobs/licence-types/";
+
   static const String profileUpdateUrl =
       "$_baseUrl/api/accounts/profile-update/";
 

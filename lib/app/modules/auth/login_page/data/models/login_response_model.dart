@@ -41,32 +41,11 @@ class LoginResponseModel {
   String? _refresh;
   GuardDetails? _guardDetails;
 
-  LoginResponseModel copyWith({
-    bool? success,
-    bool? verified,
-    String? message,
-    String? access,
-    String? refresh,
-    GuardDetails? guardDetails,
-  }) => LoginResponseModel(
-    success: success ?? _success,
-    verified: verified ?? _verified,
-    message: message ?? _message,
-    access: access ?? _access,
-    refresh: refresh ?? _refresh,
-    guardDetails: guardDetails ?? _guardDetails,
-  );
-
   bool? get success => _success;
-
   bool? get verified => _verified;
-
   String? get message => _message;
-
   String? get access => _access;
-
   String? get refresh => _refresh;
-
   GuardDetails? get guardDetails => _guardDetails;
 
   Map<String, dynamic> toJson() {
@@ -76,15 +55,14 @@ class LoginResponseModel {
     map['message'] = _message;
     map['access'] = _access;
     map['refresh'] = _refresh;
+
     if (_guardDetails != null) {
-      map['guard_details'] = _guardDetails?.toJson();
+      map['guard_details'] = _guardDetails!.toJson();
     }
+
     return map;
   }
 }
-
-/// id : 5
-/// candidate : {"id":6,"first_name":"sajid hossain","email":"sajidrec@gmail.com","phone":"+880 1771139444","user_type":"guard","image":"/media/profile/Dont_remove_Flutter_Sdk_or_any_sdk_YpD7YwB.png","licences":[],"accreditations":[],"gender":"male","language":"bangla","exprience_in_years":0,"exprience_summary":"","user_redus":10,"bank_name":null,"account_holder_name":null,"account_no":null,"bank_branch":null}
 
 class GuardDetails {
   GuardDetails({num? id, Candidate? candidate}) {
@@ -102,40 +80,18 @@ class GuardDetails {
   num? _id;
   Candidate? _candidate;
 
-  GuardDetails copyWith({num? id, Candidate? candidate}) =>
-      GuardDetails(id: id ?? _id, candidate: candidate ?? _candidate);
-
   num? get id => _id;
-
   Candidate? get candidate => _candidate;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
     if (_candidate != null) {
-      map['candidate'] = _candidate?.toJson();
+      map['candidate'] = _candidate!.toJson();
     }
     return map;
   }
 }
-
-/// id : 6
-/// first_name : "sajid hossain"
-/// email : "sajidrec@gmail.com"
-/// phone : "+880 1771139444"
-/// user_type : "guard"
-/// image : "/media/profile/Dont_remove_Flutter_Sdk_or_any_sdk_YpD7YwB.png"
-/// licences : []
-/// accreditations : []
-/// gender : "male"
-/// language : "bangla"
-/// exprience_in_years : 0
-/// exprience_summary : ""
-/// user_redus : 10
-/// bank_name : null
-/// account_holder_name : null
-/// account_no : null
-/// bank_branch : null
 
 class Candidate {
   Candidate({
@@ -183,18 +139,10 @@ class Candidate {
     _phone = json['phone'];
     _userType = json['user_type'];
     _image = json['image'];
-    if (json['licences'] != null) {
-      _licences = [];
-      json['licences'].forEach((v) {
-        _licences?.add(v);
-      });
-    }
-    if (json['accreditations'] != null) {
-      _accreditations = [];
-      json['accreditations'].forEach((v) {
-        _accreditations?.add(v);
-      });
-    }
+
+    _licences = json['licences'] ?? [];
+    _accreditations = json['accreditations'] ?? [];
+
     _gender = json['gender'];
     _language = json['language'];
     _exprienceInYears = json['exprience_in_years'];
@@ -224,76 +172,22 @@ class Candidate {
   dynamic _accountNo;
   dynamic _bankBranch;
 
-  Candidate copyWith({
-    num? id,
-    String? firstName,
-    String? email,
-    String? phone,
-    String? userType,
-    String? image,
-    List<dynamic>? licences,
-    List<dynamic>? accreditations,
-    String? gender,
-    String? language,
-    num? exprienceInYears,
-    String? exprienceSummary,
-    num? userRedus,
-    dynamic bankName,
-    dynamic accountHolderName,
-    dynamic accountNo,
-    dynamic bankBranch,
-  }) => Candidate(
-    id: id ?? _id,
-    firstName: firstName ?? _firstName,
-    email: email ?? _email,
-    phone: phone ?? _phone,
-    userType: userType ?? _userType,
-    image: image ?? _image,
-    licences: licences ?? _licences,
-    accreditations: accreditations ?? _accreditations,
-    gender: gender ?? _gender,
-    language: language ?? _language,
-    exprienceInYears: exprienceInYears ?? _exprienceInYears,
-    exprienceSummary: exprienceSummary ?? _exprienceSummary,
-    userRedus: userRedus ?? _userRedus,
-    bankName: bankName ?? _bankName,
-    accountHolderName: accountHolderName ?? _accountHolderName,
-    accountNo: accountNo ?? _accountNo,
-    bankBranch: bankBranch ?? _bankBranch,
-  );
-
   num? get id => _id;
-
   String? get firstName => _firstName;
-
   String? get email => _email;
-
   String? get phone => _phone;
-
   String? get userType => _userType;
-
   String? get image => _image;
-
   List<dynamic>? get licences => _licences;
-
   List<dynamic>? get accreditations => _accreditations;
-
   String? get gender => _gender;
-
   String? get language => _language;
-
   num? get exprienceInYears => _exprienceInYears;
-
   String? get exprienceSummary => _exprienceSummary;
-
   num? get userRedus => _userRedus;
-
   dynamic get bankName => _bankName;
-
   dynamic get accountHolderName => _accountHolderName;
-
   dynamic get accountNo => _accountNo;
-
   dynamic get bankBranch => _bankBranch;
 
   Map<String, dynamic> toJson() {
@@ -304,12 +198,11 @@ class Candidate {
     map['phone'] = _phone;
     map['user_type'] = _userType;
     map['image'] = _image;
-    if (_licences != null) {
-      map['licences'] = _licences?.map((v) => v.toJson()).toList();
-    }
-    if (_accreditations != null) {
-      map['accreditations'] = _accreditations?.map((v) => v.toJson()).toList();
-    }
+
+    /// FIXED – no `.toJson()` on list items
+    map['licences'] = _licences;
+    map['accreditations'] = _accreditations;
+
     map['gender'] = _gender;
     map['language'] = _language;
     map['exprience_in_years'] = _exprienceInYears;
@@ -319,6 +212,7 @@ class Candidate {
     map['account_holder_name'] = _accountHolderName;
     map['account_no'] = _accountNo;
     map['bank_branch'] = _bankBranch;
+
     return map;
   }
 }

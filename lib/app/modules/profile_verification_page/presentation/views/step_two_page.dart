@@ -105,10 +105,16 @@ class StepTwoPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16.r),
                     ),
                   ),
-                  child: Text(
-                    "Next",
-                    style: TextStyle(color: AppColors.primaryWhite),
-                  ),
+                  child: controller.nextButtonInProgress
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryWhite,
+                          ),
+                        )
+                      : Text(
+                          "Next",
+                          style: TextStyle(color: AppColors.primaryWhite),
+                        ),
                 );
         },
       ),

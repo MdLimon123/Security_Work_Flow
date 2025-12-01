@@ -190,8 +190,17 @@ class StepThreePage extends StatelessWidget {
             controller.setStateOrTerritory(value);
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(value: "California", child: Text("CA")),
-            const PopupMenuItem(value: "Washington DC", child: Text("WA")),
+            PopupMenuItem(value: "NSW", child: Text("NSW (New South Wales)")),
+            PopupMenuItem(value: "VIC", child: Text("VIC (Victoria)")),
+            PopupMenuItem(value: "WA", child: Text("WA (Western Australia)")),
+            PopupMenuItem(value: "QLD", child: Text("QLD (Queensland)")),
+            PopupMenuItem(value: "SA", child: Text("SA (South Australia)")),
+            PopupMenuItem(
+              value: "ACT",
+              child: Text("ACT (Australian Capital Territory)"),
+            ),
+            PopupMenuItem(value: "NT", child: Text("NT (Northern Territory)")),
+            PopupMenuItem(value: "TAS", child: Text("TAS (Tasmania)")),
           ],
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -237,8 +246,21 @@ class StepThreePage extends StatelessWidget {
             controller.setSelectedLicenseType(value);
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(value: "VISA", child: Text("VISA")),
-            const PopupMenuItem(value: "Passport", child: Text("Passport")),
+            for (
+              int i = 0;
+              i < controller.listOfLicenceTypeModel.licenceTypes!.length;
+              i++
+            )
+              PopupMenuItem(
+                value:
+                    controller.listOfLicenceTypeModel.licenceTypes?[i].title
+                        .toString() ??
+                    "0",
+                child: Text(
+                  controller.listOfLicenceTypeModel.licenceTypes?[i].title ??
+                      "",
+                ),
+              ),
           ],
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

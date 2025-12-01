@@ -6,6 +6,7 @@ import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:flutter_security_workforce/app/modules/auth/login_page/data/models/login_response_model.dart';
+import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_licence_type_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_five_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_four_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_one_page.dart';
@@ -41,6 +42,9 @@ class ProfileVerificationPageController extends GetxController {
   final TextEditingController bsbNumberTEC = TextEditingController();
 
   FilePickerResult? profileImage;
+  FilePickerResult? licenceFile;
+
+  ListOfLicenceTypeModel listOfLicenceTypeModel = ListOfLicenceTypeModel();
 
   int pageIndex = 0;
 
@@ -260,6 +264,18 @@ class ProfileVerificationPageController extends GetxController {
     increasePageIndex();
   }
 
+  Future<void> submitThirdStepData({required BuildContext context}) async {
+    if (licenceFile == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Must upload licence"),
+          backgroundColor: AppColors.primaryRed,
+        ),
+      );
+      return;
+    }
+  }
+
   @override
   void onInit() async {
     super.onInit();
@@ -276,6 +292,18 @@ class ProfileVerificationPageController extends GetxController {
     loginResponseModel = LoginResponseModel.fromJson(Get.arguments);
 
     // print("sajid testing ${loginResponseModel.toJson()}");
+
+    DioClient dioClient = DioClient();
+
+    try {
+      dynamic data = await dioClient.get(ApiEndpoints.licenceTypeListUrl);
+
+      listOfLicenceTypeModel = ListOfLicenceTypeModel.fromJson(data);
+    } on AppException catch (e) {
+      Get.showSnackbar((GetSnackBar(message: e.message)));
+    } catch (e) {
+      Get.showSnackbar((GetSnackBar(message: e.toString())));
+    }
 
     update();
   }

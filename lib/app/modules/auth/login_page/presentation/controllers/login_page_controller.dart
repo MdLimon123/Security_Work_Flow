@@ -64,6 +64,8 @@ class LoginPageController extends GetxController {
         );
       }
 
+      // print("sajid testing ${loginResponse}");
+
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -76,6 +78,8 @@ class LoginPageController extends GetxController {
       if (loginResponse.verified ?? false) {
         Get.offAllNamed(AppRoutes.bottomNavbarRoute);
       } else {
+        // print("sajid testing ${loginResponse.verified}");
+
         Get.offAllNamed(
           AppRoutes.profileVerificationRoute,
           arguments: loginResponse.toJson(),

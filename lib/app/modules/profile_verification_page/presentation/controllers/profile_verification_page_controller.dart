@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart' as dio;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -42,11 +44,19 @@ class ProfileVerificationPageController extends GetxController {
   final TextEditingController bsbNumberTEC = TextEditingController();
 
   FilePickerResult? profileImage;
-  FilePickerResult? licenceFile;
+  FilePickerResult? licenceFiles;
 
   ListOfLicenceTypeModel listOfLicenceTypeModel = ListOfLicenceTypeModel();
 
+  String licenceTypeNumber = "1";
+
   int pageIndex = 0;
+
+  int uploadingPercent = 0;
+
+  int uploadSeconds = 5;
+
+  bool fileUploaded = false;
 
   double prefRadius = 1.0;
 
@@ -66,8 +76,64 @@ class ProfileVerificationPageController extends GetxController {
 
   String selectedAccreditation = "";
 
+  Future<void> startUploadingAnimation() async {
+    fileUploaded = false;
+    update();
+
+    uploadingPercent = 0;
+    uploadSeconds = 5;
+
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      uploadSeconds--;
+      uploadingPercent += 20;
+      update();
+      if (timer.tick == 5) {
+        fileUploaded = true;
+        update();
+        timer.cancel();
+      }
+    });
+  }
+
   Future<void> pickPicture() async {
     profileImage = await FilePicker.platform.pickFiles(type: FileType.image);
+    update();
+  }
+
+  Future<void> pickLicences({required BuildContext context}) async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: true,
+    );
+
+    if (result == null) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Select 2 images first"),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+      return;
+    }
+
+    if (result.files.length != 2) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Select 2 images"),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+      return;
+    }
+
+    licenceFiles = result;
+
+    await startUploadingAnimation();
+
     update();
   }
 
@@ -91,13 +157,35 @@ class ProfileVerificationPageController extends GetxController {
     update();
   }
 
+  void setLicenceTypeNumber(String index) {
+    licenceTypeNumber = index;
+    update();
+  }
+
   void setStateOrTerritory(String value) {
     selectedStateOrTerritory = value;
+    // print("sajid testing ${value}");
     update();
   }
 
   void setSelectedLicenseType(String value) {
     selectedLicenseType = value;
+
+    for (
+      int i = 0;
+      i < (listOfLicenceTypeModel.licenceTypes?.length ?? 0);
+      i++
+    ) {
+      if (selectedLicenseType ==
+          listOfLicenceTypeModel.licenceTypes![i].title) {
+        licenceTypeNumber = listOfLicenceTypeModel.licenceTypes![i].id
+            .toString();
+        break;
+      }
+    }
+
+    // print("sajid testing $licenceTypeNumber");
+
     update();
   }
 
@@ -264,8 +352,11 @@ class ProfileVerificationPageController extends GetxController {
     increasePageIndex();
   }
 
-  Future<void> submitThirdStepData({required BuildContext context}) async {
-    if (licenceFile == null) {
+  Future<void> submitThirdStepData({
+    required BuildContext context,
+    required ProfileVerificationPageController controller,
+  }) async {
+    if (controller.licenceFiles == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Must upload licence"),
@@ -274,6 +365,65 @@ class ProfileVerificationPageController extends GetxController {
       );
       return;
     }
+
+    nextButtonInProgress = true;
+    update();
+
+    try {
+      DioClient dioClient = DioClient();
+
+      List<dio.MultipartFile> multipartImages = [];
+
+      for (var file in controller.licenceFiles!.files) {
+        multipartImages.add(
+          await dio.MultipartFile.fromFile(file.path!, filename: file.name),
+        );
+      }
+
+      final formData = dio.FormData.fromMap({
+        "state_or_territory": selectedStateOrTerritory,
+        "licence_type": licenceTypeNumber,
+        "expire_date": licenseExpireTEC.text.trim(),
+        "licence_images": multipartImages,
+      });
+
+      await dioClient.post(ApiEndpoints.addLicenceUrl, data: formData);
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Updated"),
+            backgroundColor: AppColors.primaryGreen,
+          ),
+        );
+      }
+    } on AppException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+
+      nextButtonInProgress = false;
+      update();
+    } catch (e) {
+      nextButtonInProgress = false;
+      update();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+    }
+
+    nextButtonInProgress = false;
+    increasePageIndex();
   }
 
   @override

@@ -1,16 +1,18 @@
 /// success : true
 /// message : "data fatched!"
 /// licence_types : [{"id":1,"title":"Security Agent License"},{"id":2,"title":"Crowd Controller License"},{"id":3,"title":"Investigator License"},{"id":4,"title":"Security Officer License"},{"id":5,"title":"Bodyguard License"}]
+library;
 
 class ListOfLicenceTypeModel {
   ListOfLicenceTypeModel({
-      bool? success, 
-      String? message, 
-      List<LicenceTypes>? licenceTypes,}){
+    bool? success,
+    String? message,
+    List<LicenceTypes>? licenceTypes,
+  }) {
     _success = success;
     _message = message;
     _licenceTypes = licenceTypes;
-}
+  }
 
   ListOfLicenceTypeModel.fromJson(dynamic json) {
     _success = json['success'];
@@ -25,13 +27,15 @@ class ListOfLicenceTypeModel {
   bool? _success;
   String? _message;
   List<LicenceTypes>? _licenceTypes;
-ListOfLicenceTypeModel copyWith({  bool? success,
-  String? message,
-  List<LicenceTypes>? licenceTypes,
-}) => ListOfLicenceTypeModel(  success: success ?? _success,
-  message: message ?? _message,
-  licenceTypes: licenceTypes ?? _licenceTypes,
-);
+  ListOfLicenceTypeModel copyWith({
+    bool? success,
+    String? message,
+    List<LicenceTypes>? licenceTypes,
+  }) => ListOfLicenceTypeModel(
+    success: success ?? _success,
+    message: message ?? _message,
+    licenceTypes: licenceTypes ?? _licenceTypes,
+  );
   bool? get success => _success;
   String? get message => _message;
   List<LicenceTypes>? get licenceTypes => _licenceTypes;
@@ -45,19 +49,16 @@ ListOfLicenceTypeModel copyWith({  bool? success,
     }
     return map;
   }
-
 }
 
 /// id : 1
 /// title : "Security Agent License"
 
 class LicenceTypes {
-  LicenceTypes({
-      num? id, 
-      String? title,}){
+  LicenceTypes({num? id, String? title}) {
     _id = id;
     _title = title;
-}
+  }
 
   LicenceTypes.fromJson(dynamic json) {
     _id = json['id'];
@@ -65,11 +66,8 @@ class LicenceTypes {
   }
   num? _id;
   String? _title;
-LicenceTypes copyWith({  num? id,
-  String? title,
-}) => LicenceTypes(  id: id ?? _id,
-  title: title ?? _title,
-);
+  LicenceTypes copyWith({num? id, String? title}) =>
+      LicenceTypes(id: id ?? _id, title: title ?? _title);
   num? get id => _id;
   String? get title => _title;
 
@@ -79,5 +77,4 @@ LicenceTypes copyWith({  num? id,
     map['title'] = _title;
     return map;
   }
-
 }

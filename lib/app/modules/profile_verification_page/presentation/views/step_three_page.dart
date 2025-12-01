@@ -49,18 +49,42 @@ class StepThreePage extends StatelessWidget {
                   ),
                 ),
 
-                SvgPicture.asset(AppAssets.uploadBackFrontImageLicenseImage),
+                GestureDetector(
+                  onTap: () async {
+                    await controller.pickLicences(context: context);
+                  },
+                  child: SvgPicture.asset(
+                    AppAssets.uploadBackFrontImageLicenseImage,
+                  ),
+                ),
 
                 SizedBox(height: 8.h),
 
-                _buildUploadFileStatus(),
-
-                SizedBox(height: 16.h),
+                for (
+                  int i = 0;
+                  i <
+                      (controller.licenceFiles?.files == null
+                          ? 0
+                          : controller.licenceFiles!.files.length);
+                  i++
+                )
+                  Column(
+                    children: [
+                      controller.fileUploaded
+                          ? Text(
+                              controller.licenceFiles?.files[i].name ?? "",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          : _buildUploadFileStatus(),
+                      SizedBox(height: 16.h),
+                    ],
+                  ),
 
                 _buildLicenseExpireInput(controller),
 
                 SizedBox(height: 20.h),
-                _buildNextButton(controller),
+                _buildNextButton(controller, context: context),
                 SizedBox(height: 12.h),
               ],
             ),
@@ -85,7 +109,7 @@ class StepThreePage extends StatelessWidget {
           keyboardType: TextInputType.datetime,
           controller: controller.licenseExpireTEC,
           decoration: InputDecoration(
-            hintText: "Enter your licence expiry date",
+            hintText: "2000-01-30",
             hintStyle: TextStyle(color: AppColors.primaryGray),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
@@ -124,47 +148,57 @@ class StepThreePage extends StatelessWidget {
                           "Uploading...",
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        Text(
-                          "65%  • 30 seconds remaining",
-                          style: TextStyle(color: AppColors.secondaryTextColor),
+                        GetBuilder<ProfileVerificationPageController>(
+                          builder: (controller) {
+                            return Text(
+                              "${controller.uploadingPercent}%  • ${controller.uploadSeconds} seconds remaining",
+                              style: TextStyle(
+                                color: AppColors.secondaryTextColor,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
                   ),
                   // Spacer(),
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: SvgPicture.asset(
-                          AppAssets.pauseIcon,
-                          width: 24.w,
-                          height: 24.h,
-                        ),
-                      ),
-                      SizedBox(width: 4.w),
-                      InkWell(
-                        onTap: () {},
-                        child: SvgPicture.asset(
-                          AppAssets.cancelIcon,
-                          width: 24.w,
-                          height: 24.h,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     InkWell(
+                  //       onTap: () {},
+                  //       child: SvgPicture.asset(
+                  //         AppAssets.pauseIcon,
+                  //         width: 24.w,
+                  //         height: 24.h,
+                  //       ),
+                  //     ),
+                  //     SizedBox(width: 4.w),
+                  //     InkWell(
+                  //       onTap: () {},
+                  //       child: SvgPicture.asset(
+                  //         AppAssets.cancelIcon,
+                  //         width: 24.w,
+                  //         height: 24.h,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
 
               SizedBox(height: 8.h),
               SizedBox(
                 width: double.infinity,
-                child: LinearProgressIndicator(
-                  value: .65,
-                  minHeight: 8.sp,
-                  borderRadius: BorderRadius.circular(6.r),
-                  color: AppColors.primaryBlue,
-                  backgroundColor: AppColors.lightGrey,
+                child: GetBuilder<ProfileVerificationPageController>(
+                  builder: (controller) {
+                    return LinearProgressIndicator(
+                      value: controller.uploadingPercent / 100,
+                      minHeight: 8.sp,
+                      borderRadius: BorderRadius.circular(6.r),
+                      color: AppColors.primaryBlue,
+                      backgroundColor: AppColors.lightGrey,
+                    );
+                  },
                 ),
               ),
             ],
@@ -253,8 +287,7 @@ class StepThreePage extends StatelessWidget {
             )
               PopupMenuItem(
                 value:
-                    controller.listOfLicenceTypeModel.licenceTypes?[i].title
-                        .toString() ??
+                    controller.listOfLicenceTypeModel.licenceTypes?[i].title ??
                     "0",
                 child: Text(
                   controller.listOfLicenceTypeModel.licenceTypes?[i].title ??
@@ -292,12 +325,19 @@ class StepThreePage extends StatelessWidget {
     );
   }
 
-  SizedBox _buildNextButton(ProfileVerificationPageController controller) {
+  SizedBox _buildNextButton(
+    ProfileVerificationPageController controller, {
+    required BuildContext context,
+  }) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          controller.increasePageIndex();
+          controller.submitThirdStepData(
+            context: context,
+            controller: controller,
+          );
+          // controller.increasePageIndex();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.secondaryNavyBlue,
@@ -306,7 +346,11 @@ class StepThreePage extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
           ),
         ),
-        child: Text("Next", style: TextStyle(color: AppColors.primaryWhite)),
+        child: controller.nextButtonInProgress
+            ? Center(
+                child: CircularProgressIndicator(color: AppColors.primaryWhite),
+              )
+            : Text("Next", style: TextStyle(color: AppColors.primaryWhite)),
       ),
     );
   }

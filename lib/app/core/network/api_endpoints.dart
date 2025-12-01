@@ -11,6 +11,8 @@ class ApiEndpoints {
 
   static const String licenceTypeListUrl = "$_baseUrl/api/jobs/licence-types/";
 
+  static const String addLicenceUrl = "$_baseUrl/api/accounts/licences/";
+
   static const String profileUpdateUrl =
       "$_baseUrl/api/accounts/profile-update/";
 

@@ -332,8 +332,8 @@ class StepThreePage extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-          controller.submitThirdStepData(
+        onPressed: () async {
+          await controller.submitThirdStepData(
             context: context,
             controller: controller,
           );

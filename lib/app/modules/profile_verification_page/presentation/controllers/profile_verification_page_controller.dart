@@ -8,6 +8,7 @@ import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:flutter_security_workforce/app/modules/auth/login_page/data/models/login_response_model.dart';
+import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_accreditations_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_licence_type_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_five_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_four_page.dart';
@@ -37,7 +38,7 @@ class ProfileVerificationPageController extends GetxController {
   final TextEditingController phoneTEC = TextEditingController();
   final TextEditingController summaryTEC = TextEditingController();
   final TextEditingController licenseExpireTEC = TextEditingController();
-  final TextEditingController accreditationTEC = TextEditingController();
+  final TextEditingController accreditationExpireTEC = TextEditingController();
   final TextEditingController bankNameTEC = TextEditingController();
   final TextEditingController accountHolderNameTEC = TextEditingController();
   final TextEditingController accountNumberTEC = TextEditingController();
@@ -45,8 +46,11 @@ class ProfileVerificationPageController extends GetxController {
 
   FilePickerResult? profileImage;
   FilePickerResult? licenceFiles;
+  FilePickerResult? accreditationFile;
 
   ListOfLicenceTypeModel listOfLicenceTypeModel = ListOfLicenceTypeModel();
+  ListOfAccreditationsModel listOfAccreditationsModel =
+      ListOfAccreditationsModel();
 
   String licenceTypeNumber = "1";
 
@@ -131,6 +135,44 @@ class ProfileVerificationPageController extends GetxController {
     }
 
     licenceFiles = result;
+
+    await startUploadingAnimation();
+
+    update();
+  }
+
+  Future<void> pickAccreditation({required BuildContext context}) async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowMultiple: true,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result == null) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("upload pdf file"),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+      return;
+    }
+
+    if (result.files.length != 1) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("upload single pdf file"),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+      return;
+    }
+
+    accreditationFile = result;
 
     await startUploadingAnimation();
 
@@ -409,6 +451,7 @@ class ProfileVerificationPageController extends GetxController {
 
       nextButtonInProgress = false;
       update();
+      return;
     } catch (e) {
       nextButtonInProgress = false;
       update();
@@ -420,6 +463,94 @@ class ProfileVerificationPageController extends GetxController {
           ),
         );
       }
+      return;
+    }
+
+    nextButtonInProgress = false;
+    increasePageIndex();
+  }
+
+  Future<void> submitFourthStepData({required BuildContext context}) async {
+    if (accreditationFile == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Must upload accreditation files"),
+          backgroundColor: AppColors.primaryRed,
+        ),
+      );
+      return;
+    }
+
+    nextButtonInProgress = true;
+    update();
+
+    try {
+      DioClient dioClient = DioClient();
+
+      List<dio.MultipartFile> multipartImages = [];
+
+      for (var file in accreditationFile!.files) {
+        multipartImages.add(
+          await dio.MultipartFile.fromFile(file.path!, filename: file.name),
+        );
+      }
+
+      String accreditationType = "1";
+
+      for (
+        int i = 0;
+        i < (listOfAccreditationsModel.certificateTypes?.length ?? 0);
+        i++
+      ) {
+        if (listOfAccreditationsModel.certificateTypes?[i].title ==
+            selectedAccreditation) {
+          accreditationType =
+              listOfAccreditationsModel.certificateTypes?[i].id.toString() ??
+              "1";
+          break;
+        }
+      }
+
+      final formData = dio.FormData.fromMap({
+        "accreditation_type": accreditationType,
+        "expire_date": accreditationExpireTEC.text.trim(),
+        "accreditation": multipartImages,
+      });
+
+      await dioClient.post(ApiEndpoints.addAccreditation, data: formData);
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Updated"),
+            backgroundColor: AppColors.primaryGreen,
+          ),
+        );
+      }
+    } on AppException catch (e) {
+      nextButtonInProgress = false;
+      update();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+      return;
+    } catch (e) {
+      nextButtonInProgress = false;
+      update();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+      return;
     }
 
     nextButtonInProgress = false;
@@ -449,6 +580,12 @@ class ProfileVerificationPageController extends GetxController {
       dynamic data = await dioClient.get(ApiEndpoints.licenceTypeListUrl);
 
       listOfLicenceTypeModel = ListOfLicenceTypeModel.fromJson(data);
+
+      dynamic data2 = await dioClient.get(
+        ApiEndpoints.accreditationTypeListUrl,
+      );
+
+      listOfAccreditationsModel = ListOfAccreditationsModel.fromJson(data2);
     } on AppException catch (e) {
       Get.showSnackbar((GetSnackBar(message: e.message)));
     } catch (e) {
@@ -464,7 +601,7 @@ class ProfileVerificationPageController extends GetxController {
     phoneTEC.dispose();
     summaryTEC.dispose();
     licenseExpireTEC.dispose();
-    accreditationTEC.dispose();
+    accreditationExpireTEC.dispose();
     bankNameTEC.dispose();
     accountHolderNameTEC.dispose();
     accountNumberTEC.dispose();

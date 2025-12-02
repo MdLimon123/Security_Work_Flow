@@ -43,22 +43,48 @@ class StepFourPage extends StatelessWidget {
             ),
 
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                await controller.pickAccreditation(context: context);
+              },
               child: SvgPicture.asset(
                 AppAssets.uploadBackFrontImageAccreditationImage,
               ),
             ),
 
-            SizedBox(height: 4.h),
+            SizedBox(height: 8.h),
 
-            _buildUploadedElementStatus(),
+            for (
+              int i = 0;
+              i <
+                  (controller.accreditationFile?.files == null
+                      ? 0
+                      : controller.accreditationFile!.files.length);
+              i++
+            )
+              Column(
+                children: [
+                  controller.fileUploaded
+                      ? _buildUploadedElementStatus(
+                          fileName:
+                              controller.accreditationFile?.files[i].name ?? "",
+                          fileSize:
+                              controller.accreditationFile?.files[i].size
+                                  .toString() ??
+                              "",
+                        )
+                      : _buildUploadFileStatus(),
+                  SizedBox(height: 16.h),
+                ],
+              ),
 
+            // SizedBox(height: 4.h),
+            // _buildUploadedElementStatus(),
             SizedBox(height: 16.h),
 
             _buildExpireDateAccreditationInput(controller),
 
             SizedBox(height: 20.h),
-            _buildNextButton(controller),
+            _buildNextButton(controller, context: context),
             SizedBox(height: 12.h),
           ],
         );
@@ -66,12 +92,16 @@ class StepFourPage extends StatelessWidget {
     );
   }
 
-  SizedBox _buildNextButton(ProfileVerificationPageController controller) {
+  SizedBox _buildNextButton(
+    ProfileVerificationPageController controller, {
+    required BuildContext context,
+  }) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-          controller.increasePageIndex();
+        onPressed: () async {
+          await controller.submitFourthStepData(context: context);
+          // controller.increasePageIndex();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.secondaryNavyBlue,
@@ -80,7 +110,11 @@ class StepFourPage extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
           ),
         ),
-        child: Text("Next", style: TextStyle(color: AppColors.primaryWhite)),
+        child: controller.nextButtonInProgress
+            ? Center(
+                child: CircularProgressIndicator(color: AppColors.primaryWhite),
+              )
+            : Text("Next", style: TextStyle(color: AppColors.primaryWhite)),
       ),
     );
   }
@@ -98,9 +132,9 @@ class StepFourPage extends StatelessWidget {
 
         TextFormField(
           keyboardType: TextInputType.datetime,
-          controller: controller.accreditationTEC,
+          controller: controller.accreditationExpireTEC,
           decoration: InputDecoration(
-            hintText: "Enter accreditation expiry date",
+            hintText: "2000-01-30",
             hintStyle: TextStyle(color: AppColors.primaryGray),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
@@ -116,7 +150,10 @@ class StepFourPage extends StatelessWidget {
     );
   }
 
-  Visibility _buildUploadedElementStatus() {
+  Visibility _buildUploadedElementStatus({
+    required String fileName,
+    required String fileSize,
+  }) {
     return Visibility(
       visible: true,
       child: Container(
@@ -130,35 +167,42 @@ class StepFourPage extends StatelessWidget {
             children: [
               SvgPicture.asset(AppAssets.pdfIcon),
               SizedBox(width: 8.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "assets.zip",
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    "5.3MB",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.secondaryTextColor,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      fileName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        // overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Spacer(),
-              InkWell(
-                onTap: () {},
-                child: SvgPicture.asset(
-                  AppAssets.cancelIcon,
-                  width: 24.w,
-                  height: 24.h,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.primaryGray,
-                    BlendMode.srcIn,
-                  ),
+                    Text(
+                      "$fileSize Bytes",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.secondaryTextColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              // Spacer(),
+              // InkWell(
+              //   onTap: () {
+              //
+              //   },
+              //   child: SvgPicture.asset(
+              //     AppAssets.cancelIcon,
+              //     width: 24.w,
+              //     height: 24.h,
+              //     colorFilter: ColorFilter.mode(
+              //       AppColors.primaryGray,
+              //       BlendMode.srcIn,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -182,11 +226,26 @@ class StepFourPage extends StatelessWidget {
             controller.setSelectedAccreditation(value);
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(value: "Accepted", child: Text("Accepted")),
-            const PopupMenuItem(
-              value: "Not Accepted",
-              child: Text("Not Accepted"),
-            ),
+            for (
+              int i = 0;
+              i < controller.listOfAccreditationsModel.certificateTypes!.length;
+              i++
+            )
+              PopupMenuItem(
+                value:
+                    controller
+                        .listOfAccreditationsModel
+                        .certificateTypes?[i]
+                        .title ??
+                    "0",
+                child: Text(
+                  controller
+                          .listOfAccreditationsModel
+                          .certificateTypes?[i]
+                          .title ??
+                      "",
+                ),
+              ),
           ],
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -215,6 +274,89 @@ class StepFourPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Visibility _buildUploadFileStatus() {
+    return Visibility(
+      visible: true,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: AppColors.primaryGray),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Uploading...",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        GetBuilder<ProfileVerificationPageController>(
+                          builder: (controller) {
+                            return Text(
+                              "${controller.uploadingPercent}%  • ${controller.uploadSeconds} seconds remaining",
+                              style: TextStyle(
+                                color: AppColors.secondaryTextColor,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Spacer(),
+                  // Row(
+                  //   children: [
+                  //     InkWell(
+                  //       onTap: () {},
+                  //       child: SvgPicture.asset(
+                  //         AppAssets.pauseIcon,
+                  //         width: 24.w,
+                  //         height: 24.h,
+                  //       ),
+                  //     ),
+                  //     SizedBox(width: 4.w),
+                  //     InkWell(
+                  //       onTap: () {},
+                  //       child: SvgPicture.asset(
+                  //         AppAssets.cancelIcon,
+                  //         width: 24.w,
+                  //         height: 24.h,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                ],
+              ),
+
+              SizedBox(height: 8.h),
+              SizedBox(
+                width: double.infinity,
+                child: GetBuilder<ProfileVerificationPageController>(
+                  builder: (controller) {
+                    return LinearProgressIndicator(
+                      value: controller.uploadingPercent / 100,
+                      minHeight: 8.sp,
+                      borderRadius: BorderRadius.circular(6.r),
+                      color: AppColors.primaryBlue,
+                      backgroundColor: AppColors.lightGrey,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

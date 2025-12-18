@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:developer';
 import 'package:dio/dio.dart' as dio;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +15,8 @@ import 'package:flutter_security_workforce/app/modules/profile_verification_page
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_one_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_three_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_two_page.dart';
+import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
-
 import '../../data/models/verification_details_model.dart';
 import '../views/in_review_message_page.dart';
 
@@ -555,6 +555,50 @@ class ProfileVerificationPageController extends GetxController {
 
     nextButtonInProgress = false;
     increasePageIndex();
+  }
+
+  Future<void> submitFifthStepData({required BuildContext context}) async {
+    nextButtonInProgress = true;
+    update();
+
+    try {
+      DioClient dioClient = DioClient();
+
+      dynamic data = await dioClient.put(
+        ApiEndpoints.profileUpdateUrl,
+        data: {
+          "bank_name": bankNameTEC.text.toString().trim(),
+          "account_holder_name": accountHolderNameTEC.text.toString().trim(),
+          "account_no": accountNumberTEC.text.toString().trim(),
+          "bank_branch": bsbNumberTEC.text.toString().trim(),
+        },
+      );
+
+      Get.offAllNamed(AppRoutes.bottomNavbarRoute);
+    } on AppException catch (e) {
+      log(e.message);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+      nextButtonInProgress = false;
+      update();
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: AppColors.primaryRed,
+          ),
+        );
+      }
+      nextButtonInProgress = false;
+      update();
+    }
   }
 
   @override

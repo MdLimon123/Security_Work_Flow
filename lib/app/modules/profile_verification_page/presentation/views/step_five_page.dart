@@ -64,7 +64,7 @@ class StepFivePage extends StatelessWidget {
             ),
 
             SizedBox(height: 20.h),
-            _buildSubmitButton(controller),
+            _buildSubmitButton(controller, context: context),
             SizedBox(height: 16.h),
           ],
         );
@@ -72,12 +72,16 @@ class StepFivePage extends StatelessWidget {
     );
   }
 
-  SizedBox _buildSubmitButton(ProfileVerificationPageController controller) {
+  SizedBox _buildSubmitButton(
+    ProfileVerificationPageController controller, {
+    required BuildContext context,
+  }) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-          controller.increasePageIndex();
+        onPressed: () async {
+          await controller.submitFifthStepData(context: context);
+          // controller.increasePageIndex();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.secondaryNavyBlue,
@@ -86,7 +90,11 @@ class StepFivePage extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
           ),
         ),
-        child: Text("Submit", style: TextStyle(color: AppColors.primaryWhite)),
+        child: controller.nextButtonInProgress
+            ? Center(
+                child: CircularProgressIndicator(color: AppColors.primaryWhite),
+              )
+            : Text("Submit", style: TextStyle(color: AppColors.primaryWhite)),
       ),
     );
   }

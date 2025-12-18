@@ -564,7 +564,7 @@ class ProfileVerificationPageController extends GetxController {
     try {
       DioClient dioClient = DioClient();
 
-      dynamic data = await dioClient.put(
+      await dioClient.put(
         ApiEndpoints.profileUpdateUrl,
         data: {
           "bank_name": bankNameTEC.text.toString().trim(),

@@ -79,7 +79,6 @@ class LoginPageController extends GetxController {
         Get.offAllNamed(AppRoutes.bottomNavbarRoute);
       } else {
         // print("sajid testing ${loginResponse.verified}");
-
         Get.offAllNamed(
           AppRoutes.profileVerificationRoute,
           arguments: loginResponse.toJson(),
@@ -107,13 +106,5 @@ class LoginPageController extends GetxController {
 
     signInInProgress = false;
     update();
-  }
-
-  @override
-  void onClose() {
-    emailTEC.dispose();
-    passwordTEC.dispose();
-
-    super.onClose();
   }
 }

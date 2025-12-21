@@ -26,7 +26,6 @@ class VerifyForgetPassOtpPageController extends GetxController {
       dynamic data = await dioClient.post(
         ApiEndpoints.getVerifyForgetPassUrl(email: email),
         data: {"otp": pinPutController.text},
-
       );
 
       if (context.mounted) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/presentation/controllers/home_page_controller.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,7 +19,17 @@ class HomePage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
             children: [
-              _buildAppbarSection(),
+              GetBuilder<HomePageController>(
+                builder: (controller) {
+                  return controller.profileInfoLoaded
+                      ? _buildAppbarSection()
+                      : Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryOrange,
+                          ),
+                        );
+                },
+              ),
               SizedBox(height: 22.h),
               GetBuilder<HomePageController>(
                 builder: (controller) {
@@ -383,7 +394,7 @@ class HomePage extends StatelessWidget {
                       GetBuilder<HomePageController>(
                         builder: (controller) {
                           return Text(
-                            "${controller.profileInfoModel.dashboardData?.totalUpcomingJobs ?? "N/A"}",
+                            "${controller.dashBoardInfoModel.dashboardData?.totalUpcomingJobs ?? "N/A"}",
                             style: TextStyle(
                               fontSize: 26.sp,
                               color: AppColors.secondaryNavyBlue,
@@ -430,7 +441,7 @@ class HomePage extends StatelessWidget {
                             builder: (controller) {
                               return Text(
                                 controller
-                                        .profileInfoModel
+                                        .dashBoardInfoModel
                                         .dashboardData
                                         ?.avgRating
                                         .toString() ??
@@ -484,7 +495,7 @@ class HomePage extends StatelessWidget {
                       GetBuilder<HomePageController>(
                         builder: (controller) {
                           return Text(
-                            "${controller.profileInfoModel.dashboardData?.totalCompletedJobs ?? "N/A"}",
+                            "${controller.dashBoardInfoModel.dashboardData?.totalCompletedJobs ?? "N/A"}",
                             style: TextStyle(
                               fontSize: 26.sp,
                               color: AppColors.secondaryNavyBlue,
@@ -526,7 +537,7 @@ class HomePage extends StatelessWidget {
                       GetBuilder<HomePageController>(
                         builder: (controller) {
                           return Text(
-                            "${controller.profileInfoModel.dashboardData?.pastJobs ?? "N/A"}",
+                            "${controller.dashBoardInfoModel.dashboardData?.pastJobs ?? "N/A"}",
                             style: TextStyle(
                               fontSize: 26.sp,
                               color: AppColors.secondaryNavyBlue,
@@ -574,7 +585,7 @@ class HomePage extends StatelessWidget {
                       GetBuilder<HomePageController>(
                         builder: (controller) {
                           return Text(
-                            "\$${controller.profileInfoModel.dashboardData?.totalEarningsThisWeek ?? "N/A"}",
+                            "\$${controller.dashBoardInfoModel.dashboardData?.totalEarningsThisWeek ?? "N/A"}",
                             style: TextStyle(
                               fontSize: 26.sp,
                               color: AppColors.secondaryNavyBlue,
@@ -616,7 +627,7 @@ class HomePage extends StatelessWidget {
                       GetBuilder<HomePageController>(
                         builder: (controller) {
                           return Text(
-                            "${controller.profileInfoModel.dashboardData?.totalAppliedJobs ?? "N/A"}",
+                            "${controller.dashBoardInfoModel.dashboardData?.totalAppliedJobs ?? "N/A"}",
                             style: TextStyle(
                               fontSize: 26.sp,
                               color: AppColors.secondaryNavyBlue,
@@ -645,61 +656,69 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Row _buildAppbarSection() {
-    return Row(
-      children: [
-        SizedBox(
-          width: 46.w,
-          height: 46.h,
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(
-              "https://avatars.githubusercontent.com/u/69637820?v=4",
-            ),
-          ),
-        ),
-        SizedBox(width: 12.w),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+  GetBuilder<HomePageController> _buildAppbarSection() {
+    return GetBuilder<HomePageController>(
+      builder: (controller) {
+        return Row(
           children: [
-            Text(
-              "Hey, Glad You’re Here",
-              style: TextStyle(fontSize: 18.sp, color: AppColors.primaryBlack),
-            ),
-            Text(
-              "MD. Sajid Hossain",
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: AppColors.secondaryTextColor,
+            SizedBox(
+              width: 46.w,
+              height: 46.h,
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  ApiEndpoints.getBaseUrl +
+                      (controller.profileInfoModel.data?.image ?? ""),
+                ),
               ),
             ),
+            SizedBox(width: 12.w),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Hey, Glad You’re Here",
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    color: AppColors.primaryBlack,
+                  ),
+                ),
+                Text(
+                  controller.profileInfoModel.data?.accountHolderName ?? "",
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: AppColors.secondaryTextColor,
+                  ),
+                ),
+              ],
+            ),
+            Spacer(),
+            IconButton(
+              style: IconButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100.r),
+                  side: BorderSide(color: AppColors.primaryBorderColor),
+                ),
+              ),
+              onPressed: () {
+                Get.toNamed(AppRoutes.searchPageRoute);
+              },
+              icon: Icon(Icons.search),
+            ),
+            IconButton(
+              style: IconButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100.r),
+                  side: BorderSide(color: AppColors.primaryBorderColor),
+                ),
+              ),
+              onPressed: () {
+                Get.toNamed(AppRoutes.notificationRoute);
+              },
+              icon: Icon(Icons.notifications_outlined),
+            ),
           ],
-        ),
-        Spacer(),
-        IconButton(
-          style: IconButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100.r),
-              side: BorderSide(color: AppColors.primaryBorderColor),
-            ),
-          ),
-          onPressed: () {
-            Get.toNamed(AppRoutes.searchPageRoute);
-          },
-          icon: Icon(Icons.search),
-        ),
-        IconButton(
-          style: IconButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100.r),
-              side: BorderSide(color: AppColors.primaryBorderColor),
-            ),
-          ),
-          onPressed: () {
-            Get.toNamed(AppRoutes.notificationRoute);
-          },
-          icon: Icon(Icons.notifications_outlined),
-        ),
-      ],
+        );
+      },
     );
   }
 }

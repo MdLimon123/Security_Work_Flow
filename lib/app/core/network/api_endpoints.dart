@@ -3,6 +3,9 @@ class ApiEndpoints {
 
   static String get getBaseUrl => _baseUrl;
 
+  static const String dashboardDataUrl =
+      "$_baseUrl/api/jobs/user-dashboard-data/";
+
   static const String loginUrl = "$_baseUrl/api/auth/login/";
 
   static const String forgetPassUrl = "$_baseUrl/api/auth/forgetpassword/";

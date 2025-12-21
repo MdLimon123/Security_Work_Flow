@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/modules/home_page/presentation/controllers/home_page_controller.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -19,12 +20,17 @@ class HomePage extends StatelessWidget {
             children: [
               _buildAppbarSection(),
               SizedBox(height: 22.h),
-              _buildFirstStatRow(),
-              SizedBox(height: 12.h),
-              _buildSecondStatRow(),
-              SizedBox(height: 12.h),
-              _buildThirdStateRow(),
-              SizedBox(height: 12.h),
+              GetBuilder<HomePageController>(
+                builder: (controller) {
+                  return controller.dashBoardInfoLoaded
+                      ? _buildDashboard()
+                      : Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryOrange,
+                          ),
+                        );
+                },
+              ),
               _buildSeeMoreOpenJobs(),
               SizedBox(height: 12.h),
               _buildJobListing(),
@@ -32,6 +38,20 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Column _buildDashboard() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildFirstStatRow(),
+        SizedBox(height: 12.h),
+        _buildSecondStatRow(),
+        SizedBox(height: 12.h),
+        _buildThirdStateRow(),
+        SizedBox(height: 12.h),
+      ],
     );
   }
 
@@ -360,13 +380,17 @@ class HomePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        "12",
-                        style: TextStyle(
-                          fontSize: 26.sp,
-                          color: AppColors.secondaryNavyBlue,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      GetBuilder<HomePageController>(
+                        builder: (controller) {
+                          return Text(
+                            "${controller.profileInfoModel.dashboardData?.totalUpcomingJobs ?? "N/A"}",
+                            style: TextStyle(
+                              fontSize: 26.sp,
+                              color: AppColors.secondaryNavyBlue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          );
+                        },
                       ),
                       Spacer(),
                       SvgPicture.asset(AppAssets.upComingJobIcon),
@@ -402,13 +426,22 @@ class HomePage extends StatelessWidget {
                         children: [
                           SvgPicture.asset(AppAssets.starIcon),
                           SizedBox(width: 4.w),
-                          Text(
-                            "4.5",
-                            style: TextStyle(
-                              fontSize: 26.sp,
-                              color: AppColors.secondaryNavyBlue,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          GetBuilder<HomePageController>(
+                            builder: (controller) {
+                              return Text(
+                                controller
+                                        .profileInfoModel
+                                        .dashboardData
+                                        ?.avgRating
+                                        .toString() ??
+                                    "N/A",
+                                style: TextStyle(
+                                  fontSize: 26.sp,
+                                  color: AppColors.secondaryNavyBlue,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -448,13 +481,17 @@ class HomePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        "1259",
-                        style: TextStyle(
-                          fontSize: 26.sp,
-                          color: AppColors.secondaryNavyBlue,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      GetBuilder<HomePageController>(
+                        builder: (controller) {
+                          return Text(
+                            "${controller.profileInfoModel.dashboardData?.totalCompletedJobs ?? "N/A"}",
+                            style: TextStyle(
+                              fontSize: 26.sp,
+                              color: AppColors.secondaryNavyBlue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          );
+                        },
                       ),
                       Spacer(),
                       SvgPicture.asset(AppAssets.jobCompletedIcon),
@@ -486,13 +523,17 @@ class HomePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        "1259",
-                        style: TextStyle(
-                          fontSize: 26.sp,
-                          color: AppColors.secondaryNavyBlue,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      GetBuilder<HomePageController>(
+                        builder: (controller) {
+                          return Text(
+                            "${controller.profileInfoModel.dashboardData?.pastJobs ?? "N/A"}",
+                            style: TextStyle(
+                              fontSize: 26.sp,
+                              color: AppColors.secondaryNavyBlue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          );
+                        },
                       ),
                       Spacer(),
                       SvgPicture.asset(AppAssets.pastJobIcon),
@@ -530,13 +571,17 @@ class HomePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        "\$1259",
-                        style: TextStyle(
-                          fontSize: 26.sp,
-                          color: AppColors.secondaryNavyBlue,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      GetBuilder<HomePageController>(
+                        builder: (controller) {
+                          return Text(
+                            "\$${controller.profileInfoModel.dashboardData?.totalEarningsThisWeek ?? "N/A"}",
+                            style: TextStyle(
+                              fontSize: 26.sp,
+                              color: AppColors.secondaryNavyBlue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          );
+                        },
                       ),
                       Spacer(),
                       SvgPicture.asset(AppAssets.earningThisWeekIcon),
@@ -568,13 +613,17 @@ class HomePage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        "1259",
-                        style: TextStyle(
-                          fontSize: 26.sp,
-                          color: AppColors.secondaryNavyBlue,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      GetBuilder<HomePageController>(
+                        builder: (controller) {
+                          return Text(
+                            "${controller.profileInfoModel.dashboardData?.totalAppliedJobs ?? "N/A"}",
+                            style: TextStyle(
+                              fontSize: 26.sp,
+                              color: AppColors.secondaryNavyBlue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          );
+                        },
                       ),
                       Spacer(),
                       SvgPicture.asset(AppAssets.jobAppliedIcon),

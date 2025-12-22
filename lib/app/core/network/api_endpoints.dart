@@ -37,4 +37,6 @@ class ApiEndpoints {
   static String getVerifyForgetPassUrl({required String email}) {
     return "$_baseUrl/api/auth/vefiry_for_forget/$email/";
   }
+
+  static const jobListUrl = "$_baseUrl/api/jobs/user-job-posts/";
 }

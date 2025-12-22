@@ -4,6 +4,7 @@ import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/data/models/dash_board_info_model.dart';
+import 'package:flutter_security_workforce/app/modules/home_page/data/models/open_job_list_model.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/data/models/profile_info_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,8 @@ class HomePageController extends GetxController {
 
   DashBoardInfoModel dashBoardInfoModel = DashBoardInfoModel();
   ProfileInfoModel profileInfoModel = ProfileInfoModel();
+
+  OpenJobListModel openJobListModel = OpenJobListModel();
 
   late Position currentPosition;
 
@@ -123,10 +126,32 @@ class HomePageController extends GetxController {
     }
 
     currentPosition = await Geolocator.getCurrentPosition();
+  }
 
-    // print(
-    //   "Sajid testing latitude ${currentPosition.latitude} and longitude ${currentPosition.longitude}",
-    // );
+  Future<void> _loadOpenJobs() async {
+    try {
+      DioClient dioClient = DioClient();
+
+      openJobListModel = OpenJobListModel.fromJson(
+        await dioClient.get(ApiEndpoints.jobListUrl),
+      );
+
+      update();
+    } on AppException catch (e) {
+      Get.snackbar(
+        "Error",
+        e.message,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    }
   }
 
   @override
@@ -135,5 +160,6 @@ class HomePageController extends GetxController {
     await _determinePosition();
     await loadDashBoardInfo();
     await loadProfileInfo();
+    await _loadOpenJobs();
   }
 }

@@ -77,261 +77,275 @@ class HomePage extends StatelessWidget {
     return Expanded(
       child: SizedBox(
         // height: Get.height / 2.5,
-        child: ListView.separated(
-          shrinkWrap: true,
-          itemBuilder: (context, index) => Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24.r),
-              border: Border.all(color: AppColors.primaryBorderColor),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.5.w,
-                vertical: 8.5.h,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Image.asset(AppAssets.securityIcon),
-                      SizedBox(width: 12.w),
-                      Expanded(
-                        child: Text(
-                          "Need An Experienced Night Security Guard",
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            color: AppColors.secondaryNavyBlue,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
+        child: GetBuilder<HomePageController>(
+          builder: (controller) {
+            return ListView.separated(
+              shrinkWrap: true,
+              itemBuilder: (context, index) => Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24.r),
+                  border: Border.all(color: AppColors.primaryBorderColor),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.5.w,
+                    vertical: 8.5.h,
                   ),
-
-                  SizedBox(height: 19.h),
-
-                  Row(
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Posted In ",
-                              style: TextStyle(
-                                color: AppColors.secondaryTextColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "Night Security Shift",
-                              style: TextStyle(
-                                color: AppColors.secondaryNavyBlue,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Spacer(),
-                      Column(
-                        children: [
-                          Text(
-                            "Shift Date: ",
-                            style: TextStyle(
-                              color: AppColors.secondaryNavyBlue,
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                          Text(
-                            "20 Sep,2025",
-                            style: TextStyle(
-                              color: AppColors.secondaryTextColor,
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 32.h),
-
-                  Row(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
-                          Text(
-                            "---",
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              color: AppColors.primaryOrange,
-                            ),
-                          ),
-                          Text(
-                            "Negotiate",
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: AppColors.secondaryNavyBlue,
+                          Image.asset(AppAssets.securityIcon),
+                          SizedBox(width: 12.w),
+                          Expanded(
+                            child: Text(
+                              "${controller.openJobListModel.results?[index].jobTitle}",
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                color: AppColors.secondaryNavyBlue,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(width: 24.w),
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Get.toNamed(AppRoutes.openJobsDetailsRoute);
-                          },
-                          style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                              side: BorderSide(
-                                color: AppColors.secondaryNavyBlue,
+
+                      SizedBox(height: 19.h),
+
+                      Row(
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Posted In ",
+                                  style: TextStyle(
+                                    color: AppColors.secondaryTextColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      controller
+                                          .openJobListModel
+                                          .results?[index]
+                                          .jobRole ??
+                                      "N/A",
+                                  style: TextStyle(
+                                    color: AppColors.secondaryNavyBlue,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Spacer(),
+                          Column(
+                            children: [
+                              Text(
+                                "Shift Date: ",
+                                style: TextStyle(
+                                  color: AppColors.secondaryNavyBlue,
+                                  fontSize: 12.sp,
+                                ),
                               ),
-                            ),
+                              Text(
+                                "${controller.openJobListModel.results?[index].jobDate}",
+                                style: TextStyle(
+                                  color: AppColors.secondaryTextColor,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                            ],
                           ),
-                          child: Text(
-                            "Details",
-                            style: TextStyle(
-                              color: AppColors.secondaryNavyBlue,
-                            ),
-                          ),
-                        ),
+                        ],
                       ),
 
-                      SizedBox(width: 12.w),
+                      SizedBox(height: 32.h),
 
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                            backgroundColor: AppColors.secondaryNavyBlue,
-                            foregroundColor: AppColors.primaryWhite,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "\$${controller.openJobListModel.results?[index].payRate}",
+                                style: TextStyle(
+                                  fontSize: 24.sp,
+                                  color: AppColors.primaryOrange,
+                                ),
+                              ),
+                              Text(
+                                "Per Hour",
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: AppColors.secondaryNavyBlue,
+                                ),
+                              ),
+                            ],
                           ),
-                          onPressed: () {
-                            Get.dialog(
-                              Material(
-                                color: Colors.black45,
-                                child: Center(
-                                  child: Container(
-                                    width: Get.width * 0.85,
-                                    padding: const EdgeInsets.all(20),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Center(
-                                          child: Text(
-                                            "Fit for Duty Confirmation",
-                                            style: TextStyle(
-                                              fontSize: 24.sp,
-                                              color:
-                                                  AppColors.secondaryNavyBlue,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-
-                                        const SizedBox(height: 16),
-                                        Text(
-                                          "I confirm that:",
-                                          style: TextStyle(
-                                            fontSize: 18.sp,
-                                            color: AppColors.secondaryNavyBlue,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 12),
-
-                                        _buildBullet(
-                                          "I hold the correct and current license(s) to perform this task.",
-                                        ),
-                                        _buildBullet(
-                                          "I have no injuries preventing me from completing this or related tasks.",
-                                        ),
-                                        _buildBullet(
-                                          "I am free from alcohol or intoxication (including medication).",
-                                        ),
-                                        _buildBullet(
-                                          "I am sufficiently rested and not affected by illness or fatigue.",
-                                        ),
-                                        _buildBullet(
-                                          "I understand the job requirements and am capable of performing my duties.",
-                                        ),
-
-                                        const SizedBox(height: 28),
-
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: ElevatedButton(
-                                                onPressed: () => Get.back(),
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      AppColors.primaryRed,
-                                                  foregroundColor:
-                                                      AppColors.primaryWhite,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          10,
-                                                        ),
-                                                  ),
-                                                ),
-                                                child: const Text("Cancel"),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Expanded(
-                                              child: ElevatedButton(
-                                                onPressed: () {},
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      AppColors.primaryGreen,
-                                                  foregroundColor:
-                                                      AppColors.primaryWhite,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          10,
-                                                        ),
-                                                  ),
-                                                ),
-                                                child: const Text("Confirm"),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                          SizedBox(width: 24.w),
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: () {
+                                Get.toNamed(AppRoutes.openJobsDetailsRoute);
+                              },
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  side: BorderSide(
+                                    color: AppColors.secondaryNavyBlue,
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                          child: Text("Apply"),
-                        ),
+                              child: Text(
+                                "Details",
+                                style: TextStyle(
+                                  color: AppColors.secondaryNavyBlue,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(width: 12.w),
+
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                                backgroundColor: AppColors.secondaryNavyBlue,
+                                foregroundColor: AppColors.primaryWhite,
+                              ),
+                              onPressed: () {
+                                Get.dialog(
+                                  Material(
+                                    color: Colors.black45,
+                                    child: Center(
+                                      child: Container(
+                                        width: Get.width * 0.85,
+                                        padding: const EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Center(
+                                              child: Text(
+                                                "Fit for Duty Confirmation",
+                                                style: TextStyle(
+                                                  fontSize: 24.sp,
+                                                  color: AppColors
+                                                      .secondaryNavyBlue,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+
+                                            const SizedBox(height: 16),
+                                            Text(
+                                              "I confirm that:",
+                                              style: TextStyle(
+                                                fontSize: 18.sp,
+                                                color:
+                                                    AppColors.secondaryNavyBlue,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 12),
+
+                                            _buildBullet(
+                                              "I hold the correct and current license(s) to perform this task.",
+                                            ),
+                                            _buildBullet(
+                                              "I have no injuries preventing me from completing this or related tasks.",
+                                            ),
+                                            _buildBullet(
+                                              "I am free from alcohol or intoxication (including medication).",
+                                            ),
+                                            _buildBullet(
+                                              "I am sufficiently rested and not affected by illness or fatigue.",
+                                            ),
+                                            _buildBullet(
+                                              "I understand the job requirements and am capable of performing my duties.",
+                                            ),
+
+                                            const SizedBox(height: 28),
+
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: ElevatedButton(
+                                                    onPressed: () => Get.back(),
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          AppColors.primaryRed,
+                                                      foregroundColor: AppColors
+                                                          .primaryWhite,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              10,
+                                                            ),
+                                                      ),
+                                                    ),
+                                                    child: const Text("Cancel"),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Expanded(
+                                                  child: ElevatedButton(
+                                                    onPressed: () {},
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor: AppColors
+                                                          .primaryGreen,
+                                                      foregroundColor: AppColors
+                                                          .primaryWhite,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              10,
+                                                            ),
+                                                      ),
+                                                    ),
+                                                    child: const Text(
+                                                      "Confirm",
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text("Apply"),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-          separatorBuilder: (context, index) => SizedBox(height: 16.h),
-          itemCount: 100,
+              separatorBuilder: (context, index) => SizedBox(height: 16.h),
+              itemCount: controller.openJobListModel.count?.toInt() ?? 0,
+            );
+          },
         ),
       ),
     );
@@ -371,13 +385,13 @@ class HomePage extends StatelessWidget {
         ),
         Spacer(),
 
-        GestureDetector(
-          onTap: () {},
-          child: Text(
-            "See more",
-            style: TextStyle(fontSize: 16.sp, color: AppColors.primaryOrange),
-          ),
-        ),
+        // GestureDetector(
+        //   onTap: () {},
+        //   child: Text(
+        //     "See more",
+        //     style: TextStyle(fontSize: 16.sp, color: AppColors.primaryOrange),
+        //   ),
+        // ),
       ],
     );
   }

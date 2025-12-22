@@ -19,6 +19,13 @@ class HomePage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
             children: [
+              // test if location service works or not
+              // SizedBox(height: 22.h),
+              // Obx(
+              //   () =>
+              //       Text(Get.find<LocationController>().locationMessage.value),
+              // ),
+              // SizedBox(height: 22.h),
               GetBuilder<HomePageController>(
                 builder: (controller) {
                   return controller.profileInfoLoaded

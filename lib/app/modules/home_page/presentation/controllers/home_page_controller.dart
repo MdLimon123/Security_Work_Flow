@@ -5,6 +5,7 @@ import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/data/models/dash_board_info_model.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/data/models/profile_info_model.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class HomePageController extends GetxController {
@@ -13,6 +14,8 @@ class HomePageController extends GetxController {
 
   DashBoardInfoModel dashBoardInfoModel = DashBoardInfoModel();
   ProfileInfoModel profileInfoModel = ProfileInfoModel();
+
+  late Position currentPosition;
 
   Future<void> loadDashBoardInfo() async {
     dashBoardInfoLoaded = false;
@@ -76,9 +79,60 @@ class HomePageController extends GetxController {
     update();
   }
 
+  Future<void> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      Get.snackbar(
+        "Error",
+        "Location services are disabled.",
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        Get.snackbar(
+          "Error",
+          "Location services denied.",
+          backgroundColor: AppColors.primaryRed,
+          colorText: AppColors.primaryWhite,
+        );
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      Get.snackbar(
+        "Error",
+        "Location permissions are permanently denied, we cannot request permissions.",
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+      return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.',
+      );
+    }
+
+    currentPosition = await Geolocator.getCurrentPosition();
+
+    // print(
+    //   "Sajid testing latitude ${currentPosition.latitude} and longitude ${currentPosition.longitude}",
+    // );
+  }
+
   @override
   Future<void> onInit() async {
     super.onInit();
+    await _determinePosition();
     await loadDashBoardInfo();
     await loadProfileInfo();
   }

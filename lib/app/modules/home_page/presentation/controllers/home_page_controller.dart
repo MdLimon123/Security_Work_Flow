@@ -13,6 +13,8 @@ class HomePageController extends GetxController {
   bool dashBoardInfoLoaded = true;
   bool profileInfoLoaded = true;
 
+  bool fullPageLoading = false;
+
   DashBoardInfoModel dashBoardInfoModel = DashBoardInfoModel();
   ProfileInfoModel profileInfoModel = ProfileInfoModel();
 
@@ -157,9 +159,13 @@ class HomePageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    fullPageLoading = true;
+    update();
     await _determinePosition();
     await loadDashBoardInfo();
     await loadProfileInfo();
     await _loadOpenJobs();
+    fullPageLoading = false;
+    update();
   }
 }

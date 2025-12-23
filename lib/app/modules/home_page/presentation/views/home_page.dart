@@ -17,42 +17,52 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            children: [
-              // test if location service works or not
-              // SizedBox(height: 22.h),
-              // Obx(
-              //   () =>
-              //       Text(Get.find<LocationController>().locationMessage.value),
-              // ),
-              // SizedBox(height: 22.h),
-              GetBuilder<HomePageController>(
-                builder: (controller) {
-                  return controller.profileInfoLoaded
-                      ? _buildAppbarSection()
-                      : Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.primaryOrange,
-                          ),
-                        );
-                },
-              ),
-              SizedBox(height: 22.h),
-              GetBuilder<HomePageController>(
-                builder: (controller) {
-                  return controller.dashBoardInfoLoaded
-                      ? _buildDashboard()
-                      : Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.primaryOrange,
-                          ),
-                        );
-                },
-              ),
-              _buildSeeMoreOpenJobs(),
-              SizedBox(height: 12.h),
-              _buildJobListing(),
-            ],
+          child: GetBuilder<HomePageController>(
+            builder: (controller) {
+              return controller.fullPageLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primaryOrange,
+                      ),
+                    )
+                  : Column(
+                      children: [
+                        // test if location service works or not
+                        // SizedBox(height: 22.h),
+                        // Obx(
+                        //   () =>
+                        //       Text(Get.find<LocationController>().locationMessage.value),
+                        // ),
+                        // SizedBox(height: 22.h),
+                        GetBuilder<HomePageController>(
+                          builder: (controller) {
+                            return controller.profileInfoLoaded
+                                ? _buildAppbarSection()
+                                : Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.primaryOrange,
+                                    ),
+                                  );
+                          },
+                        ),
+                        SizedBox(height: 22.h),
+                        GetBuilder<HomePageController>(
+                          builder: (controller) {
+                            return controller.dashBoardInfoLoaded
+                                ? _buildDashboard()
+                                : Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.primaryOrange,
+                                    ),
+                                  );
+                          },
+                        ),
+                        _buildSeeMoreOpenJobs(),
+                        SizedBox(height: 12.h),
+                        _buildJobListing(),
+                      ],
+                    );
+            },
           ),
         ),
       ),

@@ -1,13 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/data/models/job_details_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OpenJobsDetailsPage extends StatelessWidget {
-  const OpenJobsDetailsPage({super.key});
+  OpenJobsDetailsPage({super.key});
+
+  final JobDetailsModel jobDetailsModel = JobDetailsModel.fromJson(
+    Get.arguments,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +111,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "4.0",
+                  "${jobDetailsModel.jobProvider?.averageRatingMain}",
                   style: TextStyle(
                     fontSize: 40.sp,
                     fontWeight: FontWeight.w700,
@@ -114,32 +121,81 @@ class OpenJobsDetailsPage extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.star,
-                      color: AppColors.primaryYellow,
+                      color:
+                          double.tryParse(
+                                jobDetailsModel
+                                        .jobProvider
+                                        ?.averageRatingMain ??
+                                    "0.0",
+                              )! >=
+                              1.0
+                          ? AppColors.primaryYellow
+                          : AppColors.primaryGray,
                       size: 18.sp,
                     ),
                     SizedBox(width: 4.w),
                     Icon(
                       Icons.star,
-                      color: AppColors.primaryYellow,
+                      color:
+                          double.tryParse(
+                                jobDetailsModel
+                                        .jobProvider
+                                        ?.averageRatingMain ??
+                                    "0.0",
+                              )! >=
+                              2.0
+                          ? AppColors.primaryYellow
+                          : AppColors.primaryGray,
                       size: 18.sp,
                     ),
                     SizedBox(width: 4.w),
                     Icon(
                       Icons.star,
-                      color: AppColors.primaryYellow,
+                      color:
+                          double.tryParse(
+                                jobDetailsModel
+                                        .jobProvider
+                                        ?.averageRatingMain ??
+                                    "0.0",
+                              )! >=
+                              3.0
+                          ? AppColors.primaryYellow
+                          : AppColors.primaryGray,
                       size: 18.sp,
                     ),
                     SizedBox(width: 4.w),
                     Icon(
                       Icons.star,
-                      color: AppColors.primaryYellow,
+                      color:
+                          double.tryParse(
+                                jobDetailsModel
+                                        .jobProvider
+                                        ?.averageRatingMain ??
+                                    "0.0",
+                              )! >=
+                              4.0
+                          ? AppColors.primaryYellow
+                          : AppColors.primaryGray,
                       size: 18.sp,
                     ),
                     SizedBox(width: 4.w),
-                    Icon(Icons.star, color: AppColors.primaryGray, size: 18.sp),
+                    Icon(
+                      Icons.star,
+                      color:
+                          double.tryParse(
+                                jobDetailsModel
+                                        .jobProvider
+                                        ?.averageRatingMain ??
+                                    "0.0",
+                              )! >=
+                              5.0
+                          ? AppColors.primaryYellow
+                          : AppColors.primaryGray,
+                      size: 18.sp,
+                    ),
                   ],
                 ),
-                Text("52 Reviews"),
+                // Text("52 Reviews"),
               ],
             ),
           ),
@@ -147,7 +203,10 @@ class OpenJobsDetailsPage extends StatelessWidget {
         SizedBox(height: 16.h),
         Row(
           children: [
-            Text("2.0", style: TextStyle(fontSize: 16.sp)),
+            Text(
+              jobDetailsModel.jobProvider?.averageComunication ?? "0",
+              style: TextStyle(fontSize: 16.sp),
+            ),
             SizedBox(width: 4.w),
             Icon(Icons.star, color: AppColors.primaryYellow, size: 16.sp),
             SizedBox(width: 8.w),
@@ -157,17 +216,10 @@ class OpenJobsDetailsPage extends StatelessWidget {
         SizedBox(height: 16.h),
         Row(
           children: [
-            Text("4.0", style: TextStyle(fontSize: 16.sp)),
-            SizedBox(width: 4.w),
-            Icon(Icons.star, color: AppColors.primaryYellow, size: 16.sp),
-            SizedBox(width: 8.w),
-            Text("Payment reliability ", style: TextStyle(fontSize: 20.sp)),
-          ],
-        ),
-        SizedBox(height: 16.h),
-        Row(
-          children: [
-            Text("5.0", style: TextStyle(fontSize: 16.sp)),
+            Text(
+              jobDetailsModel.jobProvider?.averagePayRate ?? "0",
+              style: TextStyle(fontSize: 16.sp),
+            ),
             SizedBox(width: 4.w),
             Icon(Icons.star, color: AppColors.primaryYellow, size: 16.sp),
             SizedBox(width: 8.w),
@@ -177,7 +229,10 @@ class OpenJobsDetailsPage extends StatelessWidget {
         SizedBox(height: 16.h),
         Row(
           children: [
-            Text("3.0", style: TextStyle(fontSize: 16.sp)),
+            Text(
+              jobDetailsModel.jobProvider?.averageProfessionalism ?? "0",
+              style: TextStyle(fontSize: 16.sp),
+            ),
             SizedBox(width: 4.w),
             Icon(Icons.star, color: AppColors.primaryYellow, size: 16.sp),
             SizedBox(width: 8.w),
@@ -187,7 +242,10 @@ class OpenJobsDetailsPage extends StatelessWidget {
         SizedBox(height: 16.h),
         Row(
           children: [
-            Text("1.0", style: TextStyle(fontSize: 16.sp)),
+            Text(
+              jobDetailsModel.jobProvider?.averageJobSupport ?? "0",
+              style: TextStyle(fontSize: 16.sp),
+            ),
             SizedBox(width: 4.w),
             Icon(Icons.star, color: AppColors.primaryYellow, size: 16.sp),
             SizedBox(width: 8.w),
@@ -213,7 +271,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
             SvgPicture.asset(AppAssets.doubleLocationIcon),
             SizedBox(width: 8.w),
             Text(
-              "Join Venture AI (JVAI)",
+              "${jobDetailsModel.address}",
               style: TextStyle(
                 fontSize: 16.sp,
                 color: AppColors.secondaryTextColor,
@@ -230,7 +288,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
             child: OutlinedButton(
               onPressed: () async {
                 String googleMapsUrl =
-                    "https://www.google.com/maps?q=${23.780860837403864},${90.40757911256006}";
+                    "https://www.google.com/maps?q=${jobDetailsModel.latitude},${jobDetailsModel.longitude}";
                 if (await canLaunchUrl(Uri.parse(googleMapsUrl))) {
                   await launchUrl(Uri.parse(googleMapsUrl));
                 } else {
@@ -282,7 +340,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "Night Security Guard",
+                      "${jobDetailsModel.jobRole}",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -300,7 +358,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "25 Sep, 2025",
+                      "${jobDetailsModel.jobDate}",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -318,7 +376,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "18:30",
+                      "${jobDetailsModel.startTime}",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -336,7 +394,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "07:30",
+                      "${jobDetailsModel.endTime}",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -354,7 +412,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "10 Hours",
+                      "${jobDetailsModel.jobDuration} Hours",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -380,7 +438,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
         ),
         Text(
-          "SecureOne Protection Services is seeking a professional Night Security Guard to ensure the safety of a corporate office building during after-hours operations. The ideal candidate will be punctual, observant, and confident in handling routine and emergency situations.",
+          "${jobDetailsModel.jobDetails}",
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,
@@ -406,7 +464,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
               ),
             ),
             Text(
-              "\$13/hour",
+              "\$${jobDetailsModel.payRate}/hour",
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,
@@ -426,7 +484,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
               ),
             ),
             Text(
-              "10 Hours",
+              "${jobDetailsModel.jobDuration} Hours",
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,
@@ -446,7 +504,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
               ),
             ),
             Text(
-              "26 Sep, 2025",
+              "${jobDetailsModel.jobExpire ?? "N/A"}",
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,
@@ -467,7 +525,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Security Company LTD",
+                "${jobDetailsModel.jobProvider?.companyName ?? ""}",
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: AppColors.secondaryTextColor,
@@ -475,7 +533,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
                 ),
               ),
               Text(
-                "Need An Experienced Night Security Guard",
+                "${jobDetailsModel.jobTitle}",
                 style: TextStyle(
                   fontSize: 20.sp,
                   color: AppColors.secondaryNavyBlue,
@@ -485,11 +543,20 @@ class OpenJobsDetailsPage extends StatelessWidget {
             ],
           ),
         ),
-        Image.asset(
-          AppAssets.securityIcon,
-          // width: 70.w,
-          // height: 70.h,
-          fit: BoxFit.contain,
+
+        // Image.asset(
+        //   AppAssets.securityIcon,
+        //   width: 70.w,
+        //   height: 70.h,
+        //   fit: BoxFit.contain,
+        // ),
+        CachedNetworkImage(
+          width: 70.w,
+          height: 70.w,
+          imageUrl:
+              "${ApiEndpoints.getBaseUrl}${jobDetailsModel.jobProvider?.company?.image ?? ""}",
+          errorWidget: (context, url, error) =>
+              Icon(Icons.broken_image, color: AppColors.primaryRed),
         ),
       ],
     );

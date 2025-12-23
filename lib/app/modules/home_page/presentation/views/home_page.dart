@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
@@ -27,13 +28,6 @@ class HomePage extends StatelessWidget {
                     )
                   : Column(
                       children: [
-                        // test if location service works or not
-                        // SizedBox(height: 22.h),
-                        // Obx(
-                        //   () =>
-                        //       Text(Get.find<LocationController>().locationMessage.value),
-                        // ),
-                        // SizedBox(height: 22.h),
                         GetBuilder<HomePageController>(
                           builder: (controller) {
                             return controller.profileInfoLoaded
@@ -106,7 +100,15 @@ class HomePage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Image.asset(AppAssets.securityIcon),
+                          CachedNetworkImage(
+                            imageUrl:
+                                "${ApiEndpoints.getBaseUrl}${controller.openJobListModel.results?[index].jobProvider?.company?.image ?? ""}",
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error, color: AppColors.primaryRed),
+                            width: 46.w,
+                            height: 46.w,
+                          ),
+
                           SizedBox(width: 12.w),
                           Expanded(
                             child: Text(
@@ -202,7 +204,13 @@ class HomePage extends StatelessWidget {
                           Expanded(
                             child: OutlinedButton(
                               onPressed: () {
-                                Get.toNamed(AppRoutes.openJobsDetailsRoute);
+                                Get.toNamed(
+                                  AppRoutes.openJobsDetailsRoute,
+                                  arguments: controller
+                                      .openJobListModel
+                                      .results?[index]
+                                      .toJson(),
+                                );
                               },
                               style: OutlinedButton.styleFrom(
                                 shape: RoundedRectangleBorder(

@@ -1,74 +1,12 @@
-/// count : 8
-/// next : null
-/// previous : null
-/// results : [{"id":8,"job_provider":{"id":1,"company":{"id":1,"first_name":"","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-23T06:10:33.930681Z","image":"/media/profile/securisive.png","last_activity":"2025-12-23T08:48:47.366926Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Crown Control Operatives","job_role":"Day Shift Operatives","latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":"2025-12-31","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-12-23T08:48:47.363084Z","updated_at":"2025-12-23T08:48:47.363097Z"},{"id":7,"job_provider":{"id":1,"company":{"id":1,"first_name":"","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-23T06:10:33.930681Z","image":"/media/profile/securisive.png","last_activity":"2025-12-23T08:48:47.366926Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Crown Control Operatives","job_role":"Day Shift Operatives","latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":null,"start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-12-23T08:46:18.882417Z","updated_at":"2025-12-23T08:46:18.882429Z"},{"id":6,"job_provider":{"id":1,"company":{"id":1,"first_name":"","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-23T06:10:33.930681Z","image":"/media/profile/securisive.png","last_activity":"2025-12-23T08:48:47.366926Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Crown Control Operatives","job_role":"Day Shift Operatives","latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":null,"start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-12-22T11:18:24.552514Z","updated_at":"2025-12-22T11:18:24.552525Z"},{"id":5,"job_provider":{"id":1,"company":{"id":1,"first_name":"","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-23T06:10:33.930681Z","image":"/media/profile/securisive.png","last_activity":"2025-12-23T08:48:47.366926Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Crown Control Operatives Urgent","job_role":null,"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":null,"start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-11-17T04:47:03.395195Z","updated_at":"2025-12-22T10:39:05.925308Z"},{"id":4,"job_provider":{"id":1,"company":{"id":1,"first_name":"","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-23T06:10:33.930681Z","image":"/media/profile/securisive.png","last_activity":"2025-12-23T08:48:47.366926Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"JR. Crown Control Operatives","job_role":null,"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":null,"start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-11-17T04:47:02.398249Z","updated_at":"2025-12-22T10:39:17.679823Z"},{"id":3,"job_provider":{"id":1,"company":{"id":1,"first_name":"","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-23T06:10:33.930681Z","image":"/media/profile/securisive.png","last_activity":"2025-12-23T08:48:47.366926Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"SR. Crown Control Operatives","job_role":null,"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":null,"start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-11-17T04:47:01.495326Z","updated_at":"2025-12-22T10:39:24.540561Z"},{"id":2,"job_provider":{"id":1,"company":{"id":1,"first_name":"","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-23T06:10:33.930681Z","image":"/media/profile/securisive.png","last_activity":"2025-12-23T08:48:47.366926Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"House Security","job_role":null,"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":null,"start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-11-17T04:46:59.792838Z","updated_at":"2025-12-22T10:39:40.465938Z"},{"id":1,"job_provider":{"id":1,"company":{"id":1,"first_name":"","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-23T06:10:33.930681Z","image":"/media/profile/securisive.png","last_activity":"2025-12-23T08:48:47.366926Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Strong Security Guard","job_role":null,"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":null,"start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-11-16T08:52:45.951404Z","updated_at":"2025-12-22T10:40:08.998160Z"}]
-library;
-
-class OpenJobListModel {
-  OpenJobListModel({
-    num? count,
-    dynamic next,
-    dynamic previous,
-    List<Results>? results,
-  }) {
-    _count = count;
-    _next = next;
-    _previous = previous;
-    _results = results;
-  }
-
-  OpenJobListModel.fromJson(dynamic json) {
-    _count = json['count'];
-    _next = json['next'];
-    _previous = json['previous'];
-    if (json['results'] != null) {
-      _results = [];
-      json['results'].forEach((v) {
-        _results?.add(Results.fromJson(v));
-      });
-    }
-  }
-  num? _count;
-  dynamic _next;
-  dynamic _previous;
-  List<Results>? _results;
-  OpenJobListModel copyWith({
-    num? count,
-    dynamic next,
-    dynamic previous,
-    List<Results>? results,
-  }) => OpenJobListModel(
-    count: count ?? _count,
-    next: next ?? _next,
-    previous: previous ?? _previous,
-    results: results ?? _results,
-  );
-  num? get count => _count;
-  dynamic get next => _next;
-  dynamic get previous => _previous;
-  List<Results>? get results => _results;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['count'] = _count;
-    map['next'] = _next;
-    map['previous'] = _previous;
-    if (_results != null) {
-      map['results'] = _results?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
-/// id : 8
+/// id : 1
 /// job_provider : {"id":1,"company":{"id":1,"first_name":"","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-23T06:10:33.930681Z","image":"/media/profile/securisive.png","last_activity":"2025-12-23T08:48:47.366926Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"}
-/// job_title : "Crown Control Operatives"
-/// job_role : "Day Shift Operatives"
+/// job_title : "Strong Security Guard"
+/// job_role : null
 /// latitude : 23.78521422
 /// longitude : 90.9021522
 /// address : "Mohakhali, Dhaka, Bangladesh"
 /// job_date : "2025-12-10"
-/// job_expire : "2025-12-31"
+/// job_expire : null
 /// start_time : "10:00:00"
 /// end_time : "20:00:00"
 /// job_duration : "10.00"
@@ -85,20 +23,21 @@ class OpenJobListModel {
 /// engagement_type : "casual"
 /// provident_fund : 0
 /// job_details : "the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company"
-/// created_at : "2025-12-23T08:48:47.363084Z"
-/// updated_at : "2025-12-23T08:48:47.363097Z"
+/// created_at : "2025-11-16T08:52:45.951404Z"
+/// updated_at : "2025-12-22T10:40:08.998160Z"
+library;
 
-class Results {
-  Results({
+class JobDetailsModel {
+  JobDetailsModel({
     num? id,
     JobProvider? jobProvider,
     String? jobTitle,
-    String? jobRole,
+    dynamic jobRole,
     num? latitude,
     num? longitude,
     String? address,
     String? jobDate,
-    String? jobExpire,
+    dynamic jobExpire,
     String? startTime,
     String? endTime,
     String? jobDuration,
@@ -147,7 +86,7 @@ class Results {
     _updatedAt = updatedAt;
   }
 
-  Results.fromJson(dynamic json) {
+  JobDetailsModel.fromJson(dynamic json) {
     _id = json['id'];
     _jobProvider = json['job_provider'] != null
         ? JobProvider.fromJson(json['job_provider'])
@@ -181,12 +120,12 @@ class Results {
   num? _id;
   JobProvider? _jobProvider;
   String? _jobTitle;
-  String? _jobRole;
+  dynamic _jobRole;
   num? _latitude;
   num? _longitude;
   String? _address;
   String? _jobDate;
-  String? _jobExpire;
+  dynamic _jobExpire;
   String? _startTime;
   String? _endTime;
   String? _jobDuration;
@@ -205,16 +144,16 @@ class Results {
   String? _jobDetails;
   String? _createdAt;
   String? _updatedAt;
-  Results copyWith({
+  JobDetailsModel copyWith({
     num? id,
     JobProvider? jobProvider,
     String? jobTitle,
-    String? jobRole,
+    dynamic jobRole,
     num? latitude,
     num? longitude,
     String? address,
     String? jobDate,
-    String? jobExpire,
+    dynamic jobExpire,
     String? startTime,
     String? endTime,
     String? jobDuration,
@@ -233,7 +172,7 @@ class Results {
     String? jobDetails,
     String? createdAt,
     String? updatedAt,
-  }) => Results(
+  }) => JobDetailsModel(
     id: id ?? _id,
     jobProvider: jobProvider ?? _jobProvider,
     jobTitle: jobTitle ?? _jobTitle,
@@ -267,12 +206,12 @@ class Results {
   num? get id => _id;
   JobProvider? get jobProvider => _jobProvider;
   String? get jobTitle => _jobTitle;
-  String? get jobRole => _jobRole;
+  dynamic get jobRole => _jobRole;
   num? get latitude => _latitude;
   num? get longitude => _longitude;
   String? get address => _address;
   String? get jobDate => _jobDate;
-  String? get jobExpire => _jobExpire;
+  dynamic get jobExpire => _jobExpire;
   String? get startTime => _startTime;
   String? get endTime => _endTime;
   String? get jobDuration => _jobDuration;

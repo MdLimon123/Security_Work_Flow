@@ -263,12 +263,19 @@ class ProfilePage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 15.h),
         child: Column(
           children: [
-            _buildActionableButton(
-              onTap: () {
-                Get.toNamed(AppRoutes.editProfileRoute);
+            GetBuilder<ProfilePageController>(
+              builder: (controller) {
+                return _buildActionableButton(
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.editProfileRoute,
+                      arguments: controller.profileInfoModel.toJson(),
+                    );
+                  },
+                  title: "Edit Profile info",
+                  appAsset: AppAssets.profileIcon,
+                );
               },
-              title: "Edit Profile info",
-              appAsset: AppAssets.profileIcon,
             ),
             SizedBox(height: 16.h),
             _buildActionableButton(

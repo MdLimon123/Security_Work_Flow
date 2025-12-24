@@ -153,43 +153,53 @@ class EditProfileInfoPage extends StatelessWidget {
           style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
         ),
 
-        FlutterSlider(
-          trackBar: FlutterSliderTrackBar(
-            activeTrackBar: BoxDecoration(color: AppColors.primaryOrange),
-            inactiveTrackBar: BoxDecoration(color: Colors.grey.shade300),
-          ),
-
-          values: [60],
-          max: 100,
-          min: 1,
-
-          tooltip: FlutterSliderTooltip(
-            alwaysShowTooltip: true,
-            format: (value) => "$value km",
-          ),
-
-          onDragging: (handlerIndex, lowerValue, upperValue) {},
-
-          // ✅ Circular Drag Handler
-          handler: FlutterSliderHandler(
-            decoration: BoxDecoration(), // remove default circle
-            child: Container(
-              height: 16.h,
-              width: 16.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryWhite, // inner color
-                border: Border.all(color: AppColors.primaryOrange, width: 3),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primaryOrange,
-                    blurRadius: 8,
-                    spreadRadius: 1,
-                  ),
-                ],
+        GetBuilder<EditProfileInfoPageController>(
+          builder: (controller) {
+            return FlutterSlider(
+              trackBar: FlutterSliderTrackBar(
+                activeTrackBar: BoxDecoration(color: AppColors.primaryOrange),
+                inactiveTrackBar: BoxDecoration(color: Colors.grey.shade300),
               ),
-            ),
-          ),
+
+              values: [controller.preferredJobRadius],
+              max: 100,
+              min: 1,
+
+              tooltip: FlutterSliderTooltip(
+                alwaysShowTooltip: true,
+                format: (value) {
+                  controller.preferredJobRadius = double.tryParse(value) ?? 1.0;
+                  return "$value km";
+                },
+              ),
+
+              onDragging: (handlerIndex, lowerValue, upperValue) {},
+
+              // ✅ Circular Drag Handler
+              handler: FlutterSliderHandler(
+                decoration: BoxDecoration(), // remove default circle
+                child: Container(
+                  height: 16.h,
+                  width: 16.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primaryWhite, // inner color
+                    border: Border.all(
+                      color: AppColors.primaryOrange,
+                      width: 3,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primaryOrange,
+                        blurRadius: 8,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ],
     );
@@ -273,7 +283,7 @@ class EditProfileInfoPage extends StatelessWidget {
               },
               itemBuilder: (context) => [
                 const PopupMenuItem(value: "English", child: Text("English")),
-                const PopupMenuItem(value: "English", child: Text("English")),
+                // const PopupMenuItem(value: "English", child: Text("English")),
               ],
               child: Container(
                 padding: const EdgeInsets.symmetric(
@@ -410,35 +420,44 @@ class EditProfileInfoPage extends StatelessWidget {
     );
   }
 
-  Stack _buildProfilePictureEdit() {
-    return Stack(
-      children: [
-        Center(
-          child: SizedBox(
-            width: 92.w,
-            height: 92.h,
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  GetBuilder<EditProfileInfoPageController> _buildProfilePictureEdit() {
+    return GetBuilder<EditProfileInfoPageController>(
+      builder: (controller) {
+        return Stack(
+          children: [
+            Center(
+              child: InkWell(
+                onTap: () async {
+                  await controller.pickImage();
+                },
+                child: SizedBox(
+                  width: 92.w,
+                  height: 92.w,
+                  child: CircleAvatar(
+                    backgroundImage: controller.selectedImageFile == null
+                        ? NetworkImage(controller.currentImageUrl ?? "")
+                        : FileImage(controller.selectedImageFile!),
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          child: Align(
-            alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppAssets.editIcon,
-              width: 24.w,
-              height: 24.h,
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: Align(
+                alignment: Alignment.center,
+                child: SvgPicture.asset(
+                  AppAssets.editIcon,
+                  width: 24.w,
+                  height: 24.h,
+                ),
+              ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 }

@@ -1,12 +1,18 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:flutter_security_workforce/app/modules/profile_page/data/models/profile_info_model.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide MultipartFile, FormData;
 
 class EditProfileInfoPageController extends GetxController {
+  bool saveAndUpdateButtonLoading = false;
+
   final TextEditingController fullNameTEC = TextEditingController();
   final TextEditingController phoneNumTEC = TextEditingController();
   final TextEditingController addressTEC = TextEditingController();
@@ -35,6 +41,49 @@ class EditProfileInfoPageController extends GetxController {
 
   void toggleSendNotifications() {
     sendNotifications = !sendNotifications;
+    update();
+  }
+
+  Future<void> updateProfileInfo() async {
+    saveAndUpdateButtonLoading = true;
+    update();
+
+    try {
+      DioClient dioClient = DioClient();
+
+      FormData formData = FormData.fromMap({
+        'account_holder_name': fullNameTEC.text,
+        'phone': phoneNumTEC.text,
+        'address': addressTEC.text,
+        'language': selectedLanguage,
+        'gender': selectedGender,
+        'user_redus': preferredJobRadius.toString(),
+        // 'sendNotifications': sendNotifications.toString(),
+        if (selectedImageFile != null)
+          'image': await MultipartFile.fromFile(
+            selectedImageFile!.path,
+            filename: selectedImageFile!.path.split('/').last,
+          ),
+      });
+
+      await dioClient.put(ApiEndpoints.profileUpdateUrl, data: formData);
+    } on AppException catch (e) {
+      Get.snackbar(
+        "Error",
+        e.message,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    }
+
+    saveAndUpdateButtonLoading = false;
     update();
   }
 

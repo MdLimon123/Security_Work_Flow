@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/modules/profile_page/controllers/profile_page_controller.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -33,74 +34,98 @@ class ProfilePage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeaderSection(),
-                SizedBox(height: 32.h),
-                Text("Personal Details", style: TextStyle(fontSize: 20.sp)),
-                SizedBox(height: 8.h),
-                _buildPersonalDetails(),
-                SizedBox(height: 21.h),
-                Text("Others Details", style: TextStyle(fontSize: 20.sp)),
-                SizedBox(height: 8.h),
-                _buildOtherDetails(),
-                SizedBox(height: 17.h),
-                Row(
-                  children: [
-                    Text("Referral Link", style: TextStyle(fontSize: 20.sp)),
-                    Spacer(),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryOrange,
-                        foregroundColor: AppColors.primaryWhite,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                      ),
-                      onPressed: () async {
-                        await Clipboard.setData(
-                          ClipboardData(
-                            text:
-                                "https:/.com/signin/?refer_token=p8ZV9u356c...",
+            child: GetBuilder<ProfilePageController>(
+              builder: (controller) {
+                return controller.dataLoaded
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildHeaderSection(),
+                          SizedBox(height: 32.h),
+                          Text(
+                            "Personal Details",
+                            style: TextStyle(fontSize: 20.sp),
                           ),
-                        );
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Copied to clipboard')),
-                          );
-                        }
-                      },
-                      child: Text("Share Link"),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12.h),
-                TextField(
-                  style: TextStyle(
-                    color: AppColors.primaryBlue,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  enabled: false,
-                  controller: TextEditingController(
-                    text: "https:/.com/signin/?refer_token=p8ZV9u356c...",
-                  ),
-                  decoration: InputDecoration(
-                    filled: true,
+                          SizedBox(height: 8.h),
+                          _buildPersonalDetails(),
+                          SizedBox(height: 21.h),
+                          Text(
+                            "Others Details",
+                            style: TextStyle(fontSize: 20.sp),
+                          ),
+                          SizedBox(height: 8.h),
+                          _buildOtherDetails(),
+                          SizedBox(height: 17.h),
+                          Row(
+                            children: [
+                              Text(
+                                "Referral Link",
+                                style: TextStyle(fontSize: 20.sp),
+                              ),
+                              Spacer(),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primaryOrange,
+                                  foregroundColor: AppColors.primaryWhite,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  await Clipboard.setData(
+                                    ClipboardData(
+                                      text:
+                                          "https:/.com/signin/?refer_token=p8ZV9u356c...",
+                                    ),
+                                  );
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Copied to clipboard'),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Text("Share Link"),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 12.h),
+                          TextField(
+                            style: TextStyle(
+                              color: AppColors.primaryBlue,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            enabled: false,
+                            controller: TextEditingController(
+                              text:
+                                  "https:/.com/signin/?refer_token=p8ZV9u356c...",
+                            ),
+                            decoration: InputDecoration(
+                              filled: true,
 
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 10.w,
-                      vertical: 12.5.h,
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.secondaryGray.withValues(alpha: .5),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 51.h),
-              ],
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.w,
+                                vertical: 12.5.h,
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: AppColors.secondaryGray.withValues(
+                                    alpha: .5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 51.h),
+                        ],
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryOrange,
+                        ),
+                      );
+              },
             ),
           ),
         ),
@@ -184,7 +209,9 @@ class ProfilePage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: OutlinedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.back();
+                              },
                               child: Text(
                                 "Cancel",
                                 style: TextStyle(color: AppColors.primaryBlack),
@@ -343,43 +370,50 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Column _buildHeaderSection() {
-    return Column(
-      children: [
-        Center(
-          child: Stack(
-            children: [
-              SizedBox(
-                width: 92.w,
-                height: 92.h,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.primaryBlue),
-                    borderRadius: BorderRadius.circular(100.r),
-                  ),
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      "https://b3262381.smushcdn.com/3262381/wp-content/uploads/2017/04/security-guard-foyer-ssi-crop-sq-1024x675.jpg?lossy=2&strip=1&webp=1",
+  GetBuilder<ProfilePageController> _buildHeaderSection() {
+    return GetBuilder<ProfilePageController>(
+      builder: (controller) {
+        return Column(
+          children: [
+            Center(
+              child: Stack(
+                children: [
+                  SizedBox(
+                    width: 92.w,
+                    height: 92.w,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.primaryBlue,
+                          width: 2.sp,
+                        ),
+                        borderRadius: BorderRadius.circular(100.r),
+                      ),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          "${ApiEndpoints.getBaseUrl}${controller.profileInfoModel.data?.image}",
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Icon(color: AppColors.primaryBlue, Icons.verified),
+                  ),
+                ],
               ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Icon(color: AppColors.primaryBlue, Icons.verified),
+            ),
+            SizedBox(height: 12.h),
+            Center(
+              child: Text(
+                controller.profileInfoModel.data?.accountHolderName ?? "",
+                style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w500),
               ),
-            ],
-          ),
-        ),
-        SizedBox(height: 12.h),
-        Center(
-          child: Text(
-            "Jhon Marbel",
-            style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w500),
-          ),
-        ),
-      ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

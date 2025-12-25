@@ -73,16 +73,28 @@ class AddLicensePage extends StatelessWidget {
   SizedBox _buildSubmitButton() {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.secondaryNavyBlue,
-          foregroundColor: AppColors.primaryWhite,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadiusGeometry.circular(16.r),
-          ),
-        ),
-        onPressed: () {},
-        child: Text("Submit"),
+      child: GetBuilder<LicenseAndCertificatesPageController>(
+        builder: (controller) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.secondaryNavyBlue,
+              foregroundColor: AppColors.primaryWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(16.r),
+              ),
+            ),
+            onPressed: () async {
+              await controller.submitLicence();
+            },
+            child: controller.submitting
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryWhite,
+                    ),
+                  )
+                : Text("Submit"),
+          );
+        },
       ),
     );
   }
@@ -103,7 +115,7 @@ class AddLicensePage extends StatelessWidget {
               controller: controller.expireDateTEC,
               keyboardType: TextInputType.datetime,
               decoration: InputDecoration(
-                hintText: "Enter your licence expiry date",
+                hintText: "2029-10-10",
                 hintStyle: TextStyle(color: AppColors.secondaryTextColor),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
@@ -127,59 +139,17 @@ class AddLicensePage extends StatelessWidget {
         borderRadius: BorderRadius.circular(14.r),
         border: Border.all(color: AppColors.primaryBorderColor),
       ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Uploading...",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      "65%  • 30 seconds remaining",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.secondaryTextColor,
-                      ),
-                    ),
-                  ],
-                ),
-                Spacer(),
-                Row(
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.pause_circle,
-                        color: AppColors.primaryGray,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Icon(Icons.cancel, color: AppColors.primaryRed),
-                    ),
-                  ],
-                ),
-              ],
+      child: GetBuilder<LicenseAndCertificatesPageController>(
+        builder: (controller) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: Text(
+              controller.licenceFile?.path ?? "",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-
-            LinearProgressIndicator(
-              backgroundColor: AppColors.secondaryTextColor.withValues(
-                alpha: .15,
-              ),
-              color: AppColors.primaryBlue,
-              minHeight: 5,
-              value: .3,
-              borderRadius: BorderRadius.circular(50.r),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -217,17 +187,23 @@ class AddLicensePage extends StatelessWidget {
                         style: TextStyle(fontSize: 16.sp),
                       ),
                       Spacer(),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.secondaryNavyBlue,
-                          foregroundColor: AppColors.primaryWhite,
+                      GetBuilder<LicenseAndCertificatesPageController>(
+                        builder: (controller) {
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.secondaryNavyBlue,
+                              foregroundColor: AppColors.primaryWhite,
 
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: Text("Upload"),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                            ),
+                            onPressed: () async {
+                              controller.pickLicenceFile();
+                            },
+                            child: Text("Upload"),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -253,46 +229,75 @@ class AddLicensePage extends StatelessWidget {
                 color: AppColors.secondaryNavyBlue,
               ),
             ),
-            PopupMenuButton<String>(
-              color: AppColors.primaryWhite,
-              onSelected: (value) {
-                controller.setSelectedLicenseType(value);
-              },
-              itemBuilder: (context) => [
-                const PopupMenuItem(value: "VISA", child: Text("VISA")),
-                const PopupMenuItem(value: "Passport", child: Text("Passport")),
-              ],
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 14,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.secondaryWhite),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.keyboard_arrow_down,
-                      color: AppColors.primaryGray,
-                    ),
+            GetBuilder<LicenseAndCertificatesPageController>(
+              builder: (controller) {
+                return controller.licencesListFetching
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryOrange,
+                        ),
+                      )
+                    : PopupMenuButton<String>(
+                        color: AppColors.primaryWhite,
+                        onSelected: (value) {
+                          controller.setSelectedLicenseType(value);
+                        },
+                        itemBuilder: (context) => [
+                          for (
+                            int i = 0;
+                            i <
+                                controller
+                                    .licenceTypesModel
+                                    .licenceTypes!
+                                    .length;
+                            i++
+                          )
+                            PopupMenuItem(
+                              value:
+                                  "${controller.licenceTypesModel.licenceTypes![i].title}",
+                              child: Text(
+                                "${controller.licenceTypesModel.licenceTypes![i].title}",
+                              ),
+                            ),
 
-                    SizedBox(width: 8.w),
-                    Text(
-                      controller.selectedLicenseType.isEmpty
-                          ? "Select your State or Territory"
-                          : controller.selectedLicenseType,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: controller.selectedLicenseType.isEmpty
-                            ? AppColors.primaryGray
-                            : Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                          // const PopupMenuItem(
+                          //   value: "Passport",
+                          //   child: Text("Passport"),
+                          // ),
+                        ],
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 14,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: AppColors.secondaryWhite),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.keyboard_arrow_down,
+                                color: AppColors.primaryGray,
+                              ),
+
+                              SizedBox(width: 8.w),
+                              Text(
+                                controller.selectedLicenseType.isEmpty
+                                    ? "Select your State or Territory"
+                                    : controller.selectedLicenseType,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: controller.selectedLicenseType.isEmpty
+                                      ? AppColors.primaryGray
+                                      : Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+              },
             ),
           ],
         );

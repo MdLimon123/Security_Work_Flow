@@ -104,19 +104,34 @@ class SuperannuationDetailsPage extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
 
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.secondaryNavyBlue,
-          foregroundColor: AppColors.primaryWhite,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-        ),
-        onPressed: () {},
-        child: Text(
-          "Save & Update",
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-        ),
+      child: GetBuilder<SuperannuationDetailsPageController>(
+        builder: (controller) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.secondaryNavyBlue,
+              foregroundColor: AppColors.primaryWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+            ),
+            onPressed: () async {
+              await controller.saveAndUpdate();
+            },
+            child: controller.isLoading
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryWhite,
+                    ),
+                  )
+                : Text(
+                    "Save & Update",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+          );
+        },
       ),
     );
   }
@@ -134,7 +149,7 @@ class SuperannuationDetailsPage extends StatelessWidget {
               keyboardType: TextInputType.datetime,
               decoration: InputDecoration(
                 hintStyle: TextStyle(color: AppColors.secondaryTextColor),
-                hintText: "03/06/2025",
+                hintText: "2025-05-05",
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                   borderSide: BorderSide(color: AppColors.primaryBorderColor),

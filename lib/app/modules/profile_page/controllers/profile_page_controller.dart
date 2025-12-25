@@ -27,7 +27,7 @@ class ProfilePageController extends GetxController {
     Get.offAllNamed(AppRoutes.onBoardingRoute);
   }
 
-  Future<void> _fetchProfileInfo() async {
+  Future<void> fetchProfileInfo() async {
     dataLoaded = false;
     update();
 
@@ -60,6 +60,6 @@ class ProfilePageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    await _fetchProfileInfo();
+    await fetchProfileInfo();
   }
 }

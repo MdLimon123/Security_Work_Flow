@@ -82,7 +82,9 @@ class SuperannuationDetailsPage extends StatelessWidget {
                 _buildSaveAndUpdateButton(),
                 SizedBox(height: 18.h),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.back();
+                  },
                   child: Text(
                     "Cancel",
                     style: TextStyle(

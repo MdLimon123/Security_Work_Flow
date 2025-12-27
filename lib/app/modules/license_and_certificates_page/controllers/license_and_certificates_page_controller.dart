@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -52,8 +53,12 @@ class LicenseAndCertificatesPageController extends GetxController {
         }
       }
 
+      log(
+        "sajid testing ${licenceTypesModel.licenceTypes?[licenceTypeId].id.toString()}",
+      );
+
       FormData formData = FormData.fromMap({
-        "licence_type": licenceTypeId.toString(),
+        "licence_type": licenceTypesModel.licenceTypes?[licenceTypeId].id.toString(),
         "expire_date": expireDateTEC.text,
         "licence_images": await MultipartFile.fromFile(
           licenceFile!.path,
@@ -70,6 +75,8 @@ class LicenseAndCertificatesPageController extends GetxController {
         backgroundColor: AppColors.primaryRed,
         colorText: AppColors.primaryWhite,
       );
+
+      log(e.message);
     }
 
     submitting = false;

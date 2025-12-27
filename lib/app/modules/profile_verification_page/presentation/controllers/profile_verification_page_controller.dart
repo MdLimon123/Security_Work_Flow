@@ -301,10 +301,11 @@ class ProfileVerificationPageController extends GetxController {
 
       // print("Sajid testing ${data["data"]}");
 
-      selectedLanguage = data["data"]["language"];
-      selectedYearsOfExperience = data["data"]["exprience_in_years"].toString();
-      summaryTEC.text = data["data"]["exprience_summary"];
-      prefRadius = data["data"]["user_redus"].toDouble();
+      selectedLanguage = data?["data"]?["language"] ?? "";
+      selectedYearsOfExperience =
+          data?["data"]?["exprience_in_years"]?.toString() ?? "";
+      summaryTEC.text = data?["data"]?["exprience_summary"] ?? "";
+      prefRadius = data?["data"]?["user_redus"]?.toDouble() ?? 0.1;
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -313,6 +314,11 @@ class ProfileVerificationPageController extends GetxController {
             backgroundColor: AppColors.primaryGreen,
           ),
         );
+
+        increasePageIndex();
+        nextButtonInProgress = false;
+        update();
+        return;
       }
     } on AppException catch (e) {
       if (context.mounted) {

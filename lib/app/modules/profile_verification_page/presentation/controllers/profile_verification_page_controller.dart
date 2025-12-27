@@ -287,6 +287,7 @@ class ProfileVerificationPageController extends GetxController {
       // );
 
       final formData = dio.FormData.fromMap({
+        "account_holder_name": fullNameTEC.text.trim(),
         "first_name": fullNameTEC.text.trim(),
         "phone": phoneTEC.text.trim(),
         "gender": selectedGender,

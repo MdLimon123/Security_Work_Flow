@@ -53,21 +53,24 @@ class LicenseAndCertificatesPageController extends GetxController {
         }
       }
 
-      log(
-        "sajid testing ${licenceTypesModel.licenceTypes?[licenceTypeId].id.toString()}",
-      );
+      // log(
+      //   "sajid testing ${licenceTypesModel.licenceTypes?[licenceTypeId].id.toString()}",
+      // );
 
       FormData formData = FormData.fromMap({
-        "licence_type": licenceTypesModel.licenceTypes?[licenceTypeId].id.toString(),
+        "licence_type": licenceTypesModel.licenceTypes?[licenceTypeId].id
+            .toString(),
         "expire_date": expireDateTEC.text,
         "licence_images": await MultipartFile.fromFile(
           licenceFile!.path,
-          filename: licenceFile!.uri.pathSegments.last, // Filename
+          filename: licenceFile!.uri.pathSegments.last,
         ),
       });
 
       await dioClient.post(ApiEndpoints.licenseUrl, data: formData);
+      await _fetchLicencesList();
       await _fetchLicenceTypeList();
+
     } on AppException catch (e) {
       Get.snackbar(
         "Error",

@@ -70,7 +70,6 @@ class LicenseAndCertificatesPageController extends GetxController {
       await dioClient.post(ApiEndpoints.licenseUrl, data: formData);
       await _fetchLicencesList();
       await _fetchLicenceTypeList();
-
     } on AppException catch (e) {
       Get.snackbar(
         "Error",

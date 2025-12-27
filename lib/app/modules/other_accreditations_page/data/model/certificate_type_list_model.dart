@@ -4,13 +4,14 @@
 
 class CertificateTypeListModel {
   CertificateTypeListModel({
-      bool? success, 
-      String? message, 
-      List<CertificateTypes>? certificateTypes,}){
+    bool? success,
+    String? message,
+    List<CertificateTypes>? certificateTypes,
+  }) {
     _success = success;
     _message = message;
     _certificateTypes = certificateTypes;
-}
+  }
 
   CertificateTypeListModel.fromJson(dynamic json) {
     _success = json['success'];
@@ -25,13 +26,15 @@ class CertificateTypeListModel {
   bool? _success;
   String? _message;
   List<CertificateTypes>? _certificateTypes;
-CertificateTypeListModel copyWith({  bool? success,
-  String? message,
-  List<CertificateTypes>? certificateTypes,
-}) => CertificateTypeListModel(  success: success ?? _success,
-  message: message ?? _message,
-  certificateTypes: certificateTypes ?? _certificateTypes,
-);
+  CertificateTypeListModel copyWith({
+    bool? success,
+    String? message,
+    List<CertificateTypes>? certificateTypes,
+  }) => CertificateTypeListModel(
+    success: success ?? _success,
+    message: message ?? _message,
+    certificateTypes: certificateTypes ?? _certificateTypes,
+  );
   bool? get success => _success;
   String? get message => _message;
   List<CertificateTypes>? get certificateTypes => _certificateTypes;
@@ -41,23 +44,22 @@ CertificateTypeListModel copyWith({  bool? success,
     map['success'] = _success;
     map['message'] = _message;
     if (_certificateTypes != null) {
-      map['certificate_types'] = _certificateTypes?.map((v) => v.toJson()).toList();
+      map['certificate_types'] = _certificateTypes
+          ?.map((v) => v.toJson())
+          .toList();
     }
     return map;
   }
-
 }
 
 /// id : 1
 /// title : "ACC"
 
 class CertificateTypes {
-  CertificateTypes({
-      num? id, 
-      String? title,}){
+  CertificateTypes({num? id, String? title}) {
     _id = id;
     _title = title;
-}
+  }
 
   CertificateTypes.fromJson(dynamic json) {
     _id = json['id'];
@@ -65,11 +67,8 @@ class CertificateTypes {
   }
   num? _id;
   String? _title;
-CertificateTypes copyWith({  num? id,
-  String? title,
-}) => CertificateTypes(  id: id ?? _id,
-  title: title ?? _title,
-);
+  CertificateTypes copyWith({num? id, String? title}) =>
+      CertificateTypes(id: id ?? _id, title: title ?? _title);
   num? get id => _id;
   String? get title => _title;
 
@@ -79,5 +78,4 @@ CertificateTypes copyWith({  num? id,
     map['title'] = _title;
     return map;
   }
-
 }

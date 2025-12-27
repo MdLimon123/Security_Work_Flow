@@ -41,4 +41,6 @@ class ApiEndpoints {
   static const jobListUrl = "$_baseUrl/api/jobs/user-job-posts/";
 
   static const licenseUrl = "$_baseUrl/api/accounts/licences/";
+
+  static const locationUrl = "$_baseUrl/api/accounts/location-update/";
 }

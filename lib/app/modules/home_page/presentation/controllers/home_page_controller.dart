@@ -128,6 +128,25 @@ class HomePageController extends GetxController {
     }
 
     currentPosition = await Geolocator.getCurrentPosition();
+
+    DioClient dioClient = DioClient();
+
+    try {
+      await dioClient.put(
+        ApiEndpoints.locationUrl,
+        data: {
+          "latitude": currentPosition.latitude,
+          "longitude": currentPosition.longitude,
+        },
+      );
+    } on AppException catch (e) {
+      Get.snackbar(
+        "Error",
+        e.message,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    }
   }
 
   Future<void> _loadOpenJobs() async {

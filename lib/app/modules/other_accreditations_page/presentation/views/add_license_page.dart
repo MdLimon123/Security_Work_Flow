@@ -73,16 +73,28 @@ class AddLicensePage extends StatelessWidget {
   SizedBox _buildSubmitButton() {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.secondaryNavyBlue,
-          foregroundColor: AppColors.primaryWhite,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadiusGeometry.circular(16.r),
-          ),
-        ),
-        onPressed: () {},
-        child: Text("Submit"),
+      child: GetBuilder<OtherAccrediationsPageController>(
+        builder: (controller) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.secondaryNavyBlue,
+              foregroundColor: AppColors.primaryWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(16.r),
+              ),
+            ),
+            onPressed: () async {
+              // await controller.submitCertificate();
+            },
+            child: controller.submitting
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryWhite,
+                    ),
+                  )
+                : Text("Submit"),
+          );
+        },
       ),
     );
   }
@@ -132,111 +144,93 @@ class AddLicensePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Uploading...",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      "65%  • 30 seconds remaining",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.secondaryTextColor,
-                      ),
-                    ),
-                  ],
-                ),
-                Spacer(),
-                Row(
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.pause_circle,
-                        color: AppColors.primaryGray,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Icon(Icons.cancel, color: AppColors.primaryRed),
-                    ),
-                  ],
-                ),
-              ],
+            GetBuilder<OtherAccrediationsPageController>(
+              builder: (controller) {
+                return Text(
+                  controller.certificateFile?.path ?? "",
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                );
+              },
             ),
 
-            LinearProgressIndicator(
-              backgroundColor: AppColors.secondaryTextColor.withValues(
-                alpha: .15,
-              ),
-              color: AppColors.primaryBlue,
-              minHeight: 5,
-              value: .3,
-              borderRadius: BorderRadius.circular(50.r),
-            ),
+            // LinearProgressIndicator(
+            //   backgroundColor: AppColors.secondaryTextColor.withValues(
+            //     alpha: .15,
+            //   ),
+            //   color: AppColors.primaryBlue,
+            //   minHeight: 5,
+            //   value: .3,
+            //   borderRadius: BorderRadius.circular(50.r),
+            // ),
           ],
         ),
       ),
     );
   }
 
-  InkWell _buildLicenceUpload() {
-    return InkWell(
-      onTap: () {},
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
+  GetBuilder<OtherAccrediationsPageController> _buildLicenceUpload() {
+    return GetBuilder<OtherAccrediationsPageController>(
+      builder: (controller) {
+        return InkWell(
+          onTap: () async {
+            await controller.pickFile();
+          },
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Licence Upload",
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: AppColors.secondaryNavyBlue,
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14.r),
-                  border: Border.all(color: AppColors.primaryOrange),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 14.w,
-                    vertical: 18.h,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Licence Upload",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: AppColors.secondaryNavyBlue,
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Upload your licence",
-                        style: TextStyle(fontSize: 16.sp),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14.r),
+                      border: Border.all(color: AppColors.primaryOrange),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14.w,
+                        vertical: 18.h,
                       ),
-                      Spacer(),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.secondaryNavyBlue,
-                          foregroundColor: AppColors.primaryWhite,
-
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Upload your licence",
+                            style: TextStyle(fontSize: 16.sp),
                           ),
-                        ),
-                        onPressed: () {},
-                        child: Text("Upload"),
+                          Spacer(),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.secondaryNavyBlue,
+                              foregroundColor: AppColors.primaryWhite,
+
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                            ),
+                            onPressed: () async {
+                              await controller.pickFile();
+                            },
+                            child: Text("Upload"),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -258,10 +252,37 @@ class AddLicensePage extends StatelessWidget {
               onSelected: (value) {
                 controller.setSelectedLicenseType(value);
               },
-              itemBuilder: (context) => [
-                const PopupMenuItem(value: "VISA", child: Text("VISA")),
-                const PopupMenuItem(value: "Passport", child: Text("Passport")),
-              ],
+              itemBuilder: (context) {
+                if (controller
+                        .certificateTypeListModel
+                        .certificateTypes
+                        ?.isEmpty ??
+                    true) {
+                  return [
+                    PopupMenuItem(value: '', child: Text('No data available')),
+                  ];
+                }
+
+                return [
+                  for (
+                    int i = 0;
+                    i <
+                        (controller
+                                .certificateTypeListModel
+                                .certificateTypes
+                                ?.length ??
+                            0);
+                    i++
+                  )
+                    PopupMenuItem(
+                      value:
+                          "${controller.certificateTypeListModel.certificateTypes?[i].title}",
+                      child: Text(
+                        "${controller.certificateTypeListModel.certificateTypes?[i].title}",
+                      ),
+                    ),
+                ];
+              },
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
@@ -277,7 +298,6 @@ class AddLicensePage extends StatelessWidget {
                       Icons.keyboard_arrow_down,
                       color: AppColors.primaryGray,
                     ),
-
                     SizedBox(width: 8.w),
                     Text(
                       controller.selectedLicenseType.isEmpty

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_security_workforce/app/modules/other_accreditations_page/presentation/controller/other_accrediations_page_controller.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -31,18 +32,54 @@ class OtherAccrediationsPage extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Column(
-              children: [
-                SizedBox(height: 20.h),
-                _buildAddLicencesAndCertificates(),
-                SizedBox(height: 16.h),
-                _buildFileSelectedSection(),
-                SizedBox(height: 20.h),
-              ],
-            ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            children: [
+              SizedBox(height: 20.h),
+              _buildAddLicencesAndCertificates(),
+              SizedBox(height: 16.h),
+              // _buildFileSelectedSection(),
+              GetBuilder<OtherAccrediationsPageController>(
+                builder: (controller) {
+                  return Expanded(
+                    child: ListView.separated(
+                      itemBuilder: (context, index) => Padding(
+                        padding: EdgeInsets.only(left: 8.w),
+                        child: Row(
+                          children: [
+                            Text(
+                              " • ${controller.certificateTypeListModel.certificateTypes?[index].title ?? ""}",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Spacer(),
+                            SvgPicture.asset(
+                              AppAssets.pdfIcon,
+                              width: 32.w,
+                              height: 32.h,
+                            ),
+                            SizedBox(width: 12.w),
+                            Text("assets.zip"),
+                          ],
+                        ),
+                      ),
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: 12.h),
+                      itemCount:
+                          controller
+                              .certificateTypeListModel
+                              .certificateTypes
+                              ?.length ??
+                          0,
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 20.h),
+            ],
           ),
         ),
       ),
@@ -71,62 +108,6 @@ class OtherAccrediationsPage extends StatelessWidget {
           },
           child: Text("Add Licence"),
         ),
-      ],
-    );
-  }
-
-  Column _buildFileSelectedSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 8.w),
-          child: Row(
-            children: [
-              Text(
-                " • Security Operations",
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
-              ),
-              Spacer(),
-              SvgPicture.asset(AppAssets.pdfIcon, width: 32.w, height: 32.h),
-              SizedBox(width: 12.w),
-              Text("assets.zip"),
-            ],
-          ),
-        ),
-        SizedBox(height: 12.h),
-        Padding(
-          padding: EdgeInsets.only(left: 8.w),
-          child: Row(
-            children: [
-              Text(
-                " • Crowd Control",
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
-              ),
-              Spacer(),
-              SvgPicture.asset(AppAssets.pdfIcon, width: 32.w, height: 32.h),
-              SizedBox(width: 12.w),
-              Text("assets.zip"),
-            ],
-          ),
-        ),
-        SizedBox(height: 12.h),
-        Padding(
-          padding: EdgeInsets.only(left: 8.w),
-          child: Row(
-            children: [
-              Text(
-                " • Firearms",
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
-              ),
-              Spacer(),
-              SvgPicture.asset(AppAssets.pdfIcon, width: 32.w, height: 32.h),
-              SizedBox(width: 12.w),
-              Text("assets.zip"),
-            ],
-          ),
-        ),
-        SizedBox(height: 12.h),
       ],
     );
   }

@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
@@ -52,48 +54,52 @@ class OtherAccrediationsPageController extends GetxController {
     }
   }
 
-  // Future<void> submitCertificate() async {
-  //   submitting = true;
-  //   update();
-  //
-  //   try {
-  //     DioClient dioClient = DioClient();
-  //
-  //     String id = "";
-  //
-  //     for (int i = 0; i < (certificateTypeListModel.data?.length ?? 0); i++) {
-  //       if (selectedLicenseType ==
-  //           certificateTypeListModel.data![i].accreditationType?.title) {
-  //         id =
-  //             certificateTypeListModel.data![i].accreditationType?.id
-  //                 .toString() ??
-  //             "";
-  //         break;
-  //       }
-  //     }
-  //
-  //     FormData formData = FormData.fromMap({
-  //       "accreditation_type": id,
-  //       "accreditation": await MultipartFile.fromFile(
-  //         certificateFile!.path,
-  //         filename: certificateFile!.uri.pathSegments.last,
-  //       ),
-  //       "expire_date": expireDateTEC.text,
-  //     });
-  //
-  //     await dioClient.post(ApiEndpoints.certificateTypeUrl, data: formData);
-  //   } on AppException catch (e) {
-  //     Get.snackbar(
-  //       "Error",
-  //       e.message,
-  //       backgroundColor: AppColors.primaryRed,
-  //       colorText: AppColors.primaryWhite,
-  //     );
-  //   }
-  //
-  //   submitting = false;
-  //   update();
-  // }
+  Future<void> submitCertificate() async {
+    submitting = true;
+    update();
+
+    try {
+      DioClient dioClient = DioClient();
+
+      String id = "";
+
+      for (
+        int i = 0;
+        i < (certificateTypeListModel.certificateTypes?.length ?? 0);
+        i++
+      ) {
+        if (selectedLicenseType ==
+            certificateTypeListModel.certificateTypes![i].title) {
+          id = certificateTypeListModel.certificateTypes![i].id.toString();
+          break;
+        }
+      }
+
+      FormData formData = FormData.fromMap({
+        "accreditation_type": id,
+        "accreditation": await MultipartFile.fromFile(
+          certificateFile!.path,
+          filename: certificateFile!.uri.pathSegments.last,
+        ),
+        "expire_date": expireDateTEC.text,
+      });
+
+      await dioClient.post(ApiEndpoints.addAccreditation, data: formData);
+
+
+    } on AppException catch (e) {
+      log(e.message);
+      Get.snackbar(
+        "Error",
+        e.message,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    }
+
+    submitting = false;
+    update();
+  }
 
   @override
   Future<void> onInit() async {

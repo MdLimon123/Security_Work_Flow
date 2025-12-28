@@ -84,7 +84,7 @@ class AddLicensePage extends StatelessWidget {
               ),
             ),
             onPressed: () async {
-              // await controller.submitCertificate();
+              await controller.submitCertificate();
             },
             child: controller.submitting
                 ? Center(

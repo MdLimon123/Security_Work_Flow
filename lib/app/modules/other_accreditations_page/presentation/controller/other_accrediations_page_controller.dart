@@ -8,6 +8,7 @@ import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
+import 'package:flutter_security_workforce/app/modules/other_accreditations_page/data/model/certificate_list_model.dart';
 import 'package:flutter_security_workforce/app/modules/other_accreditations_page/data/model/certificate_type_list_model.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 
@@ -25,6 +26,8 @@ class OtherAccrediationsPageController extends GetxController {
   CertificateTypeListModel certificateTypeListModel =
       CertificateTypeListModel();
 
+  CertificateListModel certificateListModel = CertificateListModel();
+
   void setSelectedLicenseType(String value) {
     selectedLicenseType = value;
     update();
@@ -35,6 +38,24 @@ class OtherAccrediationsPageController extends GetxController {
     if (result != null) {
       certificateFile = File(result.files.single.path!);
       update();
+    }
+  }
+
+  Future<void> _fetchAccreditationList() async {
+    DioClient dioClient = DioClient();
+    try {
+      final response = await dioClient.get(ApiEndpoints.accreditationUrl);
+
+      certificateListModel = CertificateListModel.fromJson(response);
+
+      update();
+    } on AppException catch (e) {
+      Get.snackbar(
+        "Error",
+        e.message,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
     }
   }
 
@@ -84,9 +105,9 @@ class OtherAccrediationsPageController extends GetxController {
         "expire_date": expireDateTEC.text,
       });
 
-      await dioClient.post(ApiEndpoints.addAccreditation, data: formData);
+      await dioClient.post(ApiEndpoints.accreditationUrl, data: formData);
 
-
+      await _fetchAccreditationList();
     } on AppException catch (e) {
       log(e.message);
       Get.snackbar(
@@ -108,6 +129,7 @@ class OtherAccrediationsPageController extends GetxController {
     update();
 
     await _fetchAccreditationTypes();
+    await _fetchAccreditationList();
 
     fullPageLoading = false;
     update();

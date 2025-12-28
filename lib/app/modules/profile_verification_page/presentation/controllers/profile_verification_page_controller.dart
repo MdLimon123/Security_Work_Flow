@@ -524,7 +524,7 @@ class ProfileVerificationPageController extends GetxController {
         "accreditation": multipartImages,
       });
 
-      await dioClient.post(ApiEndpoints.addAccreditation, data: formData);
+      await dioClient.post(ApiEndpoints.accreditationUrl, data: formData);
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

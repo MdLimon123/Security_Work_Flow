@@ -49,7 +49,7 @@ class OtherAccrediationsPage extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              " • ${controller.certificateTypeListModel.certificateTypes?[index].title ?? ""}",
+                              " • ${controller.certificateListModel.data![index].accreditationType?.title ?? ""}",
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
@@ -69,11 +69,7 @@ class OtherAccrediationsPage extends StatelessWidget {
                       separatorBuilder: (context, index) =>
                           SizedBox(height: 12.h),
                       itemCount:
-                          controller
-                              .certificateTypeListModel
-                              .certificateTypes
-                              ?.length ??
-                          0,
+                          controller.certificateListModel.data?.length ?? 0,
                     ),
                   );
                 },

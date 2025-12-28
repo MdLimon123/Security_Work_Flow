@@ -3,14 +3,11 @@
 /// data : [{"id":17,"accreditation_type":{"id":3,"title":"MMM","discription":"1000","is_active":true,"created_at":"2025-12-02T05:16:20.203210Z","updated_at":"2025-12-02T05:16:20.203261Z"},"accreditation":"/media/accreditations/dating_C2bOU0N.pdf","expire_date":null}]
 
 class CertificateListModel {
-  CertificateListModel({
-      bool? success, 
-      String? message, 
-      List<Data>? data,}){
+  CertificateListModel({bool? success, String? message, List<Data>? data}) {
     _success = success;
     _message = message;
     _data = data;
-}
+  }
 
   CertificateListModel.fromJson(dynamic json) {
     _success = json['success'];
@@ -25,13 +22,15 @@ class CertificateListModel {
   bool? _success;
   String? _message;
   List<Data>? _data;
-CertificateListModel copyWith({  bool? success,
-  String? message,
-  List<Data>? data,
-}) => CertificateListModel(  success: success ?? _success,
-  message: message ?? _message,
-  data: data ?? _data,
-);
+  CertificateListModel copyWith({
+    bool? success,
+    String? message,
+    List<Data>? data,
+  }) => CertificateListModel(
+    success: success ?? _success,
+    message: message ?? _message,
+    data: data ?? _data,
+  );
   bool? get success => _success;
   String? get message => _message;
   List<Data>? get data => _data;
@@ -45,7 +44,6 @@ CertificateListModel copyWith({  bool? success,
     }
     return map;
   }
-
 }
 
 /// id : 17
@@ -55,19 +53,22 @@ CertificateListModel copyWith({  bool? success,
 
 class Data {
   Data({
-      num? id, 
-      AccreditationType? accreditationType, 
-      String? accreditation, 
-      dynamic expireDate,}){
+    num? id,
+    AccreditationType? accreditationType,
+    String? accreditation,
+    dynamic expireDate,
+  }) {
     _id = id;
     _accreditationType = accreditationType;
     _accreditation = accreditation;
     _expireDate = expireDate;
-}
+  }
 
   Data.fromJson(dynamic json) {
     _id = json['id'];
-    _accreditationType = json['accreditation_type'] != null ? AccreditationType.fromJson(json['accreditation_type']) : null;
+    _accreditationType = json['accreditation_type'] != null
+        ? AccreditationType.fromJson(json['accreditation_type'])
+        : null;
     _accreditation = json['accreditation'];
     _expireDate = json['expire_date'];
   }
@@ -75,15 +76,17 @@ class Data {
   AccreditationType? _accreditationType;
   String? _accreditation;
   dynamic _expireDate;
-Data copyWith({  num? id,
-  AccreditationType? accreditationType,
-  String? accreditation,
-  dynamic expireDate,
-}) => Data(  id: id ?? _id,
-  accreditationType: accreditationType ?? _accreditationType,
-  accreditation: accreditation ?? _accreditation,
-  expireDate: expireDate ?? _expireDate,
-);
+  Data copyWith({
+    num? id,
+    AccreditationType? accreditationType,
+    String? accreditation,
+    dynamic expireDate,
+  }) => Data(
+    id: id ?? _id,
+    accreditationType: accreditationType ?? _accreditationType,
+    accreditation: accreditation ?? _accreditation,
+    expireDate: expireDate ?? _expireDate,
+  );
   num? get id => _id;
   AccreditationType? get accreditationType => _accreditationType;
   String? get accreditation => _accreditation;
@@ -99,7 +102,6 @@ Data copyWith({  num? id,
     map['expire_date'] = _expireDate;
     return map;
   }
-
 }
 
 /// id : 3
@@ -111,19 +113,20 @@ Data copyWith({  num? id,
 
 class AccreditationType {
   AccreditationType({
-      num? id, 
-      String? title, 
-      String? discription, 
-      bool? isActive, 
-      String? createdAt, 
-      String? updatedAt,}){
+    num? id,
+    String? title,
+    String? discription,
+    bool? isActive,
+    String? createdAt,
+    String? updatedAt,
+  }) {
     _id = id;
     _title = title;
     _discription = discription;
     _isActive = isActive;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
-}
+  }
 
   AccreditationType.fromJson(dynamic json) {
     _id = json['id'];
@@ -139,19 +142,21 @@ class AccreditationType {
   bool? _isActive;
   String? _createdAt;
   String? _updatedAt;
-AccreditationType copyWith({  num? id,
-  String? title,
-  String? discription,
-  bool? isActive,
-  String? createdAt,
-  String? updatedAt,
-}) => AccreditationType(  id: id ?? _id,
-  title: title ?? _title,
-  discription: discription ?? _discription,
-  isActive: isActive ?? _isActive,
-  createdAt: createdAt ?? _createdAt,
-  updatedAt: updatedAt ?? _updatedAt,
-);
+  AccreditationType copyWith({
+    num? id,
+    String? title,
+    String? discription,
+    bool? isActive,
+    String? createdAt,
+    String? updatedAt,
+  }) => AccreditationType(
+    id: id ?? _id,
+    title: title ?? _title,
+    discription: discription ?? _discription,
+    isActive: isActive ?? _isActive,
+    createdAt: createdAt ?? _createdAt,
+    updatedAt: updatedAt ?? _updatedAt,
+  );
   num? get id => _id;
   String? get title => _title;
   String? get discription => _discription;
@@ -169,5 +174,4 @@ AccreditationType copyWith({  num? id,
     map['updated_at'] = _updatedAt;
     return map;
   }
-
 }

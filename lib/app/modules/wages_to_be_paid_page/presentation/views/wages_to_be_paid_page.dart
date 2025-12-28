@@ -95,19 +95,34 @@ class WagesToBePaidPage extends StatelessWidget {
   SizedBox _buildSaveAndUpdateButton() {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.secondaryNavyBlue,
-          foregroundColor: AppColors.primaryWhite,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-        ),
-        child: Text(
-          "Save & Update",
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-        ),
+      child: GetBuilder<WagesToBePaidPageController>(
+        builder: (controller) {
+          return ElevatedButton(
+            onPressed: () async {
+              await controller.updateBankDetails();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.secondaryNavyBlue,
+              foregroundColor: AppColors.primaryWhite,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+            ),
+            child: controller.submitting
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryWhite,
+                    ),
+                  )
+                : Text(
+                    "Save & Update",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+          );
+        },
       ),
     );
   }

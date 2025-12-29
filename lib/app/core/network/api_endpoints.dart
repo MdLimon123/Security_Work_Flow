@@ -38,13 +38,17 @@ class ApiEndpoints {
     return "$_baseUrl/api/auth/vefiry_for_forget/$email/";
   }
 
-  static const jobListUrl = "$_baseUrl/api/jobs/user-job-posts/";
+  static const String jobListUrl = "$_baseUrl/api/jobs/user-job-posts/";
 
-  static const licenseUrl = "$_baseUrl/api/accounts/licences/";
+  static const String licenseUrl = "$_baseUrl/api/accounts/licences/";
 
-  static const locationUrl = "$_baseUrl/api/accounts/location-update/";
+  static const String locationUrl = "$_baseUrl/api/accounts/location-update/";
 
-  static const certificateTypeUrl = "$_baseUrl/api/jobs/certificate-types/";
+  static const String certificateTypeUrl =
+      "$_baseUrl/api/jobs/certificate-types/";
 
-  static const cardUrl = "$_baseUrl/api/accounts/get-card-info/";
+  static const String cardUrl = "$_baseUrl/api/accounts/get-card-info/";
+
+  static const String referalListUrl =
+      "$_baseUrl/api/accounts/user-refarral-users/";
 }

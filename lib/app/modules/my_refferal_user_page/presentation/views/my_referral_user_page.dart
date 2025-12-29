@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/modules/my_refferal_user_page/presentation/controllers/my_referral_user_page_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../../routes/app_routes.dart';
@@ -29,99 +30,146 @@ class MyReferralUserPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: ListView.separated(
-            itemBuilder: (context, index) => Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.r),
-                border: Border.all(color: AppColors.primaryBorderColor),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h),
-                child: Column(
-                  children: [
-                    _buildInfoElementRow(
-                      leftString: "User Name :",
-                      rightString: "Jhone",
-                    ),
-                    SizedBox(height: 8.h),
-                    _buildInfoElementRow(
-                      leftString: "Email :",
-                      rightString: "name@gmail.com",
-                    ),
-                    SizedBox(height: 8.h),
-                    _buildInfoElementRow(
-                      leftString: "Address : ",
-                      rightString: "Uk",
-                    ),
-                    SizedBox(height: 8.h),
-                    _buildInfoElementRow(
-                      leftString: "Join Date : ",
-                      rightString: "22 Oct 2025",
-                    ),
-                    SizedBox(height: 8.h),
-                    _buildInfoElementRow(
-                      leftString: "Subscribed : ",
-                      rightString: "Yes",
-                    ),
-                    SizedBox(height: 8.h),
-                    _buildInfoElementRow(
-                      leftString: "Purchase Date :",
-                      rightString: "22 Oct 2025",
-                    ),
-                    SizedBox(height: 8.h),
-                    Row(
-                      children: [
-                        Text(
-                          "Status :",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.secondaryTextColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Spacer(),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryBlue.withValues(
-                              alpha: .15,
-                            ),
-                            foregroundColor: AppColors.primaryBlue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadiusGeometry.circular(8.r),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text("Earned"),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: 24.h),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadiusGeometry.circular(16.r),
-                          ),
-                          backgroundColor: AppColors.secondaryNavyBlue,
-                          foregroundColor: AppColors.primaryWhite,
-                        ),
-                        onPressed: () {
-                          Get.toNamed(AppRoutes.messageRoute);
-                        },
-                        child: Text("Message"),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            separatorBuilder: (context, index) => SizedBox(height: 24.h),
-            itemCount: 20,
-          ),
+          child: _buildReferList(),
         ),
       ),
+    );
+  }
+
+  GetBuilder<MyReferralUserPageController> _buildReferList() {
+    return GetBuilder<MyReferralUserPageController>(
+      builder: (controller) {
+        return ListView.separated(
+          itemBuilder: (context, index) => Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.r),
+              border: Border.all(color: AppColors.primaryBorderColor),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h),
+              child: Column(
+                children: [
+                  _buildInfoElementRow(
+                    leftString: "Name :",
+                    rightString:
+                        "${controller.myReferListModel.users?[index].firstName}",
+                  ),
+                  SizedBox(height: 8.h),
+                  _buildInfoElementRow(
+                    leftString: "Email :",
+                    rightString:
+                        "${controller.myReferListModel.users?[index].email}",
+                  ),
+                  SizedBox(height: 8.h),
+                  _buildInfoElementRow(
+                    leftString: "Address : ",
+                    rightString:
+                        "${controller.myReferListModel.users?[index].address}",
+                  ),
+                  SizedBox(height: 8.h),
+                  _buildInfoElementRow(
+                    leftString: "Join Date : ",
+                    rightString:
+                        "${controller.myReferListModel.users?[index].createAt}",
+                  ),
+                  SizedBox(height: 8.h),
+                  _buildInfoElementRow(
+                    leftString: "Subscribed : ",
+                    rightString:
+                        (controller
+                                .myReferListModel
+                                .users?[index]
+                                .isSubscribe ??
+                            false)
+                        ? "YES"
+                        : "NO",
+                  ),
+                  // SizedBox(height: 8.h),
+                  // _buildInfoElementRow(
+                  //   leftString: "Purchase Date :",
+                  //   rightString: "22 Oct 2025",
+                  // ),
+                  SizedBox(height: 8.h),
+                  Row(
+                    children: [
+                      Text(
+                        "Status :",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: AppColors.secondaryTextColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Spacer(),
+
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.r),
+                          color:
+                              (controller
+                                      .myReferListModel
+                                      .users?[index]
+                                      .isEarned ??
+                                  false)
+                              ? AppColors.primaryBlue
+                              : AppColors.primaryOrange,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(4.sp),
+                          child: Text(
+                            (controller
+                                        .myReferListModel
+                                        .users?[index]
+                                        .isEarned ??
+                                    false)
+                                ? "Earned"
+                                : "Pending",
+                            style: TextStyle(color: AppColors.primaryWhite),
+                          ),
+                        ),
+                      ),
+
+                      // ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     backgroundColor: AppColors.primaryBlue.withValues(
+                      //       alpha: .15,
+                      //     ),
+                      //     foregroundColor: AppColors.primaryBlue,
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadiusGeometry.circular(8.r),
+                      //     ),
+                      //   ),
+                      //   onPressed: () {},
+                      //   child: Text("Earned"),
+                      // ),
+                    ],
+                  ),
+
+                  SizedBox(height: 24.h),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(16.r),
+                        ),
+                        backgroundColor: AppColors.secondaryNavyBlue,
+                        foregroundColor: AppColors.primaryWhite,
+                      ),
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.messageRoute);
+                      },
+                      child: Text("Message"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          separatorBuilder: (context, index) => SizedBox(height: 24.h),
+          itemCount: controller.myReferListModel.users?.length ?? 0,
+        );
+      },
     );
   }
 

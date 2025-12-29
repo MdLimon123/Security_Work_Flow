@@ -31,8 +31,6 @@ class CardEditPageController extends GetxController {
           "billing_address": billingAddressTEC.text,
         },
       );
-
-
     } on AppException catch (e) {
       Get.snackbar(
         "Error",

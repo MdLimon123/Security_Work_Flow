@@ -106,7 +106,11 @@ class JobHistoryPage extends StatelessWidget {
 
                                   Spacer(),
 
-                                  Expanded(child: Text("Event Security")),
+                                  Expanded(
+                                    child: Text(
+                                      "${controller.jobHistoryListModel.results?.myJobs?[index].jobDetails?.jobTitle}",
+                                    ),
+                                  ),
                                 ],
                               ),
 
@@ -117,7 +121,9 @@ class JobHistoryPage extends StatelessWidget {
                                   Expanded(child: Text("Company Name : ")),
                                   Spacer(),
                                   Expanded(
-                                    child: Text("SafeGuard Security Pty Ltd"),
+                                    child: Text(
+                                      "${controller.jobHistoryListModel.results?.myJobs?[index].jobDetails?.jobProvider?.company?.firstName}",
+                                    ),
                                   ),
                                 ],
                               ),

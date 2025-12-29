@@ -129,19 +129,6 @@ class MyReferralUserPage extends StatelessWidget {
                         ),
                       ),
 
-                      // ElevatedButton(
-                      //   style: ElevatedButton.styleFrom(
-                      //     backgroundColor: AppColors.primaryBlue.withValues(
-                      //       alpha: .15,
-                      //     ),
-                      //     foregroundColor: AppColors.primaryBlue,
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadiusGeometry.circular(8.r),
-                      //     ),
-                      //   ),
-                      //   onPressed: () {},
-                      //   child: Text("Earned"),
-                      // ),
                     ],
                   ),
 

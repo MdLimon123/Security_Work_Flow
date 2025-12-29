@@ -169,7 +169,6 @@ class ProfilePage extends StatelessWidget {
             //   isNotification: true,
             // ),
             // SizedBox(height: 16.h),
-
             _buildActionableButton(
               onTap: () {
                 Get.toNamed(AppRoutes.jobHistoryRoute);
@@ -177,6 +176,7 @@ class ProfilePage extends StatelessWidget {
               title: "Job History",
               appAsset: AppAssets.historyIcon,
             ),
+
             SizedBox(height: 16.h),
 
             _buildActionableButton(

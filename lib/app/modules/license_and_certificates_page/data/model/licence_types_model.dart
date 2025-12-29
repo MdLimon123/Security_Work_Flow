@@ -1,6 +1,7 @@
 /// success : true
 /// message : "data fatched!"
 /// licence_types : [{"id":1,"title":"Security Agent License"},{"id":2,"title":"Crowd Controller License"},{"id":3,"title":"Investigator License"},{"id":4,"title":"Security Officer License"},{"id":5,"title":"Bodyguard License"}]
+library;
 
 class LicenceTypesModel {
   LicenceTypesModel({

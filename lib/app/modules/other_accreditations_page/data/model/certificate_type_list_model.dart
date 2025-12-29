@@ -1,6 +1,7 @@
 /// success : true
 /// message : "data fatched!"
 /// certificate_types : [{"id":1,"title":"ACC"},{"id":2,"title":"CCCC"},{"id":3,"title":"MMM"}]
+library;
 
 class CertificateTypeListModel {
   CertificateTypeListModel({

@@ -1,6 +1,7 @@
 /// success : true
 /// message : "data fatched!"
 /// data : [{"id":17,"accreditation_type":{"id":3,"title":"MMM","discription":"1000","is_active":true,"created_at":"2025-12-02T05:16:20.203210Z","updated_at":"2025-12-02T05:16:20.203261Z"},"accreditation":"/media/accreditations/dating_C2bOU0N.pdf","expire_date":null}]
+library;
 
 class CertificateListModel {
   CertificateListModel({bool? success, String? message, List<Data>? data}) {

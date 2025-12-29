@@ -128,7 +128,6 @@ class MyReferralUserPage extends StatelessWidget {
                           ),
                         ),
                       ),
-
                     ],
                   ),
 

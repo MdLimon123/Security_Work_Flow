@@ -1,6 +1,7 @@
 /// success : true
 /// message : "data fatched"
 /// data : {"id":6,"email":"sajidrec@gmail.com","phone":"+880 1771139444","is_email_varified":true,"image":"/media/profile/IMG20251218045205_YPz3P5U.jpg","user_type":"guard","gender":"Male","language":"English","exprience_in_years":25,"exprience_summary":"short summary I'm sajid","address":"","user_redus":70.0,"bank_name":"brac","account_holder_name":"sa","account_no":"2222","bank_branch":"sssa","accreditations":[{"id":2,"accreditation":"/media/accreditations/Screenshot_35.png","expire_date":"2029-10-12","created_at":"2025-12-02T06:00:18.790912Z","updated_at":"2025-12-02T06:00:18.790928Z","accreditation_type":1},{"id":3,"accreditation":"/media/accreditations/resume-and-cover-letter-examples.pdf","expire_date":null,"created_at":"2025-12-02T08:16:37.943766Z","updated_at":"2025-12-02T08:16:37.943780Z","accreditation_type":1},{"id":4,"accreditation":"/media/accreditations/resume-and-cover-letter-examples_cmByL9H.pdf","expire_date":null,"created_at":"2025-12-02T08:18:37.984800Z","updated_at":"2025-12-02T08:18:37.984813Z","accreditation_type":1},{"id":5,"accreditation":"/media/accreditations/quote_247_1765876109753.pdf","expire_date":null,"created_at":"2025-12-18T05:47:19.329059Z","updated_at":"2025-12-18T05:47:19.329070Z","accreditation_type":1},{"id":6,"accreditation":"/media/accreditations/quote_247_1765876109753_JPVdHub.pdf","expire_date":null,"created_at":"2025-12-18T05:56:38.076266Z","updated_at":"2025-12-18T05:56:38.076277Z","accreditation_type":1},{"id":7,"accreditation":"/media/accreditations/quote_247_1765876109753_CH5nHWZ.pdf","expire_date":null,"created_at":"2025-12-18T06:13:08.237638Z","updated_at":"2025-12-18T06:13:08.237650Z","accreditation_type":1},{"id":8,"accreditation":"/media/accreditations/quote_247_1765876109753_XJ939lJ.pdf","expire_date":null,"created_at":"2025-12-18T06:23:56.909106Z","updated_at":"2025-12-18T06:23:56.909162Z","accreditation_type":1},{"id":9,"accreditation":"/media/accreditations/quote_247_1765876109753_FkWluFf.pdf","expire_date":null,"created_at":"2025-12-18T08:09:16.110891Z","updated_at":"2025-12-18T08:09:16.110902Z","accreditation_type":1},{"id":10,"accreditation":"/media/accreditations/quote_247_1765876109753_VZHnyjv.pdf","expire_date":null,"created_at":"2025-12-18T08:25:10.006329Z","updated_at":"2025-12-18T08:25:10.006386Z","accreditation_type":1},{"id":11,"accreditation":"/media/accreditations/quote_247_1765876109753_Kwlcr0z.pdf","expire_date":null,"created_at":"2025-12-18T08:27:24.418646Z","updated_at":"2025-12-18T08:27:24.418659Z","accreditation_type":1},{"id":12,"accreditation":"/media/accreditations/quote_247_1765876109753_xXT7XGo.pdf","expire_date":null,"created_at":"2025-12-18T08:30:58.254860Z","updated_at":"2025-12-18T08:30:58.254871Z","accreditation_type":1}],"licences":[{"id":29,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/chatgpt-1756491429668.jpg"},{"file":"/media/licesces/chatgpt-1756491471064.jpg"}],"state_or_territory":"","expire_date":null},{"id":28,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG_20251218_020927_CkylHZR.jpg"},{"file":"/media/licesces/IMG_20251218_021010_BxSYDNy.jpg"}],"state_or_territory":"","expire_date":null},{"id":27,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG_20251218_020927_ULaHKWm.jpg"},{"file":"/media/licesces/IMG20251218020730_MbqKi1t.jpg"}],"state_or_territory":"","expire_date":null},{"id":26,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG_20251218_020927_NvRPeub.jpg"},{"file":"/media/licesces/IMG20251218020730_rPKgyMp.jpg"}],"state_or_territory":"","expire_date":null},{"id":25,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/Screenshot_20251128-103808.png"},{"file":"/media/licesces/Screenshot_20251128-102239.png"}],"state_or_territory":"","expire_date":null},{"id":24,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG20251218020728.jpg"},{"file":"/media/licesces/IMG20251218020730_2KnoWvU.jpg"}],"state_or_territory":"","expire_date":null},{"id":23,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG_20251218_020927.jpg"},{"file":"/media/licesces/IMG20251218020730.jpg"}],"state_or_territory":"","expire_date":null},{"id":22,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG_20251218_021010.jpg"},{"file":"/media/licesces/IMG20251119120300_NUzn06x.jpg"}],"state_or_territory":"","expire_date":null},{"id":21,"licence_type":3,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_1.jpeg"},{"file":"/media/licesces/images_FPDIjph.jpeg"}],"state_or_territory":"VIC","expire_date":"2000-01-31"},{"id":20,"licence_type":2,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_BQ2Po2u.jpeg"},{"file":"/media/licesces/images_2_yWnfeEt.jpeg"}],"state_or_territory":"VIC","expire_date":"2000-10-10"},{"id":19,"licence_type":2,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_ryVbthP.jpeg"},{"file":"/media/licesces/images_2_GPfVWvR.jpeg"}],"state_or_territory":"VIC","expire_date":"2000-10-10"},{"id":18,"licence_type":2,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_DwSK1Wx.jpeg"},{"file":"/media/licesces/images_2_nY8PhyI.jpeg"}],"state_or_territory":"VIC","expire_date":"2000-10-10"},{"id":17,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_gv8BLd6.jpeg"},{"file":"/media/licesces/images_2_P2m0Ir7.jpeg"}],"state_or_territory":"NSW","expire_date":"2000-10-10"},{"id":16,"licence_type":2,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_FmdVhho.jpeg"},{"file":"/media/licesces/images_2_LQFVPyw.jpeg"}],"state_or_territory":"NSW","expire_date":null},{"id":15,"licence_type":2,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_pIKJwFt.jpeg"},{"file":"/media/licesces/images_2_UJHkvPN.jpeg"}],"state_or_territory":"NSW","expire_date":null},{"id":14,"licence_type":2,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_eHI1qYl.jpeg"},{"file":"/media/licesces/images_2_XBXUl5G.jpeg"}],"state_or_territory":"NSW","expire_date":null},{"id":13,"licence_type":2,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_m7dX3jx.jpeg"},{"file":"/media/licesces/images_2_yGovmAf.jpeg"}],"state_or_territory":"NSW","expire_date":"2000-12-30"},{"id":12,"licence_type":2,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_RsG0UD6.jpeg"},{"file":"/media/licesces/images_2_euSsm3J.jpeg"}],"state_or_territory":"VIC","expire_date":"2000-01-01"},{"id":11,"licence_type":2,"licence_no":null,"licence_images":[{"file":"/media/licesces/images_xdqUDw2.jpeg"},{"file":"/media/licesces/images_2_UrkHdAN.jpeg"}],"state_or_territory":"VIC","expire_date":"2000-01-01"},{"id":10,"licence_type":2,"licence_no":null,"licence_images":[{"file":"/media/licesces/images.jpeg"},{"file":"/media/licesces/images_2.jpeg"}],"state_or_territory":"VIC","expire_date":"2000-01-01"},{"id":9,"licence_type":3,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG20251119120300_KwlsPsS.jpg"},{"file":"/media/licesces/Screenshot_20251116-230550_JmIetSd.png"}],"state_or_territory":"WA","expire_date":"2000-08-31"},{"id":8,"licence_type":3,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG20251119120300_K3KqqAN.jpg"},{"file":"/media/licesces/Screenshot_20251116-230550_1ciELBo.png"}],"state_or_territory":"WA","expire_date":"2000-08-31"},{"id":7,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG20251119120300_NRcX9KD.jpg"},{"file":"/media/licesces/Screenshot_20251116-230550_5vjny0P.png"}],"state_or_territory":"NSW","expire_date":"2000-08-31"},{"id":6,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/Screenshot_20251116-230512.png"},{"file":"/media/licesces/IMG20251119120300_EgJ8xyf.jpg"}],"state_or_territory":"NSW","expire_date":"2000-01-30"},{"id":5,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG20251119120300_XLvqOA5.jpg"},{"file":"/media/licesces/Screenshot_20251116-230550_ueIIwsF.png"}],"state_or_territory":"NSW","expire_date":"2000-01-30"},{"id":4,"licence_type":1,"licence_no":null,"licence_images":[{"file":"/media/licesces/IMG20251119120300.jpg"},{"file":"/media/licesces/Screenshot_20251116-230550.png"}],"state_or_territory":"NSW","expire_date":"2029-10-10"},{"id":3,"licence_type":null,"licence_no":null,"licence_images":[{"file":"/media/licesces/Dont_remove_Flutter_Sdk_or_any_sdk_iDqi8ZL.png"}],"state_or_territory":null,"expire_date":null},{"id":2,"licence_type":2,"licence_no":"LN-Dk0245","licence_images":[{"file":"/media/licesces/Dont_remove_Flutter_Sdk_or_any_sdk.png"}],"state_or_territory":"Dhaka, Bangladesh","expire_date":"2029-10-10"}]}
+library;
 
 class ProfileInfoModel {
   ProfileInfoModel({bool? success, String? message, Data? data}) {
@@ -14,17 +15,22 @@ class ProfileInfoModel {
     _message = json['message'];
     _data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
+
   bool? _success;
   String? _message;
   Data? _data;
+
   ProfileInfoModel copyWith({bool? success, String? message, Data? data}) =>
       ProfileInfoModel(
         success: success ?? _success,
         message: message ?? _message,
         data: data ?? _data,
       );
+
   bool? get success => _success;
+
   String? get message => _message;
+
   Data? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -128,6 +134,7 @@ class Data {
       });
     }
   }
+
   num? _id;
   String? _email;
   String? _phone;
@@ -146,6 +153,7 @@ class Data {
   String? _bankBranch;
   List<Accreditations>? _accreditations;
   List<Licences>? _licences;
+
   Data copyWith({
     num? id,
     String? email,
@@ -185,23 +193,41 @@ class Data {
     accreditations: accreditations ?? _accreditations,
     licences: licences ?? _licences,
   );
+
   num? get id => _id;
+
   String? get email => _email;
+
   String? get phone => _phone;
+
   bool? get isEmailVarified => _isEmailVarified;
+
   String? get image => _image;
+
   String? get userType => _userType;
+
   String? get gender => _gender;
+
   String? get language => _language;
+
   num? get exprienceInYears => _exprienceInYears;
+
   String? get exprienceSummary => _exprienceSummary;
+
   String? get address => _address;
+
   num? get userRedus => _userRedus;
+
   String? get bankName => _bankName;
+
   String? get accountHolderName => _accountHolderName;
+
   String? get accountNo => _accountNo;
+
   String? get bankBranch => _bankBranch;
+
   List<Accreditations>? get accreditations => _accreditations;
+
   List<Licences>? get licences => _licences;
 
   Map<String, dynamic> toJson() {
@@ -269,12 +295,14 @@ class Licences {
     _stateOrTerritory = json['state_or_territory'];
     _expireDate = json['expire_date'];
   }
+
   num? _id;
   num? _licenceType;
   dynamic _licenceNo;
   List<LicenceImages>? _licenceImages;
   String? _stateOrTerritory;
   dynamic _expireDate;
+
   Licences copyWith({
     num? id,
     num? licenceType,
@@ -290,11 +318,17 @@ class Licences {
     stateOrTerritory: stateOrTerritory ?? _stateOrTerritory,
     expireDate: expireDate ?? _expireDate,
   );
+
   num? get id => _id;
+
   num? get licenceType => _licenceType;
+
   dynamic get licenceNo => _licenceNo;
+
   List<LicenceImages>? get licenceImages => _licenceImages;
+
   String? get stateOrTerritory => _stateOrTerritory;
+
   dynamic get expireDate => _expireDate;
 
   Map<String, dynamic> toJson() {
@@ -321,8 +355,11 @@ class LicenceImages {
   LicenceImages.fromJson(dynamic json) {
     _file = json['file'];
   }
+
   String? _file;
+
   LicenceImages copyWith({String? file}) => LicenceImages(file: file ?? _file);
+
   String? get file => _file;
 
   Map<String, dynamic> toJson() {
@@ -364,12 +401,14 @@ class Accreditations {
     _updatedAt = json['updated_at'];
     _accreditationType = json['accreditation_type'];
   }
+
   num? _id;
   String? _accreditation;
   String? _expireDate;
   String? _createdAt;
   String? _updatedAt;
   num? _accreditationType;
+
   Accreditations copyWith({
     num? id,
     String? accreditation,
@@ -385,11 +424,17 @@ class Accreditations {
     updatedAt: updatedAt ?? _updatedAt,
     accreditationType: accreditationType ?? _accreditationType,
   );
+
   num? get id => _id;
+
   String? get accreditation => _accreditation;
+
   String? get expireDate => _expireDate;
+
   String? get createdAt => _createdAt;
+
   String? get updatedAt => _updatedAt;
+
   num? get accreditationType => _accreditationType;
 
   Map<String, dynamic> toJson() {

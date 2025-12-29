@@ -49,6 +49,8 @@ class ApiEndpoints {
 
   static const String cardUrl = "$_baseUrl/api/accounts/get-card-info/";
 
+  static const String jobHistoryUrl = "$_baseUrl/api/jobs/user_Jobs_history/";
+
   static const String referalListUrl =
       "$_baseUrl/api/accounts/user-refarral-users/";
 }

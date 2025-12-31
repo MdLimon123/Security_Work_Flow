@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
@@ -14,6 +16,8 @@ class HomePageController extends GetxController {
   bool profileInfoLoaded = true;
 
   bool fullPageLoading = false;
+
+  bool applyButtonLoading = false;
 
   DashBoardInfoModel dashBoardInfoModel = DashBoardInfoModel();
   ProfileInfoModel profileInfoModel = ProfileInfoModel();
@@ -173,6 +177,29 @@ class HomePageController extends GetxController {
         colorText: AppColors.primaryWhite,
       );
     }
+  }
+
+  Future<void> applyJob({required String jobId}) async {
+    applyButtonLoading = true;
+    update();
+
+    try {
+      DioClient dioClient = DioClient();
+
+      dynamic res = await dioClient.post(ApiEndpoints.applyJob(jobId: jobId));
+
+      log(res);
+    } on AppException catch (e) {
+      Get.snackbar(
+        "Error",
+        e.message,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    }
+
+    applyButtonLoading = false;
+    update();
   }
 
   @override

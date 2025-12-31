@@ -51,6 +51,9 @@ class ApiEndpoints {
 
   static const String jobHistoryUrl = "$_baseUrl/api/jobs/user_Jobs_history/";
 
+  static String applyJob({required String jobId}) =>
+      "$_baseUrl/api/jobs/user-job-posts/$jobId";
+
   static const String referalListUrl =
       "$_baseUrl/api/accounts/user-refarral-users/";
 }

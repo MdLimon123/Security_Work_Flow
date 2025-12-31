@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -240,7 +242,7 @@ class HomePage extends StatelessWidget {
                                 backgroundColor: AppColors.secondaryNavyBlue,
                                 foregroundColor: AppColors.primaryWhite,
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 Get.dialog(
                                   Material(
                                     color: Colors.black45,
@@ -324,7 +326,20 @@ class HomePage extends StatelessWidget {
                                                 const SizedBox(width: 10),
                                                 Expanded(
                                                   child: ElevatedButton(
-                                                    onPressed: () {},
+                                                    onPressed: () async {
+                                                      log(
+                                                        "job id ${controller.openJobListModel.results?[index].id.toString()}",
+                                                      );
+                                                      await controller.applyJob(
+                                                        jobId:
+                                                            controller
+                                                                .openJobListModel
+                                                                .results?[index]
+                                                                .id
+                                                                .toString() ??
+                                                            "",
+                                                      );
+                                                    },
                                                     style: ElevatedButton.styleFrom(
                                                       backgroundColor: AppColors
                                                           .primaryGreen,
@@ -337,9 +352,16 @@ class HomePage extends StatelessWidget {
                                                             ),
                                                       ),
                                                     ),
-                                                    child: const Text(
-                                                      "Confirm",
-                                                    ),
+                                                    child:
+                                                        controller
+                                                            .applyButtonLoading
+                                                        ? Center(
+                                                            child: CircularProgressIndicator(
+                                                              color: AppColors
+                                                                  .primaryWhite,
+                                                            ),
+                                                          )
+                                                        : Text("Confirm"),
                                                   ),
                                                 ),
                                               ],
@@ -351,7 +373,13 @@ class HomePage extends StatelessWidget {
                                   ),
                                 );
                               },
-                              child: Text("Apply"),
+                              child: controller.applyButtonLoading
+                                  ? Center(
+                                      child: CircularProgressIndicator(
+                                        color: AppColors.primaryWhite,
+                                      ),
+                                    )
+                                  : Text("Apply"),
                             ),
                           ),
                         ],

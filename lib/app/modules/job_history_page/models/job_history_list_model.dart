@@ -5,35 +5,40 @@
 
 class JobHistoryListModel {
   JobHistoryListModel({
-      num? count, 
-      dynamic next, 
-      dynamic previous, 
-      Results? results,}){
+    num? count,
+    dynamic next,
+    dynamic previous,
+    Results? results,
+  }) {
     _count = count;
     _next = next;
     _previous = previous;
     _results = results;
-}
+  }
 
   JobHistoryListModel.fromJson(dynamic json) {
     _count = json['count'];
     _next = json['next'];
     _previous = json['previous'];
-    _results = json['results'] != null ? Results.fromJson(json['results']) : null;
+    _results = json['results'] != null
+        ? Results.fromJson(json['results'])
+        : null;
   }
   num? _count;
   dynamic _next;
   dynamic _previous;
   Results? _results;
-JobHistoryListModel copyWith({  num? count,
-  dynamic next,
-  dynamic previous,
-  Results? results,
-}) => JobHistoryListModel(  count: count ?? _count,
-  next: next ?? _next,
-  previous: previous ?? _previous,
-  results: results ?? _results,
-);
+  JobHistoryListModel copyWith({
+    num? count,
+    dynamic next,
+    dynamic previous,
+    Results? results,
+  }) => JobHistoryListModel(
+    count: count ?? _count,
+    next: next ?? _next,
+    previous: previous ?? _previous,
+    results: results ?? _results,
+  );
   num? get count => _count;
   dynamic get next => _next;
   dynamic get previous => _previous;
@@ -49,7 +54,6 @@ JobHistoryListModel copyWith({  num? count,
     }
     return map;
   }
-
 }
 
 /// success : true
@@ -57,14 +61,11 @@ JobHistoryListModel copyWith({  num? count,
 /// my_jobs : [{"id":3,"job_details":{"id":8,"job_title":"Crown Control Operatives","job_provider":{"id":1,"company":{"id":1,"first_name":"ABN Secytiry Ltd.","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-29T11:09:21.377847Z","image":"/media/profile/securisive.png","last_activity":"2025-12-29T11:09:21.426080Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-12-23T08:48:47.363084Z","updated_at":"2025-12-29T06:24:52.919484Z"},"operative_trackers":"notstartyet","contacts_trackers":"pending","amend_trackers":"not_amend","amend_details":"","new_end_time":null,"total_amount":"250.00","new_job_duration":"0.00","signature_party_a":null,"signature_party_b":null}]
 
 class Results {
-  Results({
-      bool? success, 
-      String? message, 
-      List<MyJobs>? myJobs,}){
+  Results({bool? success, String? message, List<MyJobs>? myJobs}) {
     _success = success;
     _message = message;
     _myJobs = myJobs;
-}
+  }
 
   Results.fromJson(dynamic json) {
     _success = json['success'];
@@ -79,13 +80,12 @@ class Results {
   bool? _success;
   String? _message;
   List<MyJobs>? _myJobs;
-Results copyWith({  bool? success,
-  String? message,
-  List<MyJobs>? myJobs,
-}) => Results(  success: success ?? _success,
-  message: message ?? _message,
-  myJobs: myJobs ?? _myJobs,
-);
+  Results copyWith({bool? success, String? message, List<MyJobs>? myJobs}) =>
+      Results(
+        success: success ?? _success,
+        message: message ?? _message,
+        myJobs: myJobs ?? _myJobs,
+      );
   bool? get success => _success;
   String? get message => _message;
   List<MyJobs>? get myJobs => _myJobs;
@@ -99,7 +99,6 @@ Results copyWith({  bool? success,
     }
     return map;
   }
-
 }
 
 /// id : 3
@@ -116,17 +115,18 @@ Results copyWith({  bool? success,
 
 class MyJobs {
   MyJobs({
-      num? id, 
-      JobDetails? jobDetails, 
-      String? operativeTrackers, 
-      String? contactsTrackers, 
-      String? amendTrackers, 
-      String? amendDetails, 
-      dynamic newEndTime, 
-      String? totalAmount, 
-      String? newJobDuration, 
-      dynamic signaturePartyA, 
-      dynamic signaturePartyB,}){
+    num? id,
+    JobDetails? jobDetails,
+    String? operativeTrackers,
+    String? contactsTrackers,
+    String? amendTrackers,
+    String? amendDetails,
+    dynamic newEndTime,
+    String? totalAmount,
+    String? newJobDuration,
+    dynamic signaturePartyA,
+    dynamic signaturePartyB,
+  }) {
     _id = id;
     _jobDetails = jobDetails;
     _operativeTrackers = operativeTrackers;
@@ -138,11 +138,13 @@ class MyJobs {
     _newJobDuration = newJobDuration;
     _signaturePartyA = signaturePartyA;
     _signaturePartyB = signaturePartyB;
-}
+  }
 
   MyJobs.fromJson(dynamic json) {
     _id = json['id'];
-    _jobDetails = json['job_details'] != null ? JobDetails.fromJson(json['job_details']) : null;
+    _jobDetails = json['job_details'] != null
+        ? JobDetails.fromJson(json['job_details'])
+        : null;
     _operativeTrackers = json['operative_trackers'];
     _contactsTrackers = json['contacts_trackers'];
     _amendTrackers = json['amend_trackers'];
@@ -164,29 +166,31 @@ class MyJobs {
   String? _newJobDuration;
   dynamic _signaturePartyA;
   dynamic _signaturePartyB;
-MyJobs copyWith({  num? id,
-  JobDetails? jobDetails,
-  String? operativeTrackers,
-  String? contactsTrackers,
-  String? amendTrackers,
-  String? amendDetails,
-  dynamic newEndTime,
-  String? totalAmount,
-  String? newJobDuration,
-  dynamic signaturePartyA,
-  dynamic signaturePartyB,
-}) => MyJobs(  id: id ?? _id,
-  jobDetails: jobDetails ?? _jobDetails,
-  operativeTrackers: operativeTrackers ?? _operativeTrackers,
-  contactsTrackers: contactsTrackers ?? _contactsTrackers,
-  amendTrackers: amendTrackers ?? _amendTrackers,
-  amendDetails: amendDetails ?? _amendDetails,
-  newEndTime: newEndTime ?? _newEndTime,
-  totalAmount: totalAmount ?? _totalAmount,
-  newJobDuration: newJobDuration ?? _newJobDuration,
-  signaturePartyA: signaturePartyA ?? _signaturePartyA,
-  signaturePartyB: signaturePartyB ?? _signaturePartyB,
-);
+  MyJobs copyWith({
+    num? id,
+    JobDetails? jobDetails,
+    String? operativeTrackers,
+    String? contactsTrackers,
+    String? amendTrackers,
+    String? amendDetails,
+    dynamic newEndTime,
+    String? totalAmount,
+    String? newJobDuration,
+    dynamic signaturePartyA,
+    dynamic signaturePartyB,
+  }) => MyJobs(
+    id: id ?? _id,
+    jobDetails: jobDetails ?? _jobDetails,
+    operativeTrackers: operativeTrackers ?? _operativeTrackers,
+    contactsTrackers: contactsTrackers ?? _contactsTrackers,
+    amendTrackers: amendTrackers ?? _amendTrackers,
+    amendDetails: amendDetails ?? _amendDetails,
+    newEndTime: newEndTime ?? _newEndTime,
+    totalAmount: totalAmount ?? _totalAmount,
+    newJobDuration: newJobDuration ?? _newJobDuration,
+    signaturePartyA: signaturePartyA ?? _signaturePartyA,
+    signaturePartyB: signaturePartyB ?? _signaturePartyB,
+  );
   num? get id => _id;
   JobDetails? get jobDetails => _jobDetails;
   String? get operativeTrackers => _operativeTrackers;
@@ -216,7 +220,6 @@ MyJobs copyWith({  num? id,
     map['signature_party_b'] = _signaturePartyB;
     return map;
   }
-
 }
 
 /// id : 8
@@ -247,31 +250,32 @@ MyJobs copyWith({  num? id,
 
 class JobDetails {
   JobDetails({
-      num? id, 
-      String? jobTitle, 
-      JobProvider? jobProvider, 
-      num? latitude, 
-      num? longitude, 
-      String? address, 
-      String? jobDate, 
-      String? startTime, 
-      String? endTime, 
-      String? jobDuration, 
-      String? payType, 
-      String? payRate, 
-      num? operativeRequired, 
-      num? licenceTypeRequirements, 
-      num? minRatingRequirements, 
-      num? accreditationsRequirements, 
-      String? isPreferredGuard, 
-      String? genderRequirements, 
-      String? languageRequirements, 
-      String? status, 
-      String? engagementType, 
-      num? providentFund, 
-      String? jobDetails, 
-      String? createdAt, 
-      String? updatedAt,}){
+    num? id,
+    String? jobTitle,
+    JobProvider? jobProvider,
+    num? latitude,
+    num? longitude,
+    String? address,
+    String? jobDate,
+    String? startTime,
+    String? endTime,
+    String? jobDuration,
+    String? payType,
+    String? payRate,
+    num? operativeRequired,
+    num? licenceTypeRequirements,
+    num? minRatingRequirements,
+    num? accreditationsRequirements,
+    String? isPreferredGuard,
+    String? genderRequirements,
+    String? languageRequirements,
+    String? status,
+    String? engagementType,
+    num? providentFund,
+    String? jobDetails,
+    String? createdAt,
+    String? updatedAt,
+  }) {
     _id = id;
     _jobTitle = jobTitle;
     _jobProvider = jobProvider;
@@ -297,12 +301,14 @@ class JobDetails {
     _jobDetails = jobDetails;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
-}
+  }
 
   JobDetails.fromJson(dynamic json) {
     _id = json['id'];
     _jobTitle = json['job_title'];
-    _jobProvider = json['job_provider'] != null ? JobProvider.fromJson(json['job_provider']) : null;
+    _jobProvider = json['job_provider'] != null
+        ? JobProvider.fromJson(json['job_provider'])
+        : null;
     _latitude = json['latitude'];
     _longitude = json['longitude'];
     _address = json['address'];
@@ -351,57 +357,61 @@ class JobDetails {
   String? _jobDetails;
   String? _createdAt;
   String? _updatedAt;
-JobDetails copyWith({  num? id,
-  String? jobTitle,
-  JobProvider? jobProvider,
-  num? latitude,
-  num? longitude,
-  String? address,
-  String? jobDate,
-  String? startTime,
-  String? endTime,
-  String? jobDuration,
-  String? payType,
-  String? payRate,
-  num? operativeRequired,
-  num? licenceTypeRequirements,
-  num? minRatingRequirements,
-  num? accreditationsRequirements,
-  String? isPreferredGuard,
-  String? genderRequirements,
-  String? languageRequirements,
-  String? status,
-  String? engagementType,
-  num? providentFund,
-  String? jobDetails,
-  String? createdAt,
-  String? updatedAt,
-}) => JobDetails(  id: id ?? _id,
-  jobTitle: jobTitle ?? _jobTitle,
-  jobProvider: jobProvider ?? _jobProvider,
-  latitude: latitude ?? _latitude,
-  longitude: longitude ?? _longitude,
-  address: address ?? _address,
-  jobDate: jobDate ?? _jobDate,
-  startTime: startTime ?? _startTime,
-  endTime: endTime ?? _endTime,
-  jobDuration: jobDuration ?? _jobDuration,
-  payType: payType ?? _payType,
-  payRate: payRate ?? _payRate,
-  operativeRequired: operativeRequired ?? _operativeRequired,
-  licenceTypeRequirements: licenceTypeRequirements ?? _licenceTypeRequirements,
-  minRatingRequirements: minRatingRequirements ?? _minRatingRequirements,
-  accreditationsRequirements: accreditationsRequirements ?? _accreditationsRequirements,
-  isPreferredGuard: isPreferredGuard ?? _isPreferredGuard,
-  genderRequirements: genderRequirements ?? _genderRequirements,
-  languageRequirements: languageRequirements ?? _languageRequirements,
-  status: status ?? _status,
-  engagementType: engagementType ?? _engagementType,
-  providentFund: providentFund ?? _providentFund,
-  jobDetails: jobDetails ?? _jobDetails,
-  createdAt: createdAt ?? _createdAt,
-  updatedAt: updatedAt ?? _updatedAt,
-);
+  JobDetails copyWith({
+    num? id,
+    String? jobTitle,
+    JobProvider? jobProvider,
+    num? latitude,
+    num? longitude,
+    String? address,
+    String? jobDate,
+    String? startTime,
+    String? endTime,
+    String? jobDuration,
+    String? payType,
+    String? payRate,
+    num? operativeRequired,
+    num? licenceTypeRequirements,
+    num? minRatingRequirements,
+    num? accreditationsRequirements,
+    String? isPreferredGuard,
+    String? genderRequirements,
+    String? languageRequirements,
+    String? status,
+    String? engagementType,
+    num? providentFund,
+    String? jobDetails,
+    String? createdAt,
+    String? updatedAt,
+  }) => JobDetails(
+    id: id ?? _id,
+    jobTitle: jobTitle ?? _jobTitle,
+    jobProvider: jobProvider ?? _jobProvider,
+    latitude: latitude ?? _latitude,
+    longitude: longitude ?? _longitude,
+    address: address ?? _address,
+    jobDate: jobDate ?? _jobDate,
+    startTime: startTime ?? _startTime,
+    endTime: endTime ?? _endTime,
+    jobDuration: jobDuration ?? _jobDuration,
+    payType: payType ?? _payType,
+    payRate: payRate ?? _payRate,
+    operativeRequired: operativeRequired ?? _operativeRequired,
+    licenceTypeRequirements:
+        licenceTypeRequirements ?? _licenceTypeRequirements,
+    minRatingRequirements: minRatingRequirements ?? _minRatingRequirements,
+    accreditationsRequirements:
+        accreditationsRequirements ?? _accreditationsRequirements,
+    isPreferredGuard: isPreferredGuard ?? _isPreferredGuard,
+    genderRequirements: genderRequirements ?? _genderRequirements,
+    languageRequirements: languageRequirements ?? _languageRequirements,
+    status: status ?? _status,
+    engagementType: engagementType ?? _engagementType,
+    providentFund: providentFund ?? _providentFund,
+    jobDetails: jobDetails ?? _jobDetails,
+    createdAt: createdAt ?? _createdAt,
+    updatedAt: updatedAt ?? _updatedAt,
+  );
   num? get id => _id;
   String? get jobTitle => _jobTitle;
   JobProvider? get jobProvider => _jobProvider;
@@ -459,7 +469,6 @@ JobDetails copyWith({  num? id,
     map['updated_at'] = _updatedAt;
     return map;
   }
-
 }
 
 /// id : 1
@@ -475,16 +484,17 @@ JobDetails copyWith({  num? id,
 
 class JobProvider {
   JobProvider({
-      num? id, 
-      Company? company, 
-      dynamic companyName, 
-      dynamic phoneNumber, 
-      String? averageRatingMain, 
-      String? averageComunication, 
-      String? averageReliability, 
-      String? averagePayRate, 
-      String? averageProfessionalism, 
-      String? averageJobSupport,}){
+    num? id,
+    Company? company,
+    dynamic companyName,
+    dynamic phoneNumber,
+    String? averageRatingMain,
+    String? averageComunication,
+    String? averageReliability,
+    String? averagePayRate,
+    String? averageProfessionalism,
+    String? averageJobSupport,
+  }) {
     _id = id;
     _company = company;
     _companyName = companyName;
@@ -495,11 +505,13 @@ class JobProvider {
     _averagePayRate = averagePayRate;
     _averageProfessionalism = averageProfessionalism;
     _averageJobSupport = averageJobSupport;
-}
+  }
 
   JobProvider.fromJson(dynamic json) {
     _id = json['id'];
-    _company = json['company'] != null ? Company.fromJson(json['company']) : null;
+    _company = json['company'] != null
+        ? Company.fromJson(json['company'])
+        : null;
     _companyName = json['company_name'];
     _phoneNumber = json['phone_number'];
     _averageRatingMain = json['average_rating_main'];
@@ -519,27 +531,29 @@ class JobProvider {
   String? _averagePayRate;
   String? _averageProfessionalism;
   String? _averageJobSupport;
-JobProvider copyWith({  num? id,
-  Company? company,
-  dynamic companyName,
-  dynamic phoneNumber,
-  String? averageRatingMain,
-  String? averageComunication,
-  String? averageReliability,
-  String? averagePayRate,
-  String? averageProfessionalism,
-  String? averageJobSupport,
-}) => JobProvider(  id: id ?? _id,
-  company: company ?? _company,
-  companyName: companyName ?? _companyName,
-  phoneNumber: phoneNumber ?? _phoneNumber,
-  averageRatingMain: averageRatingMain ?? _averageRatingMain,
-  averageComunication: averageComunication ?? _averageComunication,
-  averageReliability: averageReliability ?? _averageReliability,
-  averagePayRate: averagePayRate ?? _averagePayRate,
-  averageProfessionalism: averageProfessionalism ?? _averageProfessionalism,
-  averageJobSupport: averageJobSupport ?? _averageJobSupport,
-);
+  JobProvider copyWith({
+    num? id,
+    Company? company,
+    dynamic companyName,
+    dynamic phoneNumber,
+    String? averageRatingMain,
+    String? averageComunication,
+    String? averageReliability,
+    String? averagePayRate,
+    String? averageProfessionalism,
+    String? averageJobSupport,
+  }) => JobProvider(
+    id: id ?? _id,
+    company: company ?? _company,
+    companyName: companyName ?? _companyName,
+    phoneNumber: phoneNumber ?? _phoneNumber,
+    averageRatingMain: averageRatingMain ?? _averageRatingMain,
+    averageComunication: averageComunication ?? _averageComunication,
+    averageReliability: averageReliability ?? _averageReliability,
+    averagePayRate: averagePayRate ?? _averagePayRate,
+    averageProfessionalism: averageProfessionalism ?? _averageProfessionalism,
+    averageJobSupport: averageJobSupport ?? _averageJobSupport,
+  );
   num? get id => _id;
   Company? get company => _company;
   dynamic get companyName => _companyName;
@@ -567,7 +581,6 @@ JobProvider copyWith({  num? id,
     map['average_job_support'] = _averageJobSupport;
     return map;
   }
-
 }
 
 /// id : 1
@@ -586,19 +599,20 @@ JobProvider copyWith({  num? id,
 
 class Company {
   Company({
-      num? id, 
-      String? firstName, 
-      String? email, 
-      bool? isEmailVarified, 
-      String? createAt, 
-      String? updatedAt, 
-      String? image, 
-      String? lastActivity, 
-      String? userType, 
-      String? gender, 
-      bool? isAdminAproved, 
-      bool? isAdminRejected, 
-      bool? isSubscribe,}){
+    num? id,
+    String? firstName,
+    String? email,
+    bool? isEmailVarified,
+    String? createAt,
+    String? updatedAt,
+    String? image,
+    String? lastActivity,
+    String? userType,
+    String? gender,
+    bool? isAdminAproved,
+    bool? isAdminRejected,
+    bool? isSubscribe,
+  }) {
     _id = id;
     _firstName = firstName;
     _email = email;
@@ -612,7 +626,7 @@ class Company {
     _isAdminAproved = isAdminAproved;
     _isAdminRejected = isAdminRejected;
     _isSubscribe = isSubscribe;
-}
+  }
 
   Company.fromJson(dynamic json) {
     _id = json['id'];
@@ -642,33 +656,35 @@ class Company {
   bool? _isAdminAproved;
   bool? _isAdminRejected;
   bool? _isSubscribe;
-Company copyWith({  num? id,
-  String? firstName,
-  String? email,
-  bool? isEmailVarified,
-  String? createAt,
-  String? updatedAt,
-  String? image,
-  String? lastActivity,
-  String? userType,
-  String? gender,
-  bool? isAdminAproved,
-  bool? isAdminRejected,
-  bool? isSubscribe,
-}) => Company(  id: id ?? _id,
-  firstName: firstName ?? _firstName,
-  email: email ?? _email,
-  isEmailVarified: isEmailVarified ?? _isEmailVarified,
-  createAt: createAt ?? _createAt,
-  updatedAt: updatedAt ?? _updatedAt,
-  image: image ?? _image,
-  lastActivity: lastActivity ?? _lastActivity,
-  userType: userType ?? _userType,
-  gender: gender ?? _gender,
-  isAdminAproved: isAdminAproved ?? _isAdminAproved,
-  isAdminRejected: isAdminRejected ?? _isAdminRejected,
-  isSubscribe: isSubscribe ?? _isSubscribe,
-);
+  Company copyWith({
+    num? id,
+    String? firstName,
+    String? email,
+    bool? isEmailVarified,
+    String? createAt,
+    String? updatedAt,
+    String? image,
+    String? lastActivity,
+    String? userType,
+    String? gender,
+    bool? isAdminAproved,
+    bool? isAdminRejected,
+    bool? isSubscribe,
+  }) => Company(
+    id: id ?? _id,
+    firstName: firstName ?? _firstName,
+    email: email ?? _email,
+    isEmailVarified: isEmailVarified ?? _isEmailVarified,
+    createAt: createAt ?? _createAt,
+    updatedAt: updatedAt ?? _updatedAt,
+    image: image ?? _image,
+    lastActivity: lastActivity ?? _lastActivity,
+    userType: userType ?? _userType,
+    gender: gender ?? _gender,
+    isAdminAproved: isAdminAproved ?? _isAdminAproved,
+    isAdminRejected: isAdminRejected ?? _isAdminRejected,
+    isSubscribe: isSubscribe ?? _isSubscribe,
+  );
   num? get id => _id;
   String? get firstName => _firstName;
   String? get email => _email;
@@ -700,5 +716,4 @@ Company copyWith({  num? id,
     map['is_subscribe'] = _isSubscribe;
     return map;
   }
-
 }

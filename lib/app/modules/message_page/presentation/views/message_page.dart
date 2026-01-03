@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/controllers/message_page_controller.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/views/message_inbox.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
@@ -82,7 +83,7 @@ class MessagePage extends StatelessWidget {
                       borderRadius: BorderRadiusGeometry.circular(100.r),
                       child: CachedNetworkImage(
                         imageUrl:
-                            "https://avatars.githubusercontent.com/u/69637820?v=4",
+                            "${ApiEndpoints.getBaseUrl}${controller.chatlistModel.data?[index].participants![0].image}",
                         width: 52.w,
                         height: 52.h,
                         errorWidget: (context, url, error) =>
@@ -94,6 +95,7 @@ class MessagePage extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(width: 4.w),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

@@ -104,7 +104,7 @@ class HomePage extends StatelessWidget {
                         children: [
                           CachedNetworkImage(
                             imageUrl:
-                                "${ApiEndpoints.getBaseUrl}${controller.openJobListModel.results?[index].jobProvider?.company?.image ?? ""}",
+                                "${ApiEndpoints.getBaseUrl}${controller.openJobListModel.data?[index].jobProvider?.company?.image ?? ""}",
                             errorWidget: (context, url, error) =>
                                 Icon(Icons.error, color: AppColors.primaryRed),
                             width: 46.w,
@@ -114,7 +114,7 @@ class HomePage extends StatelessWidget {
                           SizedBox(width: 12.w),
                           Expanded(
                             child: Text(
-                              "${controller.openJobListModel.results?[index].jobTitle}",
+                              "${controller.openJobListModel.data?[index].jobTitle}",
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 color: AppColors.secondaryNavyBlue,
@@ -143,7 +143,7 @@ class HomePage extends StatelessWidget {
                                   text:
                                       controller
                                           .openJobListModel
-                                          .results?[index]
+                                          .data?[index]
                                           .jobRole ??
                                       "N/A",
                                   style: TextStyle(
@@ -167,7 +167,7 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${controller.openJobListModel.results?[index].jobDate}",
+                                "${controller.openJobListModel.data?[index].jobDate}",
                                 style: TextStyle(
                                   color: AppColors.secondaryTextColor,
                                   fontSize: 12.sp,
@@ -188,7 +188,7 @@ class HomePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "\$${controller.openJobListModel.results?[index].payRate}",
+                                "\$${controller.openJobListModel.data?[index].payRate}",
                                 style: TextStyle(
                                   fontSize: 24.sp,
                                   color: AppColors.primaryOrange,
@@ -211,7 +211,7 @@ class HomePage extends StatelessWidget {
                                   AppRoutes.openJobsDetailsRoute,
                                   arguments: controller
                                       .openJobListModel
-                                      .results?[index]
+                                      .data?[index]
                                       .toJson(),
                                 );
                               },
@@ -329,13 +329,13 @@ class HomePage extends StatelessWidget {
                                                   child: ElevatedButton(
                                                     onPressed: () async {
                                                       log(
-                                                        "job id ${controller.openJobListModel.results?[index].id.toString()}",
+                                                        "job id ${controller.openJobListModel.data?[index].id.toString()}",
                                                       );
                                                       await controller.applyJob(
                                                         jobId:
                                                             controller
                                                                 .openJobListModel
-                                                                .results?[index]
+                                                                .data?[index]
                                                                 .id
                                                                 .toString() ??
                                                             "",
@@ -390,7 +390,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               separatorBuilder: (context, index) => SizedBox(height: 16.h),
-              itemCount: controller.openJobListModel.count?.toInt() ?? 0,
+              itemCount: controller.openJobListModel.data?.length ?? 0,
             );
           },
         ),

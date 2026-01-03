@@ -58,4 +58,6 @@ class ApiEndpoints {
       "$_baseUrl/api/accounts/user-refarral-users/";
 
   static const String chatListUrl = "$_baseUrl/api/chat-note/chat-list/?page=1";
+
+  static const String myJobListUrl = "$_baseUrl/api/jobs/user/my-jobs/";
 }

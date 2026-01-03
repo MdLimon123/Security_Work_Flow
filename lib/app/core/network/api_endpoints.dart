@@ -56,4 +56,6 @@ class ApiEndpoints {
 
   static const String referalListUrl =
       "$_baseUrl/api/accounts/user-refarral-users/";
+
+  static const String chatListUrl = "$_baseUrl/api/chat-note/chat-list/?page=1";
 }

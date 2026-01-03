@@ -156,6 +156,7 @@ class HomePage extends StatelessWidget {
                           ),
 
                           Spacer(),
+
                           Column(
                             children: [
                               Text(

@@ -1,6 +1,7 @@
 /// success : true
 /// message : "code fatched !"
 /// users : [{"id":18,"email":"mahid@gmail.com","first_name":"Nahid Rahman","phone":null,"is_email_varified":false,"user_type":"guard","is_subscribe":false,"is_earned":false,"gender":"","language":null,"address":"","create_at":"2025-12-29T06:59:30.411628Z"}]
+library;
 
 class MyReferListModel {
   MyReferListModel({bool? success, String? message, List<Users>? users}) {

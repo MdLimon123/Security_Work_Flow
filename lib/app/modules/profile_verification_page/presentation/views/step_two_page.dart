@@ -19,6 +19,22 @@ class StepTwoPage extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    controller.increasePageIndex();
+                  },
+                  child: Text(
+                    "Skip",
+                    style: TextStyle(color: AppColors.primaryOrange),
+                  ),
+                ),
+              ],
+            ),
+
             Text(
               "Personal Information",
               style: TextStyle(

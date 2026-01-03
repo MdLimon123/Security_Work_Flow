@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/data/models/job_details_model.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,7 +10,9 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class JobDetailsPage extends StatelessWidget {
-  const JobDetailsPage({super.key});
+  JobDetailsPage({super.key});
+
+  final JobDetailsModel jobDetailsModel = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,7 @@ class JobDetailsPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        "Security Company LTD",
+                        jobDetailsModel.jobDetails?.jobTitle ?? "",
                         style: TextStyle(
                           fontSize: 32.sp,
                           fontWeight: FontWeight.w600,
@@ -76,7 +79,7 @@ class JobDetailsPage extends StatelessWidget {
                     GestureDetector(
                       onTap: () async {
                         String googleMapsUrl =
-                            "https://www.google.com/maps?q=${23.780860837403864},${90.40757911256006}";
+                            "https://www.google.com/maps?q=${jobDetailsModel.jobDetails?.latitude},${jobDetailsModel.jobDetails?.longitude}";
                         if (await canLaunchUrl(Uri.parse(googleMapsUrl))) {
                           await launchUrl(Uri.parse(googleMapsUrl));
                         } else {
@@ -107,7 +110,7 @@ class JobDetailsPage extends StatelessWidget {
                     SizedBox(width: 8.w),
 
                     Text(
-                      " 28 King Street, Melbourne CBD, VIC 3000",
+                      " ${jobDetailsModel.jobDetails?.address}",
                       style: TextStyle(
                         color: AppColors.secondaryTextColor,
                         fontSize: 16.sp,
@@ -193,7 +196,7 @@ class JobDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "Night Security Guard",
+                      jobDetailsModel.jobDetails?.jobTitle ?? "",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -210,7 +213,7 @@ class JobDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "25 Sep, 2025",
+                      jobDetailsModel.jobDetails?.jobDate ?? "",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -227,7 +230,7 @@ class JobDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "18:30",
+                      "${jobDetailsModel.jobDetails?.startTime}",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -244,7 +247,7 @@ class JobDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "07:30",
+                      "${jobDetailsModel.jobDetails?.endTime}",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -261,7 +264,7 @@ class JobDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "10 Hours",
+                      "${jobDetailsModel.jobDetails?.jobDuration} Hours",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -278,7 +281,7 @@ class JobDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "\$13/hour",
+                      "\$${jobDetailsModel.jobDetails?.payRate}/hour",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -306,7 +309,7 @@ class JobDetailsPage extends StatelessWidget {
               style: TextStyle(color: AppColors.secondaryTextColor),
             ),
             Text(
-              "10:30 pm",
+              "${jobDetailsModel.jobDetails?.startTime}",
               style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
             ),
           ],
@@ -319,7 +322,7 @@ class JobDetailsPage extends StatelessWidget {
               style: TextStyle(color: AppColors.secondaryTextColor),
             ),
             Text(
-              "--- ",
+              "${jobDetailsModel.jobDetails?.endTime}",
               style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
             ),
           ],

@@ -34,4 +34,5 @@ abstract class AppRoutes {
   static const String myReferralUserRoute = "/myReferralUserRoute";
   static const String jobHistoryRoute = "/jobHistoryRoute";
   static const String customerSupportRoute = "/customerSupportRoute";
+  static const String messageInboxRoute = "/messageInboxRoute";
 }

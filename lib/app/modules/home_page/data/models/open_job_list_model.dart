@@ -1,16 +1,14 @@
 /// success : true
 /// message : "data fatched!"
 /// data : [{"id":12,"job_provider":{"id":2,"company":{"id":8,"first_name":"ABN Secytiry Ltd.","email":"abnsecuritysolution@abn.com","is_email_varified":true,"create_at":"2025-12-09T06:11:55.736877Z","updated_at":"2026-01-03T08:02:13.498848Z","image":null,"last_activity":"2026-01-03T08:56:12.958953Z","user_type":"company","gender":"male","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"afasdfv","job_role":"fvdsfv","latitude":23.7764608,"longitude":90.406912,"address":"fsdavsdf","job_date":"2026-01-03","job_expire":"2026-01-21","start_time":"15:44:00","end_time":"18:44:00","job_duration":"3.00","pay_type":"award","pay_rate":"23.00","operative_required":2,"licence_type_requirements":4,"min_rating_requirements":3,"accreditations_requirements":2,"is_preferred_guard":"yes","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"part-time","provident_fund":0,"job_details":"vfvsdf","created_at":"2026-01-03T08:48:32.456442Z","updated_at":"2026-01-03T08:48:32.456509Z"},{"id":11,"job_provider":{"id":2,"company":{"id":8,"first_name":"ABN Secytiry Ltd.","email":"abnsecuritysolution@abn.com","is_email_varified":true,"create_at":"2025-12-09T06:11:55.736877Z","updated_at":"2026-01-03T08:02:13.498848Z","image":null,"last_activity":"2026-01-03T08:56:12.958953Z","user_type":"company","gender":"male","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Crown Control Operatives","job_role":"Day Shift Operatives","latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":"2025-12-31","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2026-01-03T06:45:48.547686Z","updated_at":"2026-01-03T06:45:48.547696Z"},{"id":10,"job_provider":{"id":2,"company":{"id":8,"first_name":"ABN Secytiry Ltd.","email":"abnsecuritysolution@abn.com","is_email_varified":true,"create_at":"2025-12-09T06:11:55.736877Z","updated_at":"2026-01-03T08:02:13.498848Z","image":null,"last_activity":"2026-01-03T08:56:12.958953Z","user_type":"company","gender":"male","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Crown Control Operatives","job_role":"Day Shift Operatives","latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":"2025-12-31","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2026-01-03T06:45:47.598541Z","updated_at":"2026-01-03T06:45:47.598552Z"},{"id":9,"job_provider":{"id":2,"company":{"id":8,"first_name":"ABN Secytiry Ltd.","email":"abnsecuritysolution@abn.com","is_email_varified":true,"create_at":"2025-12-09T06:11:55.736877Z","updated_at":"2026-01-03T08:02:13.498848Z","image":null,"last_activity":"2026-01-03T08:56:12.958953Z","user_type":"company","gender":"male","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Crown Control Operatives","job_role":"Day Shift Operatives","latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":"2025-12-31","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2026-01-03T06:40:56.223371Z","updated_at":"2026-01-03T06:40:56.223382Z"},{"id":7,"job_provider":{"id":1,"company":{"id":1,"first_name":"ABN Secytiry Ltd.","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-29T11:09:21.377847Z","image":"/media/profile/securisive.png","last_activity":"2026-01-03T09:16:53.923412Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Crown Control Operatives","job_role":"Day Shift Operatives","latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":"2025-12-27","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-12-23T08:46:18.882417Z","updated_at":"2025-12-29T05:39:27.872061Z"},{"id":6,"job_provider":{"id":1,"company":{"id":1,"first_name":"ABN Secytiry Ltd.","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-29T11:09:21.377847Z","image":"/media/profile/securisive.png","last_activity":"2026-01-03T09:16:53.923412Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Crown Control Operatives","job_role":"Day Shift Operatives","latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":"2025-12-30","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-12-22T11:18:24.552514Z","updated_at":"2025-12-23T08:52:44.971086Z"},{"id":5,"job_provider":{"id":1,"company":{"id":1,"first_name":"ABN Secytiry Ltd.","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-29T11:09:21.377847Z","image":"/media/profile/securisive.png","last_activity":"2026-01-03T09:16:53.923412Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Crown Control Operatives Urgent","job_role":null,"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":"2025-12-25","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-11-17T04:47:03.395195Z","updated_at":"2026-01-01T05:32:15.146857Z"},{"id":4,"job_provider":{"id":1,"company":{"id":1,"first_name":"ABN Secytiry Ltd.","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-29T11:09:21.377847Z","image":"/media/profile/securisive.png","last_activity":"2026-01-03T09:16:53.923412Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"JR. Crown Control Operatives","job_role":null,"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":null,"start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-11-17T04:47:02.398249Z","updated_at":"2025-12-22T10:39:17.679823Z"},{"id":3,"job_provider":{"id":1,"company":{"id":1,"first_name":"ABN Secytiry Ltd.","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-29T11:09:21.377847Z","image":"/media/profile/securisive.png","last_activity":"2026-01-03T09:16:53.923412Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"SR. Crown Control Operatives","job_role":null,"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":"2025-12-22","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-11-17T04:47:01.495326Z","updated_at":"2025-12-23T08:53:00.481675Z"},{"id":2,"job_provider":{"id":1,"company":{"id":1,"first_name":"ABN Secytiry Ltd.","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-29T11:09:21.377847Z","image":"/media/profile/securisive.png","last_activity":"2026-01-03T09:16:53.923412Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"House Security","job_role":null,"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":"2025-12-22","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-11-17T04:46:59.792838Z","updated_at":"2025-12-23T08:53:06.539207Z"},{"id":1,"job_provider":{"id":1,"company":{"id":1,"first_name":"ABN Secytiry Ltd.","email":"email@gmail.com","is_email_varified":true,"create_at":"2025-11-15T11:16:38.878105Z","updated_at":"2025-12-29T11:09:21.377847Z","image":"/media/profile/securisive.png","last_activity":"2026-01-03T09:16:53.923412Z","user_type":"company","gender":"prefer_not_to_say","is_admin_aproved":true,"is_admin_rejected":false,"is_subscribe":true},"company_name":null,"phone_number":null,"average_rating_main":"0.00","average_comunication":"0.00","average_reliability":"0.00","average_pay_rate":"0.00","average_professionalism":"0.00","average_job_support":"0.00"},"job_title":"Strong Security Guard","job_role":null,"latitude":23.78521422,"longitude":90.9021522,"address":"Mohakhali, Dhaka, Bangladesh","job_date":"2025-12-10","job_expire":"2025-12-23","start_time":"10:00:00","end_time":"20:00:00","job_duration":"10.00","pay_type":"negotiation","pay_rate":"25.00","operative_required":15,"licence_type_requirements":1,"min_rating_requirements":3,"accreditations_requirements":1,"is_preferred_guard":"no","gender_requirements":"male","language_requirements":"english","status":"published","engagement_type":"casual","provident_fund":0,"job_details":"the quick brown fox jump over the alzy dog.The Quick Brown fox jump over the lazy deog. Tiger Security company","created_at":"2025-11-16T08:52:45.951404Z","updated_at":"2025-12-23T08:53:16.617498Z"}]
+library;
 
 class OpenJobListModel {
-  OpenJobListModel({
-      bool? success, 
-      String? message, 
-      List<Data>? data,}){
+  OpenJobListModel({bool? success, String? message, List<Data>? data}) {
     _success = success;
     _message = message;
     _data = data;
-}
+  }
 
   OpenJobListModel.fromJson(dynamic json) {
     _success = json['success'];
@@ -22,18 +20,25 @@ class OpenJobListModel {
       });
     }
   }
+
   bool? _success;
   String? _message;
   List<Data>? _data;
-OpenJobListModel copyWith({  bool? success,
-  String? message,
-  List<Data>? data,
-}) => OpenJobListModel(  success: success ?? _success,
-  message: message ?? _message,
-  data: data ?? _data,
-);
+
+  OpenJobListModel copyWith({
+    bool? success,
+    String? message,
+    List<Data>? data,
+  }) => OpenJobListModel(
+    success: success ?? _success,
+    message: message ?? _message,
+    data: data ?? _data,
+  );
+
   bool? get success => _success;
+
   String? get message => _message;
+
   List<Data>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -45,7 +50,6 @@ OpenJobListModel copyWith({  bool? success,
     }
     return map;
   }
-
 }
 
 /// id : 12
@@ -78,33 +82,34 @@ OpenJobListModel copyWith({  bool? success,
 
 class Data {
   Data({
-      num? id, 
-      JobProvider? jobProvider, 
-      String? jobTitle, 
-      String? jobRole, 
-      num? latitude, 
-      num? longitude, 
-      String? address, 
-      String? jobDate, 
-      String? jobExpire, 
-      String? startTime, 
-      String? endTime, 
-      String? jobDuration, 
-      String? payType, 
-      String? payRate, 
-      num? operativeRequired, 
-      num? licenceTypeRequirements, 
-      num? minRatingRequirements, 
-      num? accreditationsRequirements, 
-      String? isPreferredGuard, 
-      String? genderRequirements, 
-      String? languageRequirements, 
-      String? status, 
-      String? engagementType, 
-      num? providentFund, 
-      String? jobDetails, 
-      String? createdAt, 
-      String? updatedAt,}){
+    num? id,
+    JobProvider? jobProvider,
+    String? jobTitle,
+    String? jobRole,
+    num? latitude,
+    num? longitude,
+    String? address,
+    String? jobDate,
+    String? jobExpire,
+    String? startTime,
+    String? endTime,
+    String? jobDuration,
+    String? payType,
+    String? payRate,
+    num? operativeRequired,
+    num? licenceTypeRequirements,
+    num? minRatingRequirements,
+    num? accreditationsRequirements,
+    String? isPreferredGuard,
+    String? genderRequirements,
+    String? languageRequirements,
+    String? status,
+    String? engagementType,
+    num? providentFund,
+    String? jobDetails,
+    String? createdAt,
+    String? updatedAt,
+  }) {
     _id = id;
     _jobProvider = jobProvider;
     _jobTitle = jobTitle;
@@ -132,11 +137,13 @@ class Data {
     _jobDetails = jobDetails;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
-}
+  }
 
   Data.fromJson(dynamic json) {
     _id = json['id'];
-    _jobProvider = json['job_provider'] != null ? JobProvider.fromJson(json['job_provider']) : null;
+    _jobProvider = json['job_provider'] != null
+        ? JobProvider.fromJson(json['job_provider'])
+        : null;
     _jobTitle = json['job_title'];
     _jobRole = json['job_role'];
     _latitude = json['latitude'];
@@ -163,6 +170,7 @@ class Data {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
+
   num? _id;
   JobProvider? _jobProvider;
   String? _jobTitle;
@@ -190,87 +198,119 @@ class Data {
   String? _jobDetails;
   String? _createdAt;
   String? _updatedAt;
-Data copyWith({  num? id,
-  JobProvider? jobProvider,
-  String? jobTitle,
-  String? jobRole,
-  num? latitude,
-  num? longitude,
-  String? address,
-  String? jobDate,
-  String? jobExpire,
-  String? startTime,
-  String? endTime,
-  String? jobDuration,
-  String? payType,
-  String? payRate,
-  num? operativeRequired,
-  num? licenceTypeRequirements,
-  num? minRatingRequirements,
-  num? accreditationsRequirements,
-  String? isPreferredGuard,
-  String? genderRequirements,
-  String? languageRequirements,
-  String? status,
-  String? engagementType,
-  num? providentFund,
-  String? jobDetails,
-  String? createdAt,
-  String? updatedAt,
-}) => Data(  id: id ?? _id,
-  jobProvider: jobProvider ?? _jobProvider,
-  jobTitle: jobTitle ?? _jobTitle,
-  jobRole: jobRole ?? _jobRole,
-  latitude: latitude ?? _latitude,
-  longitude: longitude ?? _longitude,
-  address: address ?? _address,
-  jobDate: jobDate ?? _jobDate,
-  jobExpire: jobExpire ?? _jobExpire,
-  startTime: startTime ?? _startTime,
-  endTime: endTime ?? _endTime,
-  jobDuration: jobDuration ?? _jobDuration,
-  payType: payType ?? _payType,
-  payRate: payRate ?? _payRate,
-  operativeRequired: operativeRequired ?? _operativeRequired,
-  licenceTypeRequirements: licenceTypeRequirements ?? _licenceTypeRequirements,
-  minRatingRequirements: minRatingRequirements ?? _minRatingRequirements,
-  accreditationsRequirements: accreditationsRequirements ?? _accreditationsRequirements,
-  isPreferredGuard: isPreferredGuard ?? _isPreferredGuard,
-  genderRequirements: genderRequirements ?? _genderRequirements,
-  languageRequirements: languageRequirements ?? _languageRequirements,
-  status: status ?? _status,
-  engagementType: engagementType ?? _engagementType,
-  providentFund: providentFund ?? _providentFund,
-  jobDetails: jobDetails ?? _jobDetails,
-  createdAt: createdAt ?? _createdAt,
-  updatedAt: updatedAt ?? _updatedAt,
-);
+
+  Data copyWith({
+    num? id,
+    JobProvider? jobProvider,
+    String? jobTitle,
+    String? jobRole,
+    num? latitude,
+    num? longitude,
+    String? address,
+    String? jobDate,
+    String? jobExpire,
+    String? startTime,
+    String? endTime,
+    String? jobDuration,
+    String? payType,
+    String? payRate,
+    num? operativeRequired,
+    num? licenceTypeRequirements,
+    num? minRatingRequirements,
+    num? accreditationsRequirements,
+    String? isPreferredGuard,
+    String? genderRequirements,
+    String? languageRequirements,
+    String? status,
+    String? engagementType,
+    num? providentFund,
+    String? jobDetails,
+    String? createdAt,
+    String? updatedAt,
+  }) => Data(
+    id: id ?? _id,
+    jobProvider: jobProvider ?? _jobProvider,
+    jobTitle: jobTitle ?? _jobTitle,
+    jobRole: jobRole ?? _jobRole,
+    latitude: latitude ?? _latitude,
+    longitude: longitude ?? _longitude,
+    address: address ?? _address,
+    jobDate: jobDate ?? _jobDate,
+    jobExpire: jobExpire ?? _jobExpire,
+    startTime: startTime ?? _startTime,
+    endTime: endTime ?? _endTime,
+    jobDuration: jobDuration ?? _jobDuration,
+    payType: payType ?? _payType,
+    payRate: payRate ?? _payRate,
+    operativeRequired: operativeRequired ?? _operativeRequired,
+    licenceTypeRequirements:
+        licenceTypeRequirements ?? _licenceTypeRequirements,
+    minRatingRequirements: minRatingRequirements ?? _minRatingRequirements,
+    accreditationsRequirements:
+        accreditationsRequirements ?? _accreditationsRequirements,
+    isPreferredGuard: isPreferredGuard ?? _isPreferredGuard,
+    genderRequirements: genderRequirements ?? _genderRequirements,
+    languageRequirements: languageRequirements ?? _languageRequirements,
+    status: status ?? _status,
+    engagementType: engagementType ?? _engagementType,
+    providentFund: providentFund ?? _providentFund,
+    jobDetails: jobDetails ?? _jobDetails,
+    createdAt: createdAt ?? _createdAt,
+    updatedAt: updatedAt ?? _updatedAt,
+  );
+
   num? get id => _id;
+
   JobProvider? get jobProvider => _jobProvider;
+
   String? get jobTitle => _jobTitle;
+
   String? get jobRole => _jobRole;
+
   num? get latitude => _latitude;
+
   num? get longitude => _longitude;
+
   String? get address => _address;
+
   String? get jobDate => _jobDate;
+
   String? get jobExpire => _jobExpire;
+
   String? get startTime => _startTime;
+
   String? get endTime => _endTime;
+
   String? get jobDuration => _jobDuration;
+
   String? get payType => _payType;
+
   String? get payRate => _payRate;
+
   num? get operativeRequired => _operativeRequired;
+
   num? get licenceTypeRequirements => _licenceTypeRequirements;
+
   num? get minRatingRequirements => _minRatingRequirements;
+
   num? get accreditationsRequirements => _accreditationsRequirements;
+
   String? get isPreferredGuard => _isPreferredGuard;
+
   String? get genderRequirements => _genderRequirements;
+
   String? get languageRequirements => _languageRequirements;
+
   String? get status => _status;
+
   String? get engagementType => _engagementType;
+
   num? get providentFund => _providentFund;
+
   String? get jobDetails => _jobDetails;
+
   String? get createdAt => _createdAt;
+
   String? get updatedAt => _updatedAt;
 
   Map<String, dynamic> toJson() {
@@ -306,7 +346,6 @@ Data copyWith({  num? id,
     map['updated_at'] = _updatedAt;
     return map;
   }
-
 }
 
 /// id : 2
@@ -322,16 +361,17 @@ Data copyWith({  num? id,
 
 class JobProvider {
   JobProvider({
-      num? id, 
-      Company? company, 
-      dynamic companyName, 
-      dynamic phoneNumber, 
-      String? averageRatingMain, 
-      String? averageComunication, 
-      String? averageReliability, 
-      String? averagePayRate, 
-      String? averageProfessionalism, 
-      String? averageJobSupport,}){
+    num? id,
+    Company? company,
+    dynamic companyName,
+    dynamic phoneNumber,
+    String? averageRatingMain,
+    String? averageComunication,
+    String? averageReliability,
+    String? averagePayRate,
+    String? averageProfessionalism,
+    String? averageJobSupport,
+  }) {
     _id = id;
     _company = company;
     _companyName = companyName;
@@ -342,11 +382,13 @@ class JobProvider {
     _averagePayRate = averagePayRate;
     _averageProfessionalism = averageProfessionalism;
     _averageJobSupport = averageJobSupport;
-}
+  }
 
   JobProvider.fromJson(dynamic json) {
     _id = json['id'];
-    _company = json['company'] != null ? Company.fromJson(json['company']) : null;
+    _company = json['company'] != null
+        ? Company.fromJson(json['company'])
+        : null;
     _companyName = json['company_name'];
     _phoneNumber = json['phone_number'];
     _averageRatingMain = json['average_rating_main'];
@@ -356,6 +398,7 @@ class JobProvider {
     _averageProfessionalism = json['average_professionalism'];
     _averageJobSupport = json['average_job_support'];
   }
+
   num? _id;
   Company? _company;
   dynamic _companyName;
@@ -366,36 +409,49 @@ class JobProvider {
   String? _averagePayRate;
   String? _averageProfessionalism;
   String? _averageJobSupport;
-JobProvider copyWith({  num? id,
-  Company? company,
-  dynamic companyName,
-  dynamic phoneNumber,
-  String? averageRatingMain,
-  String? averageComunication,
-  String? averageReliability,
-  String? averagePayRate,
-  String? averageProfessionalism,
-  String? averageJobSupport,
-}) => JobProvider(  id: id ?? _id,
-  company: company ?? _company,
-  companyName: companyName ?? _companyName,
-  phoneNumber: phoneNumber ?? _phoneNumber,
-  averageRatingMain: averageRatingMain ?? _averageRatingMain,
-  averageComunication: averageComunication ?? _averageComunication,
-  averageReliability: averageReliability ?? _averageReliability,
-  averagePayRate: averagePayRate ?? _averagePayRate,
-  averageProfessionalism: averageProfessionalism ?? _averageProfessionalism,
-  averageJobSupport: averageJobSupport ?? _averageJobSupport,
-);
+
+  JobProvider copyWith({
+    num? id,
+    Company? company,
+    dynamic companyName,
+    dynamic phoneNumber,
+    String? averageRatingMain,
+    String? averageComunication,
+    String? averageReliability,
+    String? averagePayRate,
+    String? averageProfessionalism,
+    String? averageJobSupport,
+  }) => JobProvider(
+    id: id ?? _id,
+    company: company ?? _company,
+    companyName: companyName ?? _companyName,
+    phoneNumber: phoneNumber ?? _phoneNumber,
+    averageRatingMain: averageRatingMain ?? _averageRatingMain,
+    averageComunication: averageComunication ?? _averageComunication,
+    averageReliability: averageReliability ?? _averageReliability,
+    averagePayRate: averagePayRate ?? _averagePayRate,
+    averageProfessionalism: averageProfessionalism ?? _averageProfessionalism,
+    averageJobSupport: averageJobSupport ?? _averageJobSupport,
+  );
+
   num? get id => _id;
+
   Company? get company => _company;
+
   dynamic get companyName => _companyName;
+
   dynamic get phoneNumber => _phoneNumber;
+
   String? get averageRatingMain => _averageRatingMain;
+
   String? get averageComunication => _averageComunication;
+
   String? get averageReliability => _averageReliability;
+
   String? get averagePayRate => _averagePayRate;
+
   String? get averageProfessionalism => _averageProfessionalism;
+
   String? get averageJobSupport => _averageJobSupport;
 
   Map<String, dynamic> toJson() {
@@ -414,7 +470,6 @@ JobProvider copyWith({  num? id,
     map['average_job_support'] = _averageJobSupport;
     return map;
   }
-
 }
 
 /// id : 8
@@ -433,19 +488,20 @@ JobProvider copyWith({  num? id,
 
 class Company {
   Company({
-      num? id, 
-      String? firstName, 
-      String? email, 
-      bool? isEmailVarified, 
-      String? createAt, 
-      String? updatedAt, 
-      dynamic image, 
-      String? lastActivity, 
-      String? userType, 
-      String? gender, 
-      bool? isAdminAproved, 
-      bool? isAdminRejected, 
-      bool? isSubscribe,}){
+    num? id,
+    String? firstName,
+    String? email,
+    bool? isEmailVarified,
+    String? createAt,
+    String? updatedAt,
+    dynamic image,
+    String? lastActivity,
+    String? userType,
+    String? gender,
+    bool? isAdminAproved,
+    bool? isAdminRejected,
+    bool? isSubscribe,
+  }) {
     _id = id;
     _firstName = firstName;
     _email = email;
@@ -459,7 +515,7 @@ class Company {
     _isAdminAproved = isAdminAproved;
     _isAdminRejected = isAdminRejected;
     _isSubscribe = isSubscribe;
-}
+  }
 
   Company.fromJson(dynamic json) {
     _id = json['id'];
@@ -476,6 +532,7 @@ class Company {
     _isAdminRejected = json['is_admin_rejected'];
     _isSubscribe = json['is_subscribe'];
   }
+
   num? _id;
   String? _firstName;
   String? _email;
@@ -489,45 +546,61 @@ class Company {
   bool? _isAdminAproved;
   bool? _isAdminRejected;
   bool? _isSubscribe;
-Company copyWith({  num? id,
-  String? firstName,
-  String? email,
-  bool? isEmailVarified,
-  String? createAt,
-  String? updatedAt,
-  dynamic image,
-  String? lastActivity,
-  String? userType,
-  String? gender,
-  bool? isAdminAproved,
-  bool? isAdminRejected,
-  bool? isSubscribe,
-}) => Company(  id: id ?? _id,
-  firstName: firstName ?? _firstName,
-  email: email ?? _email,
-  isEmailVarified: isEmailVarified ?? _isEmailVarified,
-  createAt: createAt ?? _createAt,
-  updatedAt: updatedAt ?? _updatedAt,
-  image: image ?? _image,
-  lastActivity: lastActivity ?? _lastActivity,
-  userType: userType ?? _userType,
-  gender: gender ?? _gender,
-  isAdminAproved: isAdminAproved ?? _isAdminAproved,
-  isAdminRejected: isAdminRejected ?? _isAdminRejected,
-  isSubscribe: isSubscribe ?? _isSubscribe,
-);
+
+  Company copyWith({
+    num? id,
+    String? firstName,
+    String? email,
+    bool? isEmailVarified,
+    String? createAt,
+    String? updatedAt,
+    dynamic image,
+    String? lastActivity,
+    String? userType,
+    String? gender,
+    bool? isAdminAproved,
+    bool? isAdminRejected,
+    bool? isSubscribe,
+  }) => Company(
+    id: id ?? _id,
+    firstName: firstName ?? _firstName,
+    email: email ?? _email,
+    isEmailVarified: isEmailVarified ?? _isEmailVarified,
+    createAt: createAt ?? _createAt,
+    updatedAt: updatedAt ?? _updatedAt,
+    image: image ?? _image,
+    lastActivity: lastActivity ?? _lastActivity,
+    userType: userType ?? _userType,
+    gender: gender ?? _gender,
+    isAdminAproved: isAdminAproved ?? _isAdminAproved,
+    isAdminRejected: isAdminRejected ?? _isAdminRejected,
+    isSubscribe: isSubscribe ?? _isSubscribe,
+  );
+
   num? get id => _id;
+
   String? get firstName => _firstName;
+
   String? get email => _email;
+
   bool? get isEmailVarified => _isEmailVarified;
+
   String? get createAt => _createAt;
+
   String? get updatedAt => _updatedAt;
+
   dynamic get image => _image;
+
   String? get lastActivity => _lastActivity;
+
   String? get userType => _userType;
+
   String? get gender => _gender;
+
   bool? get isAdminAproved => _isAdminAproved;
+
   bool? get isAdminRejected => _isAdminRejected;
+
   bool? get isSubscribe => _isSubscribe;
 
   Map<String, dynamic> toJson() {
@@ -547,5 +620,4 @@ Company copyWith({  num? id,
     map['is_subscribe'] = _isSubscribe;
     return map;
   }
-
 }

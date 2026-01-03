@@ -25,6 +25,7 @@ import 'package:flutter_security_workforce/app/modules/job_history_page/presenta
 import 'package:flutter_security_workforce/app/modules/license_and_certificates_page/binding/license_and_certificates_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/license_and_certificates_page/views/license_and_certificates_page.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/binding/message_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/message_page/presentation/views/message_inbox.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/views/message_page.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/binding/my_jobs_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/views/my_jobs_page.dart';
@@ -265,6 +266,12 @@ class AppPages {
       name: AppRoutes.customerSupportRoute,
       page: () => CustomerSupportPage(),
       binding: CustomerSupportPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.messageInboxRoute,
+      page: () => MessageInbox(),
+      binding: MessagePageBinding(),
     ),
   ];
 }

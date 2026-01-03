@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/controllers/message_page_controller.dart';
-import 'package:flutter_security_workforce/app/modules/message_page/presentation/views/message_inbox.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:web_socket_channel/io.dart';
 
 class MessagePage extends StatelessWidget {
   const MessagePage({super.key});
@@ -73,8 +73,17 @@ class MessagePage extends StatelessWidget {
                 // Handle parsing error if needed
               }
               return InkWell(
-                onTap: () {
-                  Get.to(MessageInbox());
+                onTap: () async {
+                  // Get.to(MessageInbox(),);
+
+                  Get.toNamed(
+                    AppRoutes.messageInboxRoute,
+                    arguments: {
+                      "socket_channel": IOWebSocketChannel.connect(
+                        await controller.getWebSocketLink(),
+                      ),
+                    },
+                  );
                 },
                 child: Row(
                   children: [

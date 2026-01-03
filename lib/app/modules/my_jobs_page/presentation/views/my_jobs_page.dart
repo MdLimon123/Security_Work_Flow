@@ -105,18 +105,18 @@ class MyJobsPage extends StatelessWidget {
 
                               Spacer(),
 
-                              Chip(
-                                label: Text(
-                                  "On duty",
-                                  style: TextStyle(
-                                    color: AppColors.primaryGreen,
-                                  ),
-                                ),
-
-                                color: WidgetStatePropertyAll(
-                                  AppColors.primaryGreen.withValues(alpha: .2),
-                                ),
-                              ),
+                              // Chip(
+                              //   label: Text(
+                              //     "On duty",
+                              //     style: TextStyle(
+                              //       color: AppColors.primaryGreen,
+                              //     ),
+                              //   ),
+                              //
+                              //   color: WidgetStatePropertyAll(
+                              //     AppColors.primaryGreen.withValues(alpha: .2),
+                              //   ),
+                              // ),
                             ],
                           ),
 

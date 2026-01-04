@@ -24,13 +24,26 @@ class ChatMessage {
   });
 
   factory ChatMessage.fromJson(Map<String, dynamic> json, String currentUserId) {
+    // Handle sender information - could be an object or just an ID
+    String? senderId;
+    if (json['sender'] != null && json['sender'] is Map) {
+      senderId = json['sender']['id']?.toString();
+    } else if (json['sender_id'] != null) {
+      senderId = json['sender_id']?.toString();
+    }
+
+    final isMe = senderId == currentUserId;
+    debugPrint('Message from sender: $senderId, current user: $currentUserId, isMe: $isMe');
+
     return ChatMessage(
       text: json['message'] ?? json['text'] ?? '',
-      isMe: json['sender_id']?.toString() == currentUserId,
+      isMe: isMe,
       timestamp: json['timestamp'] != null
           ? DateTime.parse(json['timestamp'])
-          : DateTime.now(),
-      senderId: json['sender_id']?.toString(),
+          : json['created_at'] != null
+              ? DateTime.parse(json['created_at'])
+              : DateTime.now(),
+      senderId: senderId,
     );
   }
 }
@@ -53,8 +66,12 @@ class MessageInboxPageController extends GetxController {
   void onInit() {
     super.onInit();
     _initializeFromArguments();
-    _loadCurrentUserId();
-    _fetchMessageHistory();
+    _initializeController();
+  }
+
+  Future<void> _initializeController() async {
+    await _loadCurrentUserId();
+    await _fetchMessageHistory();
     _initializeWebSocket();
   }
 
@@ -68,8 +85,17 @@ class MessageInboxPageController extends GetxController {
 
   Future<void> _loadCurrentUserId() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      currentUserId = prefs.getString(AppKeys.userIdKey) ?? '';
+      DioClient dioClient = DioClient();
+      final response = await dioClient.get(ApiEndpoints.profileInfoUrl);
+      
+      if (response['success'] == true && response['data'] != null) {
+        currentUserId = response['data']['id']?.toString() ?? '';
+        debugPrint('Loaded current user ID from profile: $currentUserId');
+      } else {
+        debugPrint('Failed to load user profile');
+      }
+    } on AppException catch (e) {
+      debugPrint('Error loading user profile: ${e.message}');
     } catch (e) {
       debugPrint('Error loading user ID: $e');
     }
@@ -91,6 +117,8 @@ class MessageInboxPageController extends GetxController {
         List<dynamic> messageList = response['data'] ?? [];
         messages.value = messageList
             .map((msg) => ChatMessage.fromJson(msg, currentUserId))
+            .toList()
+            .reversed  // Reverse to show oldest first, newest last
             .toList();
 
         Future.delayed(Duration(milliseconds: 100), () {

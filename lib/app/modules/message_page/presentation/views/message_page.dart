@@ -84,7 +84,10 @@ class MessagePage extends StatelessWidget {
                       'participant_name': chatData.participants?[0].firstName ?? 'Unknown',
                       'participant_image': chatData.participants?[0].image ?? '',
                     },
-                  );
+                  )?.then((_) {
+                    // Refresh chat list when returning from conversation
+                    controller.fetchChatList();
+                  });
                 },
                 child: Row(
                   children: [

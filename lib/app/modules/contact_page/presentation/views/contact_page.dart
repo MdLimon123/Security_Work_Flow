@@ -20,7 +20,7 @@ class ContactPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
                 children: [
-                  _buildHeaderSection(controller),
+                  // _buildHeaderSection(controller),
                   SizedBox(height: 13.h),
                   _buildNewContactAmendContactSelection(),
                   SizedBox(height: 29.h),

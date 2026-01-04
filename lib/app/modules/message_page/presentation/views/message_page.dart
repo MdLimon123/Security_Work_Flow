@@ -7,7 +7,7 @@ import 'package:flutter_security_workforce/app/modules/message_page/presentation
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:web_socket_channel/io.dart';
+
 
 class MessagePage extends StatelessWidget {
   const MessagePage({super.key});
@@ -73,15 +73,16 @@ class MessagePage extends StatelessWidget {
                 // Handle parsing error if needed
               }
               return InkWell(
-                onTap: () async {
-                  // Get.to(MessageInbox(),);
+                onTap: () {
+                  final chatData = controller.chatlistModel.data?[index];
+                  if (chatData == null) return;
 
                   Get.toNamed(
                     AppRoutes.messageInboxRoute,
                     arguments: {
-                      "socket_channel": IOWebSocketChannel.connect(
-                        await controller.getWebSocketLink(),
-                      ),
+                      'conversation_id': chatData.id?.toString() ?? '',
+                      'participant_name': chatData.participants?[0].firstName ?? 'Unknown',
+                      'participant_image': chatData.participants?[0].image ?? '',
                     },
                   );
                 },

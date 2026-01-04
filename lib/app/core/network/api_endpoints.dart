@@ -59,6 +59,9 @@ class ApiEndpoints {
 
   static const String chatListUrl = "$_baseUrl/api/chat-note/chat-list/?page=1";
 
+  static String getMessageHistoryUrl({required String conversationId}) =>
+      "$_baseUrl/api/chat-note/messages/$conversationId/";
+
   static const String myJobListUrl = "$_baseUrl/api/jobs/user/my-jobs/";
 
   static String chatSocketUrl({required String token}) =>

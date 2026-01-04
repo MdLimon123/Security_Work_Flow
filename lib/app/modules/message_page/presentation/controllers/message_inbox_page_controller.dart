@@ -1,6 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/constants/app_keys.dart';
+import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
+import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChatMessage {
@@ -37,43 +44,119 @@ class MessageInboxPageController extends GetxController {
   RxBool isConnected = false.obs;
   RxBool isLoading = true.obs;
 
-  String currentUserId = "6"; // Get this from your auth system
+  String currentUserId = "";
+  String conversationId = "";
+  String participantName = "";
+  String participantImage = "";
 
   @override
   void onInit() {
     super.onInit();
-    // Get socket channel from arguments
-    if (Get.arguments != null && Get.arguments['socket_channel'] != null) {
-      socketChannel = Get.arguments['socket_channel'];
-      _initializeWebSocket();
+    _initializeFromArguments();
+    _loadCurrentUserId();
+    _fetchMessageHistory();
+    _initializeWebSocket();
+  }
+
+  void _initializeFromArguments() {
+    if (Get.arguments != null) {
+      conversationId = Get.arguments['conversation_id']?.toString() ?? '';
+      participantName = Get.arguments['participant_name']?.toString() ?? 'Unknown';
+      participantImage = Get.arguments['participant_image']?.toString() ?? '';
     }
   }
 
-  void _initializeWebSocket() {
-    if (socketChannel == null) return;
+  Future<void> _loadCurrentUserId() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      currentUserId = prefs.getString(AppKeys.userIdKey) ?? '';
+    } catch (e) {
+      debugPrint('Error loading user ID: $e');
+    }
+  }
 
-    isConnected.value = true;
-    isLoading.value = false;
+  Future<void> _fetchMessageHistory() async {
+    if (conversationId.isEmpty) {
+      isLoading.value = false;
+      return;
+    }
 
-    // Listen to incoming messages
-    socketChannel!.stream.listen(
-          (data) {
-        _handleIncomingMessage(data);
-      },
-      onError: (error) {
-        print('WebSocket Error: $error');
-        isConnected.value = false;
-      },
-      onDone: () {
-        print('WebSocket connection closed');
-        isConnected.value = false;
-      },
-    );
+    try {
+      DioClient dioClient = DioClient();
+      final response = await dioClient.get(
+        ApiEndpoints.getMessageHistoryUrl(conversationId: conversationId),
+      );
+
+      if (response['success'] == true && response['data'] != null) {
+        List<dynamic> messageList = response['data'] ?? [];
+        messages.value = messageList
+            .map((msg) => ChatMessage.fromJson(msg, currentUserId))
+            .toList();
+
+        Future.delayed(Duration(milliseconds: 100), () {
+          _scrollToBottom();
+        });
+      }
+    } on AppException catch (e) {
+      Get.snackbar(
+        'Error',
+        e.message,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    } catch (e) {
+      debugPrint('Error fetching message history: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> _initializeWebSocket() async {
+    if (conversationId.isEmpty) return;
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(AppKeys.accessTokenKey) ?? '';
+
+      final wsUrl = ApiEndpoints.chatSocketUrl(token: token);
+
+      socketChannel = IOWebSocketChannel.connect(Uri.parse(wsUrl));
+      isConnected.value = true;
+
+      // Listen to incoming messages
+      socketChannel!.stream.listen(
+        (data) {
+          _handleIncomingMessage(data);
+        },
+        onError: (error) {
+          debugPrint('WebSocket Error: $error');
+          isConnected.value = false;
+          _attemptReconnection();
+        },
+        onDone: () {
+          debugPrint('WebSocket connection closed');
+          isConnected.value = false;
+          _attemptReconnection();
+        },
+      );
+    } catch (e) {
+      debugPrint('Error initializing WebSocket: $e');
+      isConnected.value = false;
+      _attemptReconnection();
+    }
+  }
+
+  void _attemptReconnection() {
+    Future.delayed(Duration(seconds: 3), () {
+      if (!isConnected.value && conversationId.isNotEmpty) {
+        debugPrint('Attempting to reconnect WebSocket...');
+        _initializeWebSocket();
+      }
+    });
   }
 
   void _handleIncomingMessage(dynamic data) {
     try {
-      // Parse the incoming message
       Map<String, dynamic> jsonData;
 
       if (data is String) {
@@ -85,14 +168,18 @@ class MessageInboxPageController extends GetxController {
       // Handle different message types
       if (jsonData['type'] == 'chat_message' || jsonData['message'] != null) {
         final message = ChatMessage.fromJson(jsonData, currentUserId);
-        messages.add(message);
-
-        // Scroll to bottom after new message
-        Future.delayed(Duration(milliseconds: 100), () {
-          _scrollToBottom();
-        });
+        
+        // Only add if not already in the list (avoid duplicates)
+        if (!messages.any((m) => 
+            m.text == message.text && 
+            m.timestamp.difference(message.timestamp).abs().inSeconds < 2)) {
+          messages.add(message);
+          
+          Future.delayed(Duration(milliseconds: 100), () {
+            _scrollToBottom();
+          });
+        }
       } else if (jsonData['type'] == 'message_history') {
-        // Handle initial message history
         List<dynamic> messageList = jsonData['messages'] ?? [];
         messages.value = messageList
             .map((msg) => ChatMessage.fromJson(msg, currentUserId))
@@ -103,25 +190,31 @@ class MessageInboxPageController extends GetxController {
         });
       }
     } catch (e) {
-      print('Error parsing message: $e');
+      debugPrint('Error parsing message: $e');
     }
   }
 
   void sendMessage() {
-    if (messageTEC.text.trim().isEmpty || socketChannel == null) return;
+    if (messageTEC.text.trim().isEmpty || socketChannel == null || !isConnected.value) {
+      if (!isConnected.value) {
+        Get.snackbar(
+          'Connection Error',
+          'Not connected to chat server',
+          backgroundColor: AppColors.primaryRed,
+          colorText: AppColors.primaryWhite,
+        );
+      }
+      return;
+    }
 
     final messageText = messageTEC.text.trim();
 
-    // Create message object to send
     final messageData = json.encode({
-      'type': 'chat_message',
       'message': messageText,
-      'sender_id': currentUserId,
-      'timestamp': DateTime.now().toIso8601String(),
+      'chat_id': int.parse(conversationId),
     });
 
     try {
-      // Send message through WebSocket
       socketChannel!.sink.add(messageData);
 
       // Add to local messages immediately for better UX
@@ -132,17 +225,15 @@ class MessageInboxPageController extends GetxController {
         senderId: currentUserId,
       ));
 
-      // Clear input
       messageTEC.clear();
-
-      // Scroll to bottom
       _scrollToBottom();
     } catch (e) {
-      print('Error sending message: $e');
+      debugPrint('Error sending message: $e');
       Get.snackbar(
         'Error',
         'Failed to send message',
-        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
       );
     }
   }

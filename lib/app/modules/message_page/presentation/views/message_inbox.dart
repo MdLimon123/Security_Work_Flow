@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/modules/message_page/presentation/controllers/message_inbox_page_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -113,24 +114,26 @@ class MessageInbox extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(100.r),
-            child: CachedNetworkImage(
-              width: 35.w,
-              height: 35.h,
-              imageUrl: "https://avatars.githubusercontent.com/u/69637820?v=4",
-              errorWidget: (context, url, error) =>
-                  Icon(Icons.error, color: AppColors.primaryRed),
-              placeholder: (context, url) => CircularProgressIndicator(
-                strokeWidth: 2,
-                color: AppColors.primaryOrange,
-              ),
-            ),
+            child: controller.participantImage.isNotEmpty
+                ? CachedNetworkImage(
+                    width: 35.w,
+                    height: 35.h,
+                    imageUrl: "${ApiEndpoints.getBaseUrl}${controller.participantImage}",
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.person, color: AppColors.primaryGray),
+                    placeholder: (context, url) => CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.primaryOrange,
+                    ),
+                  )
+                : Icon(Icons.person, size: 35.w, color: AppColors.primaryGray),
           ),
           SizedBox(width: 14.w),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Sajid Hossain",
+                controller.participantName,
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
@@ -243,12 +246,17 @@ class MessageInbox extends StatelessWidget {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            radius: 16.r,
-            backgroundImage: NetworkImage(
-              "https://avatars.githubusercontent.com/u/69637820?v=4",
-            ),
-          ),
+          controller.participantImage.isNotEmpty
+              ? CircleAvatar(
+                  radius: 16.r,
+                  backgroundImage: NetworkImage(
+                    "${ApiEndpoints.getBaseUrl}${controller.participantImage}",
+                  ),
+                )
+              : CircleAvatar(
+                  radius: 16.r,
+                  child: Icon(Icons.person, size: 16.w),
+                ),
           SizedBox(width: 8.w),
           Expanded(
             child: Container(

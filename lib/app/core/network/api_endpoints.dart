@@ -60,4 +60,7 @@ class ApiEndpoints {
   static const String chatListUrl = "$_baseUrl/api/chat-note/chat-list/?page=1";
 
   static const String myJobListUrl = "$_baseUrl/api/jobs/user/my-jobs/";
+
+  static String chatSocketUrl({required String token}) =>
+      "ws://10.10.12.15:8001/ws/asc/update_chat_messages/?token=$token";
 }

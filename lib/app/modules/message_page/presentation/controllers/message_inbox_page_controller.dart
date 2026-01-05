@@ -23,7 +23,10 @@ class ChatMessage {
     this.senderId,
   });
 
-  factory ChatMessage.fromJson(Map<String, dynamic> json, String currentUserId) {
+  factory ChatMessage.fromJson(
+    Map<String, dynamic> json,
+    String currentUserId,
+  ) {
     // Handle sender information - could be an object or just an ID
     String? senderId;
     if (json['sender'] != null && json['sender'] is Map) {
@@ -33,7 +36,9 @@ class ChatMessage {
     }
 
     final isMe = senderId == currentUserId;
-    debugPrint('Message from sender: $senderId, current user: $currentUserId, isMe: $isMe');
+    debugPrint(
+      'Message from sender: $senderId, current user: $currentUserId, isMe: $isMe',
+    );
 
     return ChatMessage(
       text: json['message'] ?? json['text'] ?? '',
@@ -41,8 +46,8 @@ class ChatMessage {
       timestamp: json['timestamp'] != null
           ? DateTime.parse(json['timestamp'])
           : json['created_at'] != null
-              ? DateTime.parse(json['created_at'])
-              : DateTime.now(),
+          ? DateTime.parse(json['created_at'])
+          : DateTime.now(),
       senderId: senderId,
     );
   }
@@ -78,7 +83,8 @@ class MessageInboxPageController extends GetxController {
   void _initializeFromArguments() {
     if (Get.arguments != null) {
       conversationId = Get.arguments['conversation_id']?.toString() ?? '';
-      participantName = Get.arguments['participant_name']?.toString() ?? 'Unknown';
+      participantName =
+          Get.arguments['participant_name']?.toString() ?? 'Unknown';
       participantImage = Get.arguments['participant_image']?.toString() ?? '';
     }
   }
@@ -87,7 +93,7 @@ class MessageInboxPageController extends GetxController {
     try {
       DioClient dioClient = DioClient();
       final response = await dioClient.get(ApiEndpoints.profileInfoUrl);
-      
+
       if (response['success'] == true && response['data'] != null) {
         currentUserId = response['data']['id']?.toString() ?? '';
         debugPrint('Loaded current user ID from profile: $currentUserId');
@@ -118,7 +124,7 @@ class MessageInboxPageController extends GetxController {
         messages.value = messageList
             .map((msg) => ChatMessage.fromJson(msg, currentUserId))
             .toList()
-            .reversed  // Reverse to show oldest first, newest last
+            .reversed // Reverse to show oldest first, newest last
             .toList();
 
         Future.delayed(Duration(milliseconds: 100), () {
@@ -196,13 +202,15 @@ class MessageInboxPageController extends GetxController {
       // Handle different message types
       if (jsonData['type'] == 'chat_message' || jsonData['message'] != null) {
         final message = ChatMessage.fromJson(jsonData, currentUserId);
-        
+
         // Only add if not already in the list (avoid duplicates)
-        if (!messages.any((m) => 
-            m.text == message.text && 
-            m.timestamp.difference(message.timestamp).abs().inSeconds < 2)) {
+        if (!messages.any(
+          (m) =>
+              m.text == message.text &&
+              m.timestamp.difference(message.timestamp).abs().inSeconds < 2,
+        )) {
           messages.add(message);
-          
+
           Future.delayed(Duration(milliseconds: 100), () {
             _scrollToBottom();
           });
@@ -223,7 +231,9 @@ class MessageInboxPageController extends GetxController {
   }
 
   void sendMessage() {
-    if (messageTEC.text.trim().isEmpty || socketChannel == null || !isConnected.value) {
+    if (messageTEC.text.trim().isEmpty ||
+        socketChannel == null ||
+        !isConnected.value) {
       if (!isConnected.value) {
         Get.snackbar(
           'Connection Error',
@@ -246,12 +256,14 @@ class MessageInboxPageController extends GetxController {
       socketChannel!.sink.add(messageData);
 
       // Add to local messages immediately for better UX
-      messages.add(ChatMessage(
-        text: messageText,
-        isMe: true,
-        timestamp: DateTime.now(),
-        senderId: currentUserId,
-      ));
+      messages.add(
+        ChatMessage(
+          text: messageText,
+          isMe: true,
+          timestamp: DateTime.now(),
+          senderId: currentUserId,
+        ),
+      );
 
       messageTEC.clear();
       _scrollToBottom();

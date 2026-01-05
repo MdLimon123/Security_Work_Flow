@@ -296,29 +296,4 @@ class MyJobsPage extends StatelessWidget {
       ),
     );
   }
-
-  GetBuilder<MyJobsPageController> _buildSearchInput() {
-    return GetBuilder<MyJobsPageController>(
-      init: MyJobsPageController(),
-      builder: (controller) {
-        return TextField(
-          textInputAction: TextInputAction.search,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.search, color: AppColors.primaryGray),
-            hintText: "Search anything…",
-            hintStyle: TextStyle(color: AppColors.primaryGray),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16.r),
-              borderSide: BorderSide(color: AppColors.primaryBorderColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16.r),
-              borderSide: BorderSide(color: AppColors.primaryBorderColor),
-            ),
-          ),
-          controller: controller.searchTEC,
-        );
-      },
-    );
-  }
 }

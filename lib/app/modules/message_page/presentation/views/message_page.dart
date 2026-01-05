@@ -8,7 +8,6 @@ import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-
 class MessagePage extends StatelessWidget {
   const MessagePage({super.key});
 
@@ -81,8 +80,10 @@ class MessagePage extends StatelessWidget {
                     AppRoutes.messageInboxRoute,
                     arguments: {
                       'conversation_id': chatData.id?.toString() ?? '',
-                      'participant_name': chatData.participants?[0].firstName ?? 'Unknown',
-                      'participant_image': chatData.participants?[0].image ?? '',
+                      'participant_name':
+                          chatData.participants?[0].firstName ?? 'Unknown',
+                      'participant_image':
+                          chatData.participants?[0].image ?? '',
                     },
                   )?.then((_) {
                     // Refresh chat list when returning from conversation
@@ -164,35 +165,6 @@ class MessagePage extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  GetBuilder<MessagePageController> _buildSearchInput() {
-    return GetBuilder<MessagePageController>(
-      init: MessagePageController(),
-      builder: (controller) {
-        return TextField(
-          controller: controller.searchTEC,
-          textInputAction: TextInputAction.search,
-          decoration: InputDecoration(
-            hintText: "Search anything…",
-            hintStyle: TextStyle(color: AppColors.secondaryTextColor),
-            contentPadding: EdgeInsets.symmetric(
-              vertical: 11.h,
-              horizontal: 16.w,
-            ),
-            prefixIcon: Icon(Icons.search, color: AppColors.primaryGray),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16.r),
-              borderSide: BorderSide(color: AppColors.primaryBorderColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16.r),
-              borderSide: BorderSide(color: AppColors.primaryBorderColor),
-            ),
-          ),
-        );
-      },
     );
   }
 }

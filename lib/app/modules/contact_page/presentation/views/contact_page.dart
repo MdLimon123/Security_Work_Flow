@@ -252,35 +252,4 @@ class ContactPage extends StatelessWidget {
       },
     );
   }
-
-  Row _buildHeaderSection(ContactPageController controller) {
-    return Row(
-      children: [
-        Expanded(
-          child: TextField(
-            controller: controller.searchTEC,
-            textInputAction: TextInputAction.search,
-            decoration: InputDecoration(
-              prefixIcon: Icon(
-                Icons.search,
-                color: AppColors.secondaryTextColor,
-              ),
-              hintText: "Search for jobs or shifts…",
-              hintStyle: TextStyle(color: AppColors.secondaryTextColor),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16.r),
-                borderSide: BorderSide(color: AppColors.primaryBorderColor),
-              ),
-            ),
-          ),
-        ),
-        IconButton(
-          onPressed: () {
-            Get.toNamed(AppRoutes.notificationRoute);
-          },
-          icon: Icon(Icons.notifications_outlined),
-        ),
-      ],
-    );
-  }
 }

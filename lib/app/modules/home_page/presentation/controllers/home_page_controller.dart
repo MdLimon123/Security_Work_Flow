@@ -161,8 +161,6 @@ class HomePageController extends GetxController {
         await dioClient.get(ApiEndpoints.jobListUrl),
       );
 
-      print("sajid testing ${openJobListModel.toJson()}");
-
       update();
     } on AppException catch (e) {
       Get.snackbar(

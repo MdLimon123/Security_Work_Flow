@@ -21,18 +21,20 @@ class MessageInbox extends StatelessWidget {
         child: Column(
           children: [
             // Connection status indicator
-            Obx(() => controller.isConnected.value
-                ? SizedBox.shrink()
-                : Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 4.h),
-              color: Colors.orange,
-              child: Text(
-                'Reconnecting...',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: 12.sp),
-              ),
-            )),
+            Obx(
+              () => controller.isConnected.value
+                  ? SizedBox.shrink()
+                  : Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: 4.h),
+                      color: Colors.orange,
+                      child: Text(
+                        'Reconnecting...',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontSize: 12.sp),
+                      ),
+                    ),
+            ),
 
             // Messages list
             Expanded(
@@ -77,11 +79,15 @@ class MessageInbox extends StatelessWidget {
 
                 return ListView.builder(
                   controller: controller.scrollController,
-                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 16.h,
+                  ),
                   itemCount: controller.messages.length,
                   itemBuilder: (context, index) {
                     final message = controller.messages[index];
-                    final showDate = index == 0 ||
+                    final showDate =
+                        index == 0 ||
                         !_isSameDay(
                           message.timestamp,
                           controller.messages[index - 1].timestamp,
@@ -118,7 +124,8 @@ class MessageInbox extends StatelessWidget {
                 ? CachedNetworkImage(
                     width: 35.w,
                     height: 35.h,
-                    imageUrl: "${ApiEndpoints.getBaseUrl}${controller.participantImage}",
+                    imageUrl:
+                        "${ApiEndpoints.getBaseUrl}${controller.participantImage}",
                     errorWidget: (context, url, error) =>
                         Icon(Icons.person, color: AppColors.primaryGray),
                     placeholder: (context, url) => CircularProgressIndicator(
@@ -134,34 +141,33 @@ class MessageInbox extends StatelessWidget {
             children: [
               Text(
                 controller.participantName,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
+              ),
+              Obx(
+                () => Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: controller.isConnected.value
+                            ? AppColors.primaryGreen
+                            : Colors.grey,
+                        borderRadius: BorderRadius.circular(100.r),
+                      ),
+                      width: 8.w,
+                      height: 8.h,
+                    ),
+                    SizedBox(width: 4.w),
+                    Text(
+                      controller.isConnected.value ? "Active" : "Offline",
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.secondaryTextColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Obx(() => Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: controller.isConnected.value
-                          ? AppColors.primaryGreen
-                          : Colors.grey,
-                      borderRadius: BorderRadius.circular(100.r),
-                    ),
-                    width: 8.w,
-                    height: 8.h,
-                  ),
-                  SizedBox(width: 4.w),
-                  Text(
-                    controller.isConnected.value ? "Active" : "Offline",
-                    style: TextStyle(
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.secondaryTextColor,
-                    ),
-                  ),
-                ],
-              )),
             ],
           ),
         ],
@@ -232,7 +238,7 @@ class MessageInbox extends StatelessWidget {
                   Text(
                     DateFormat('h:mm a').format(message.timestamp),
                     style: TextStyle(
-                      color: AppColors.primaryWhite.withOpacity(0.7),
+                      color: AppColors.primaryWhite.withValues(alpha: 0.7),
                       fontSize: 10.sp,
                     ),
                   ),
@@ -272,10 +278,7 @@ class MessageInbox extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    message.text,
-                    style: TextStyle(fontSize: 14.sp),
-                  ),
+                  Text(message.text, style: TextStyle(fontSize: 14.sp)),
                   SizedBox(height: 4.h),
                   Text(
                     DateFormat('h:mm a').format(message.timestamp),
@@ -334,20 +337,22 @@ class MessageInbox extends StatelessWidget {
             ),
           ),
           SizedBox(width: 8.w),
-          Obx(() => Container(
-            decoration: BoxDecoration(
-              color: controller.isConnected.value
-                  ? AppColors.secondaryNavyBlue
-                  : Colors.grey,
-              borderRadius: BorderRadius.circular(12.r),
+          Obx(
+            () => Container(
+              decoration: BoxDecoration(
+                color: controller.isConnected.value
+                    ? AppColors.secondaryNavyBlue
+                    : Colors.grey,
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              child: IconButton(
+                icon: Icon(Icons.send, color: Colors.white),
+                onPressed: controller.isConnected.value
+                    ? controller.sendMessage
+                    : null,
+              ),
             ),
-            child: IconButton(
-              icon: Icon(Icons.send, color: Colors.white),
-              onPressed: controller.isConnected.value
-                  ? controller.sendMessage
-                  : null,
-            ),
-          )),
+          ),
         ],
       ),
     );

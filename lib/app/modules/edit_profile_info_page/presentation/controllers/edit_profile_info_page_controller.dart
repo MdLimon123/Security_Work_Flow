@@ -70,6 +70,17 @@ class EditProfileInfoPageController extends GetxController {
       await dioClient.put(ApiEndpoints.profileUpdateUrl, data: formData);
 
       await Get.find<ProfilePageController>().fetchProfileInfo();
+
+      Get.snackbar(
+        "Success",
+        "Profile updated successfully",
+        backgroundColor: AppColors.primaryGreen,
+        colorText: AppColors.primaryWhite,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+  
+      Get.back();
     } on AppException catch (e) {
       Get.snackbar(
         "Error",

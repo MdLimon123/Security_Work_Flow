@@ -56,26 +56,82 @@ class ProfilePage extends StatelessWidget {
                           SizedBox(height: 8.h),
                           _buildOtherDetails(),
                           SizedBox(height: 17.h),
+
+                          // Row(
+                          //   children: [
+                          //     Text(
+                          //       "Referral Link",
+                          //       style: TextStyle(fontSize: 20.sp),
+                          //     ),
+                          //     Spacer(),
+                          //     ElevatedButton(
+                          //       style: ElevatedButton.styleFrom(
+                          //         backgroundColor: AppColors.primaryOrange,
+                          //         foregroundColor: AppColors.primaryWhite,
+                          //         shape: RoundedRectangleBorder(
+                          //           borderRadius: BorderRadius.circular(12.r),
+                          //         ),
+                          //       ),
+                          //       onPressed: () async {
+                          //         await Clipboard.setData(
+                          //           ClipboardData(text: ""),
+                          //         );
+                          //         if (context.mounted) {
+                          //           ScaffoldMessenger.of(context).showSnackBar(
+                          //             SnackBar(
+                          //               content: Text('Copied to clipboard'),
+                          //             ),
+                          //           );
+                          //         }
+                          //       },
+                          //       child: Text("Share Link"),
+                          //     ),
+                          //   ],
+                          // ),
+
+                          // SizedBox(height: 12.h),
+                          // TextField(
+                          //   style: TextStyle(
+                          //     color: AppColors.primaryBlue,
+                          //     overflow: TextOverflow.ellipsis,
+                          //   ),
+                          //   enabled: false,
+                          //   controller: controller.referralController,
+                          //   decoration: InputDecoration(
+                          //     filled: true,
+
+                          //     contentPadding: EdgeInsets.symmetric(
+                          //       horizontal: 10.w,
+                          //       vertical: 12.5.h,
+                          //     ),
+                          //     disabledBorder: OutlineInputBorder(
+                          //       borderSide: BorderSide(
+                          //         color: AppColors.secondaryGray.withValues(
+                          //           alpha: .5,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           Row(
                             children: [
                               Text(
                                 "Referral Link",
-                                style: TextStyle(fontSize: 20.sp),
+                                style: TextStyle(fontSize: 20),
                               ),
                               Spacer(),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primaryOrange,
-                                  foregroundColor: AppColors.primaryWhite,
+                                  backgroundColor: Colors.orange,
+                                  foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.r),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
                                 onPressed: () async {
                                   await Clipboard.setData(
                                     ClipboardData(
-                                      text:
-                                          "https:/.com/signin/?refer_token=p8ZV9u356c...",
+                                      text: controller.referralController.text,
                                     ),
                                   );
                                   if (context.mounted) {
@@ -90,33 +146,28 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 12.h),
+                          SizedBox(height: 12),
                           TextField(
-                            style: TextStyle(
-                              color: AppColors.primaryBlue,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            controller: controller.referralController,
                             enabled: false,
-                            controller: TextEditingController(
-                              text:
-                                  "https:/.com/signin/?refer_token=p8ZV9u356c...",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              overflow: TextOverflow.ellipsis,
                             ),
                             decoration: InputDecoration(
                               filled: true,
-
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10.w,
-                                vertical: 12.5.h,
+                                horizontal: 10,
+                                vertical: 12.5,
                               ),
                               disabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: AppColors.secondaryGray.withValues(
-                                    alpha: .5,
-                                  ),
+                                  color: Colors.grey.withOpacity(0.5),
                                 ),
                               ),
                             ),
                           ),
+
                           SizedBox(height: 51.h),
                         ],
                       )

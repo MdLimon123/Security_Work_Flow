@@ -67,6 +67,7 @@ class Data {
   Data({
     num? id,
     String? email,
+    String? fullName,
     String? phone,
     bool? isEmailVarified,
     String? image,
@@ -89,6 +90,7 @@ class Data {
     _phone = phone;
     _isEmailVarified = isEmailVarified;
     _image = image;
+    _fullName = fullName;
     _userType = userType;
     _gender = gender;
     _language = language;
@@ -108,6 +110,7 @@ class Data {
     _id = json['id'];
     _email = json['email'];
     _phone = json['phone'];
+    _fullName = json['first_name'];
     _isEmailVarified = json['is_email_varified'];
     _image = json['image'];
     _userType = json['user_type'];
@@ -138,6 +141,7 @@ class Data {
   num? _id;
   String? _email;
   String? _phone;
+  String? _fullName;
   bool? _isEmailVarified;
   String? _image;
   String? _userType;
@@ -159,6 +163,7 @@ class Data {
     String? email,
     String? phone,
     bool? isEmailVarified,
+    String? fullName,
     String? image,
     String? userType,
     String? gender,
@@ -179,6 +184,7 @@ class Data {
     phone: phone ?? _phone,
     isEmailVarified: isEmailVarified ?? _isEmailVarified,
     image: image ?? _image,
+    fullName: fullName ?? _fullName,
     userType: userType ?? _userType,
     gender: gender ?? _gender,
     language: language ?? _language,
@@ -199,6 +205,8 @@ class Data {
   String? get email => _email;
 
   String? get phone => _phone;
+
+  String? get fullName => _fullName;
 
   bool? get isEmailVarified => _isEmailVarified;
 
@@ -235,6 +243,7 @@ class Data {
     map['id'] = _id;
     map['email'] = _email;
     map['phone'] = _phone;
+    map['full_name'] = _fullName;
     map['is_email_varified'] = _isEmailVarified;
     map['image'] = _image;
     map['user_type'] = _userType;

@@ -52,7 +52,7 @@ class ApiEndpoints {
   static const String jobHistoryUrl = "$_baseUrl/api/jobs/user_Jobs_history/";
 
   static String applyJob({required String jobId}) =>
-      "$_baseUrl/api/jobs/user-job-posts/$jobId";
+      "$_baseUrl/api/jobs/user-job-posts/$jobId/";
 
   static const String referalListUrl =
       "$_baseUrl/api/accounts/user-refarral-users/";
@@ -62,7 +62,23 @@ class ApiEndpoints {
   static String getMessageHistoryUrl({required String conversationId}) =>
       "$_baseUrl/api/chat-note/message-list/$conversationId/";
 
+  static String engagementListUrl = "$_baseUrl/api/jobs/company-engagements/";
+  static String amendContractUrl =
+      "$_baseUrl/api/jobs/user-engagements-ammends/";
+
   static const String myJobListUrl = "$_baseUrl/api/jobs/user/my-jobs/";
+
+  static const String customSupport = "$_baseUrl/api/jobs/support-message/";
+  static const String customSupportSend = "$_baseUrl/api/jobs/support-message/";
+  static const String referralUrl = "$_baseUrl/api/accounts/user-refarral-code/";
+
+  static String acceptJobUrl({required String id}) =>
+      "$_baseUrl/api/jobs/user/my-jobs/$id/";
+
+  static String rejectJobUrl({required String id}) =>
+      "$_baseUrl/api/jobs/user/my-jobs/$id/";
+  static String uploadSignatureUrl({required String id}) =>
+      "$_baseUrl/api/jobs/company-engagements-details/$id/";
 
   static String chatSocketUrl({required String token}) =>
       "ws://10.10.12.15:8001/ws/asc/update_chat_messages/?token=$token";

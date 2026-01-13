@@ -244,6 +244,8 @@ class HomePage extends StatelessWidget {
                                 foregroundColor: AppColors.primaryWhite,
                               ),
                               onPressed: () async {
+
+                                
                                 Get.dialog(
                                   Material(
                                     color: Colors.black45,
@@ -325,6 +327,7 @@ class HomePage extends StatelessWidget {
                                                   ),
                                                 ),
                                                 const SizedBox(width: 10),
+                                                
                                                 Expanded(
                                                   child: ElevatedButton(
                                                     onPressed: () async {
@@ -365,6 +368,8 @@ class HomePage extends StatelessWidget {
                                                         : Text("Confirm"),
                                                   ),
                                                 ),
+
+
                                               ],
                                             ),
                                           ],
@@ -373,6 +378,8 @@ class HomePage extends StatelessWidget {
                                     ),
                                   ),
                                 );
+                             
+                             
                               },
                               child: controller.applyButtonLoading
                                   ? Center(
@@ -383,6 +390,9 @@ class HomePage extends StatelessWidget {
                                   : Text("Apply"),
                             ),
                           ),
+                       
+                       
+                       
                         ],
                       ),
                     ],

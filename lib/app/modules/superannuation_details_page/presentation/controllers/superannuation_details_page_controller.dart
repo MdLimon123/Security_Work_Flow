@@ -31,6 +31,14 @@ class SuperannuationDetailsPageController extends GetxController {
           "date_of_birth": dateOfBirthTEC.text,
         },
       );
+
+      Get.snackbar(
+        "Success",
+        "Updated successfully",
+        backgroundColor: AppColors.primaryGreen,
+      );
+      Get.back();
+
     } on AppException catch (e) {
       Get.snackbar(
         "Error",

@@ -135,7 +135,10 @@ class JobDetailsPage extends StatelessWidget {
       children: [
         Expanded(
           child: OutlinedButton(
-            onPressed: () {},
+            onPressed: () {
+          
+              Get.toNamed(AppRoutes.messageInboxRoute);
+            },
             style: OutlinedButton.styleFrom(
               side: BorderSide(color: AppColors.secondaryNavyBlue),
               shape: RoundedRectangleBorder(

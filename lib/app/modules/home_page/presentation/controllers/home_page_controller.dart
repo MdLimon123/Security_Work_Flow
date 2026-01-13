@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -188,8 +189,25 @@ class HomePageController extends GetxController {
 
       dynamic res = await dioClient.post(ApiEndpoints.applyJob(jobId: jobId));
 
-      log(res);
+      print("result =============> ${res}");
+
+      log("Apply Job Response: ${jsonEncode(res)}");
+
+      Get.back();
+
+   
+      Get.snackbar(
+        "Success",
+        "Job applied successfully",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppColors.primaryGreen,
+        colorText: AppColors.primaryWhite,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
+        duration: const Duration(seconds: 2),
+      );
     } on AppException catch (e) {
+        Get.back();
       Get.snackbar(
         "Error",
         e.message,

@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/modules/contact_page/data/engagement_list_model.dart';
 import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/widgets/signature_dialog_widget.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class OpenContactPage extends StatelessWidget {
-  const OpenContactPage({super.key});
+  final Engagement engagementListData;
+
+  const OpenContactPage({super.key, required this.engagementListData});
 
   @override
   Widget build(BuildContext context) {
+    bool isSigned =
+        engagementListData.signaturePartyB != null &&
+        engagementListData.signaturePartyB!.isNotEmpty;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,12 +66,17 @@ class OpenContactPage extends StatelessWidget {
                     ),
 
                     Chip(
+                      backgroundColor: isSigned
+                          ? AppColors.primaryGreen.withOpacity(0.1)
+                          : Colors.orange.withOpacity(0.1),
                       label: Text(
-                        "Pending",
-                        style: TextStyle(color: AppColors.primaryYellow),
-                      ),
-                      backgroundColor: AppColors.primaryYellow.withValues(
-                        alpha: .15,
+                        isSigned ? "Signed" : "Pendings",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: isSigned
+                              ? AppColors.primaryGreen
+                              : Colors.orange,
+                        ),
                       ),
                     ),
                   ],
@@ -188,7 +198,10 @@ class OpenContactPage extends StatelessWidget {
 
                 SizedBox(height: 12.h),
 
-                _buildPartyWithoutSign(context: context),
+                _buildPartyWithoutSign(
+                  context: context,
+                  id: engagementListData.id.toString(),
+                ),
 
                 SizedBox(height: 34.h),
               ],
@@ -199,12 +212,15 @@ class OpenContactPage extends StatelessWidget {
     );
   }
 
-  Column _buildPartyWithoutSign({required BuildContext context}) {
+  Column _buildPartyWithoutSign({
+    required BuildContext context,
+    required String id,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Party B — Employer",
+          "Party B — Worker",
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 18.sp,
@@ -236,7 +252,7 @@ class OpenContactPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      "Michael Ross",
+                      "${engagementListData.application!.candidate!.firstName}",
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         fontSize: 16.sp,
@@ -252,55 +268,38 @@ class OpenContactPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Text(
-                      "Signature Statues :",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                  Text(
+                    "Status :",
+                    style: TextStyle(color: AppColors.secondaryTextColor),
                   ),
-                  Expanded(
-                    child: Text(
-                      "Pending",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primaryYellow,
-                      ),
-                    ),
+                  Builder(
+                    builder: (_) {
+                      bool isSigned =
+                          engagementListData.signaturePartyB != null &&
+                          engagementListData.signaturePartyB!.isNotEmpty;
+
+                      return Chip(
+                        backgroundColor: isSigned
+                            ? AppColors.primaryGreen.withValues(alpha: 0.1)
+                            : Colors.orange.withValues(alpha: 0.1),
+                        label: Text(
+                          isSigned ? "Signed" : "Pendings",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: isSigned
+                                ? AppColors.primaryGreen
+                                : Colors.orange,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
 
               SizedBox(height: 8.h),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Signature Timestamp  :",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "14 Oct 2025, 18.03",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+           
             ],
           ),
         ),
@@ -315,7 +314,7 @@ class OpenContactPage extends StatelessWidget {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => const SignatureDialogWidget(),
+                  builder: (context) => SignatureDialogWidget(id: id),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -370,7 +369,7 @@ class OpenContactPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      "Michael Ross",
+                      "${engagementListData.jobDetails!.jobProvider!.company!.firstName}",
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         fontSize: 16.sp,
@@ -386,72 +385,55 @@ class OpenContactPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Text(
-                      "Signature Statues :",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                  Text(
+                    "Status :",
+                    style: TextStyle(color: AppColors.secondaryTextColor),
                   ),
-                  Expanded(
-                    child: Text(
-                      "Signed",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primaryGreen,
-                      ),
-                    ),
+                  Builder(
+                    builder: (_) {
+                      bool isSigned =
+                          engagementListData.signaturePartyA != null &&
+                          engagementListData.signaturePartyA!.isNotEmpty;
+
+                      return Chip(
+                        backgroundColor: isSigned
+                            ? AppColors.primaryGreen.withValues(alpha: 0.1)
+                            : Colors.orange.withValues(alpha: 0.1),
+                        label: Text(
+                          isSigned ? "Signed" : "Pendings",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: isSigned
+                                ? AppColors.primaryGreen
+                                : Colors.orange,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
 
               SizedBox(height: 8.h),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Signature Timestamp  :",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "14 Oct 2025, 18.03",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),
         SizedBox(height: 32.h),
 
         Center(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: AppColors.primaryBorderColor),
-            ),
-            child: Image.asset(
-              width: Get.width / 1.5,
-              height: 57.h,
-              AppAssets.signatureImg,
-            ),
-          ),
+          child: engagementListData.signaturePartyB == null
+              ? const SizedBox()
+              : Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.r),
+                    border: Border.all(color: AppColors.primaryBorderColor),
+                  ),
+                  child: Image.network(
+                    "http://10.10.12.15:8001${engagementListData.signaturePartyB}",
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, __, ___) => const SizedBox(),
+                  ),
+                ),
         ),
       ],
     );
@@ -496,41 +478,13 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "\$15/hour",
+                        "\$${engagementListData.jobDetails!.payRate}",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w400,
                           color: AppColors.secondaryTextColor,
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 8.h),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Superannuation (% of Hourly Rate)  :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "11%",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                        textAlign: TextAlign.end,
                       ),
                     ),
                   ],
@@ -552,7 +506,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "\$200",
+                        "\$${engagementListData.totalAmount}",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -580,7 +534,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "AUD",
+                        "${engagementListData.application!.currency}",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -638,7 +592,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "Casual",
+                        "${engagementListData.jobDetails!.engagementType}",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -666,41 +620,13 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "Crowd Controlle",
+                        "${engagementListData.jobDetails!.jobTitle}",
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w400,
                           color: AppColors.secondaryTextColor,
                         ),
                         textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 8.h),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Site Name :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "Event Centre Downtown",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
                       ),
                     ),
                   ],
@@ -722,7 +648,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "35 Park Ave, Sydney NSW ",
+                        "${engagementListData.jobDetails!.address}",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -750,7 +676,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "EventCo Group Pty Ltd",
+                        "${engagementListData.jobDetails!.jobProvider!.company!.firstName}",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -778,7 +704,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "12 Sep, 2025",
+                        "${engagementListData.jobDetails!.jobDate}",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -806,7 +732,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "18:00",
+                        "${engagementListData.jobDetails!.startTime}",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -834,7 +760,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "23:00",
+                        "${engagementListData.jobDetails!.endTime}",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -862,7 +788,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "8 hours",
+                        "${engagementListData.jobDetails!.jobDuration}",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -882,6 +808,13 @@ class OpenContactPage extends StatelessWidget {
   }
 
   Column _buildPartyASectionTwo() {
+    final application = engagementListData.application;
+    final candidate = application?.candidate;
+
+    final company = engagementListData.jobDetails?.jobProvider?.company;
+
+    final licences = company?.licences ?? [];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -906,227 +839,54 @@ class OpenContactPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Full Name :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "Michael Ross",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                /// Full Name
+                _buildRow("Full Name :", candidate?.firstName ?? 'N/A'),
+
+                SizedBox(height: 8.h),
+
+                /// Security Licence No
+                _buildRow(
+                  "Security Licence No. :",
+                  licences.isNotEmpty
+                      ? licences.first.licenceNo ?? 'N/A'
+                      : 'N/A',
                 ),
 
                 SizedBox(height: 8.h),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Security Licence No. :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "QLD-SEC-239817",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
+                /// Contact Phone
+                _buildRow("Contact Phone :", candidate?.phone ?? 'N/A'),
+
+                SizedBox(height: 8.h),
+
+                /// Contact Email
+                _buildRow("Contact Email :", candidate?.email ?? 'N/A'),
+
+                SizedBox(height: 8.h),
+
+                /// Bank Name
+                _buildRow("Bank Name :", company?.bankName ?? 'N/A'),
+
+                SizedBox(height: 8.h),
+
+                /// Account Name
+                _buildRow(
+                  "Account Name :",
+                  company?.accountHolderName ?? 'N/A',
                 ),
 
                 SizedBox(height: 8.h),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Contact Phone :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "+61 400 123 456",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                /// Bank Branch (BSB)
+                _buildRow(
+                  "Bank-State-Branch (BSB) :",
+                  company?.bankBranch ?? 'N/A',
                 ),
 
                 SizedBox(height: 8.h),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Contact Email :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "example@example.co",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 8.h),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Bank Name :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "Trust Bank",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 8.h),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Account Name :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "232651264",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 8.h),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Bank-State-Branch (BSB) :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "062-987",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 8.h),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Account Number :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "98765432",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                /// Account Number
+                _buildRow("Account Number :", company?.accountNo ?? 'N/A'),
               ],
             ),
           ),
@@ -1136,6 +896,10 @@ class OpenContactPage extends StatelessWidget {
   }
 
   Column _buildPartyASectionOne() {
+    final company = engagementListData.jobDetails?.jobProvider?.company;
+
+    final licences = company?.licences ?? [];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1160,144 +924,69 @@ class OpenContactPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Legal Name :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "Apex Security Solutions Pty Ltd",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                /// Legal Name
+                _buildRow("Legal Name :", company?.firstName ?? 'N/A'),
+
+                SizedBox(height: 8.h),
+
+                /// ABN
+                _buildRow(
+                  "ABN :",
+                  engagementListData.jobDetails?.jobProvider?.abnNumber
+                          ?.toString() ??
+                      'N/A',
                 ),
 
                 SizedBox(height: 8.h),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "ABN :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "12 345 678 910",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                /// Company Licence No
+                _buildRow(
+                  "Company License No. :",
+                  licences.isNotEmpty
+                      ? licences.first.licenceNo ?? 'N/A'
+                      : 'N/A',
                 ),
 
                 SizedBox(height: 8.h),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Company License No. :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "SA-482937",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                /// State Licence Held
+                _buildRow(
+                  "State License Held :",
+                  licences.length > 1
+                      ? licences[1].stateOrTerritory ?? 'N/A'
+                      : 'N/A',
                 ),
 
                 SizedBox(height: 8.h),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "State License Held  :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "New South Wales",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 8.h),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Contact Email :",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "name@gmail.com",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                /// Email
+                _buildRow("Contact Email :", company?.email ?? 'N/A'),
               ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRow(String title, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w400,
+              color: AppColors.secondaryTextColor,
             ),
           ),
         ),

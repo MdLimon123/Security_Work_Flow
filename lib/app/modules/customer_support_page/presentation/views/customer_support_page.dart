@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/modules/customer_support_page/presentation/controllers/customer_support_page_controller.dart';
+import 'package:flutter_security_workforce/app/modules/profile_page/controllers/profile_page_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -65,15 +65,71 @@ class CustomerSupportPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 56.h),
-                      _buildMessageFromOtherSide(),
-                      SizedBox(height: 16.h),
-                      _buildMessageFromUser(),
+
+                      GetBuilder<ProfilePageController>(
+                        init: ProfilePageController()..fetchCustomSupport(),
+                        builder: (controller) {
+                          if (controller.isCustomSupportLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          if (controller.customSupportModel.messages == null ||
+                              controller.customSupportModel.messages!.isEmpty) {
+                            return const Center(
+                              child: Text("No messages found"),
+                            );
+                          }
+
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount:
+                                controller.customSupportModel.messages!.length,
+                            itemBuilder: (context, index) {
+                              final message = controller
+                                  .customSupportModel
+                                  .messages![index];
+
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.secondaryNavyBlue,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(12.r),
+                                    topRight: Radius.circular(12.r),
+                                    bottomLeft: Radius.circular(12.r),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 12.w,
+                                    vertical: 5.5.h,
+                                  ),
+                                  child: Text(
+                                    message.message,
+                                    style: TextStyle(
+                                      color: AppColors.primaryWhite,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                          );
+                        },
+                      ),
+
+
+
                       SizedBox(height: 16.h),
                     ],
                   ),
                 ),
               ),
             ),
+
+
             Container(
               decoration: BoxDecoration(
                 color: AppColors.messageBG,
@@ -86,10 +142,13 @@ class CustomerSupportPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: GetBuilder<CustomerSupportPageController>(
+                      child: GetBuilder<ProfilePageController>(
                         builder: (controller) {
                           return TextField(
-                            controller: controller.messageTEC,
+                            controller: controller.sendMessageController,
+                            onSubmitted: (value) {
+                              controller.submitCustomSupport();
+                            },
                             decoration: InputDecoration(
                               hintText: "Type a message...",
                               border: OutlineInputBorder(
@@ -113,75 +172,18 @@ class CustomerSupportPage extends StatelessWidget {
                         color: AppColors.secondaryNavyBlue,
                       ),
                       onPressed: () {
-                        // Add send functionality here
+                        Get.find<ProfilePageController>().submitCustomSupport();
                       },
                     ),
                   ],
                 ),
               ),
             ),
+          
+          
           ],
         ),
       ),
-    );
-  }
-
-  Row _buildMessageFromUser() {
-    return Row(
-      children: [
-        SizedBox(width: 8.w),
-        SizedBox(width: Get.width / 6),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.secondaryNavyBlue,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12.r),
-                topRight: Radius.circular(12.r),
-                bottomLeft: Radius.circular(12.r),
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 5.5.h),
-              child: Text(
-                "Hi there how are you?",
-                style: TextStyle(color: AppColors.primaryWhite),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Row _buildMessageFromOtherSide() {
-    return Row(
-      children: [
-        // CircleAvatar(
-        //   backgroundImage: NetworkImage(
-        //     "https://avatars.githubusercontent.com/u/69637820?v=4",
-        //   ),
-        // ),
-        SvgPicture.asset(AppAssets.supportIcon),
-        SizedBox(width: 8.w),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.primaryWhite,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12.r),
-                topRight: Radius.circular(12.r),
-                bottomRight: Radius.circular(12.r),
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 5.5.h),
-              child: Text("Hi there how are you?"),
-            ),
-          ),
-        ),
-        SizedBox(width: Get.width / 6),
-      ],
     );
   }
 }

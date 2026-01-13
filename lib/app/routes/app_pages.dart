@@ -10,6 +10,8 @@ import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentatio
 import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/views/bottom_navbar_page.dart';
 import 'package:flutter_security_workforce/app/modules/card_edit_page/presentation/binding/card_edit_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/card_edit_page/presentation/views/card_edit_page.dart';
+import 'package:flutter_security_workforce/app/modules/contact_page/data/amend_contract_model.dart';
+import 'package:flutter_security_workforce/app/modules/contact_page/data/engagement_list_model.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/presentation/binding/contact_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/presentation/views/contact_page.dart';
 import 'package:flutter_security_workforce/app/modules/customer_support_page/presentation/binding/customer_support_page_binding.dart';
@@ -38,6 +40,7 @@ import 'package:flutter_security_workforce/app/modules/on_boarding_page/presenta
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/views/on_boarding_get_started_page.dart';
 import 'package:flutter_security_workforce/app/modules/on_boarding_page/presentation/views/on_boarding_page.dart';
 import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/binding/open_contact_page_binding.dart';
+import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/views/open_amend_page.dart';
 import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/views/open_contact_page.dart';
 import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/presentation/binding/open_jobs_details_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/presentation/views/open_jobs_details_page.dart';
@@ -192,7 +195,15 @@ class AppPages {
 
     GetPage(
       name: AppRoutes.openContactRoute,
-      page: () => OpenContactPage(),
+      page: () =>
+          OpenContactPage(engagementListData: Get.arguments as Engagement),
+      binding: OpenContactPageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.openAmendRoute,
+      page: () =>
+          OpenAmendPage(amendEngagements: Get.arguments as AmendEngagements),
       binding: OpenContactPageBinding(),
     ),
 

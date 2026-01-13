@@ -1,18 +1,29 @@
+import 'dart:io';
+import 'dart:ui' as ui;
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_security_workforce/app/modules/contact_page/presentation/controllers/contact_page_controller.dart';
+import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../../core/constants/app_colors.dart';
 
 class SignatureDialogWidget extends StatefulWidget {
-  const SignatureDialogWidget({super.key});
+  final String id;
+  const SignatureDialogWidget({super.key, required this.id});
 
   @override
   State<SignatureDialogWidget> createState() => _SignatureDialogWidgetState();
 }
 
 class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
-  int _selectedTab = 0; // 0: Draw, 1: Upload, 2: Save
+  int _selectedTab = 0;
   final SignaturePainter _signaturePainter = SignaturePainter();
-  int _repaintKey = 0; // Add this to force repaint
+  int _repaintKey = 0;
+  File? selectedImageFile;
+
+  final controller = Get.find<ContactPageController>();
 
   void _triggerRepaint() {
     setState(() {
@@ -89,7 +100,9 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _handleSubmit,
+                  onPressed: controller.uploadSignatureLoading.value
+                      ? null
+                      : _handleSubmit,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.secondaryNavyBlue,
                     foregroundColor: AppColors.primaryWhite,
@@ -98,14 +111,9 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text(
-                    'Save & Submit',
-                    style: TextStyle(
-                      color: AppColors.primaryWhite,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  child: controller.uploadSignatureLoading.value
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text("Save & Submit"),
                 ),
               ),
           ],
@@ -212,6 +220,7 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
       );
     } else if (_selectedTab == 1) {
       // Upload Tab
+
       return Container(
         height: 200,
         decoration: BoxDecoration(
@@ -220,47 +229,57 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
           color: AppColors.lightGrey,
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Upload a photo of your signature.',
-                style: TextStyle(color: AppColors.secondaryTextColor),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'Max file size: 1MB',
-                style: TextStyle(
-                  color: AppColors.secondaryTextColor,
-                  fontSize: 12,
-                ),
-              ),
-              Text(
-                'png, jpg, jpeg, bmp, gif',
-                style: TextStyle(
-                  color: AppColors.secondaryTextColor,
-                  fontSize: 12,
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton.icon(
-                onPressed: _pickImage,
-                icon: const Icon(Icons.upload, size: 16),
-                label: const Text('Upload photo'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.secondaryNavyBlue,
-                  foregroundColor: AppColors.primaryWhite,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
+          child: selectedImageFile != null
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.file(
+                    selectedImageFile!,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Upload a photo of your signature.',
+                      style: TextStyle(color: AppColors.secondaryTextColor),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Max file size: 1MB',
+                      style: TextStyle(
+                        color: AppColors.secondaryTextColor,
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      'png, jpg, jpeg, bmp, gif',
+                      style: TextStyle(
+                        color: AppColors.secondaryTextColor,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton.icon(
+                      onPressed: _pickImage,
+                      icon: const Icon(Icons.upload, size: 16),
+                      label: const Text('Upload photo'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.secondaryNavyBlue,
+                        foregroundColor: AppColors.primaryWhite,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ),
       );
     } else {
@@ -338,13 +357,52 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
   }
 
   Future<void> _pickImage() async {
-    // Image picker implementation
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
+
+    if (result != null) {
+      setState(() {
+        selectedImageFile = File(result.files.single.path!);
+      });
+    }
   }
 
-  void _handleSubmit() {
-    setState(() {
-      _selectedTab = 2;
-    });
+  //   void _handleSubmit() {
+  //     setState(() {
+  //       _selectedTab = 2;
+  //     });
+  //   }
+  // }
+
+  Future<void> _handleSubmit() async {
+    File? fileToUpload;
+
+    if (_selectedTab == 0) {
+      /// DRAW → IMAGE FILE
+      final image = await _signaturePainter.exportAsImage();
+      if (image == null) {
+        Get.snackbar("Error", "Please draw a signature");
+        return;
+      }
+
+      final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
+      final dir = await getTemporaryDirectory();
+      final file = File("${dir.path}/signature.png");
+      await file.writeAsBytes(bytes!.buffer.asUint8List());
+      fileToUpload = file;
+    } else {
+      /// UPLOAD TAB
+      if (selectedImageFile == null) {
+        Get.snackbar("Error", "Please select an image");
+        return;
+      }
+      fileToUpload = selectedImageFile;
+    }
+
+    await controller.submitSignature(id: widget.id, file: fileToUpload!);
+
+    Navigator.pop(context);
   }
 }
 
@@ -393,4 +451,19 @@ class SignaturePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+
+  Future<ui.Image?> exportAsImage({
+    double width = 500,
+    double height = 200,
+  }) async {
+    if (_strokes.isEmpty) return null;
+
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, width, height));
+
+    paint(canvas, Size(width, height));
+
+    final picture = recorder.endRecording();
+    return picture.toImage(width.toInt(), height.toInt());
+  }
 }

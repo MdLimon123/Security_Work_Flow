@@ -1,10 +1,13 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:flutter_security_workforce/app/modules/home_page/presentation/controllers/home_page_controller.dart';
 import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/data/models/job_details_model.dart';
+import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -62,23 +65,153 @@ class OpenJobsDetailsPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.messageInboxRoute);
+                        },
                         child: Text("Message"),
                       ),
                     ),
                     SizedBox(width: 12.w),
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.secondaryNavyBlue,
-                          foregroundColor: AppColors.primaryWhite,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
+                    GetBuilder<HomePageController>(
+                      init: Get.find<HomePageController>(),
+                      builder: (controller) {
+                        return Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.secondaryNavyBlue,
+                              foregroundColor: AppColors.primaryWhite,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                            ),
+                            onPressed: () {
+                              Get.dialog(
+                                Material(
+                                  color: Colors.black45,
+                                  child: Center(
+                                    child: Container(
+                                      width: Get.width * 0.85,
+                                      padding: const EdgeInsets.all(20),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Center(
+                                            child: Text(
+                                              "Fit for Duty Confirmation",
+                                              style: TextStyle(
+                                                fontSize: 24.sp,
+                                                color:
+                                                    AppColors.secondaryNavyBlue,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+
+                                          const SizedBox(height: 16),
+                                          Text(
+                                            "I confirm that:",
+                                            style: TextStyle(
+                                              fontSize: 18.sp,
+                                              color:
+                                                  AppColors.secondaryNavyBlue,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 12),
+
+                                          _buildBullet(
+                                            "I hold the correct and current license(s) to perform this task.",
+                                          ),
+                                          _buildBullet(
+                                            "I have no injuries preventing me from completing this or related tasks.",
+                                          ),
+                                          _buildBullet(
+                                            "I am free from alcohol or intoxication (including medication).",
+                                          ),
+                                          _buildBullet(
+                                            "I am sufficiently rested and not affected by illness or fatigue.",
+                                          ),
+                                          _buildBullet(
+                                            "I understand the job requirements and am capable of performing my duties.",
+                                          ),
+
+                                          const SizedBox(height: 28),
+
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                  onPressed: () => Get.back(),
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        AppColors.primaryRed,
+                                                    foregroundColor:
+                                                        AppColors.primaryWhite,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            10,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  child: const Text("Cancel"),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                  onPressed: () async {
+                                                  
+                                                    await controller.applyJob(
+                                                      jobId: jobDetailsModel.id
+                                                          .toString(),
+                                                    );
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        AppColors.primaryGreen,
+                                                    foregroundColor:
+                                                        AppColors.primaryWhite,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            10,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  child:
+                                                      controller
+                                                          .applyButtonLoading
+                                                      ? Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                                color: AppColors
+                                                                    .primaryWhite,
+                                                              ),
+                                                        )
+                                                      : Text("Confirm"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Text("Apply"),
                           ),
-                        ),
-                        onPressed: () {},
-                        child: Text("Apply"),
-                      ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -86,6 +219,27 @@ class OpenJobsDetailsPage extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildBullet(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 6,
+            height: 6,
+            margin: const EdgeInsets.only(top: 6, right: 8),
+            decoration: BoxDecoration(
+              color: AppColors.primaryOrange,
+              shape: BoxShape.circle,
+            ),
+          ),
+          Expanded(child: Text(text)),
+        ],
       ),
     );
   }

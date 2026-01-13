@@ -255,7 +255,7 @@ class MessageInboxPageController extends GetxController {
     try {
       socketChannel!.sink.add(messageData);
 
-      // Add to local messages immediately for better UX
+ 
       messages.add(
         ChatMessage(
           text: messageText,

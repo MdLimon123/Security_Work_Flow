@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/data/models/job_details_model.dart';
+import 'package:flutter_security_workforce/app/modules/home_page/presentation/controllers/home_page_controller.dart';
+import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/controllers/my_jobs_page_controller.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -134,37 +136,60 @@ class JobDetailsPage extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: OutlinedButton(
-            onPressed: () {
-          
-              Get.toNamed(AppRoutes.messageInboxRoute);
-            },
-            style: OutlinedButton.styleFrom(
-              side: BorderSide(color: AppColors.secondaryNavyBlue),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
+          child: GetBuilder<HomePageController>(
+            init: Get.find<HomePageController>(),
+            builder: (controller) => OutlinedButton(
+              onPressed: () {
+                controller.createChatRoom(
+                  userId: jobDetailsModel.jobDetails!.jobProvider!.company!.id
+                      .toString(),
+                );
+              },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: AppColors.secondaryNavyBlue),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
               ),
-            ),
-            child: Text(
-              "Message",
-              style: TextStyle(color: AppColors.secondaryNavyBlue),
+              child: Text(
+                "Message",
+                style: TextStyle(color: AppColors.secondaryNavyBlue),
+              ),
             ),
           ),
         ),
         SizedBox(width: 16.w),
         Expanded(
-          child: ElevatedButton(
-            onPressed: () {
-              Get.toNamed(AppRoutes.finishShiftRoute);
+          child: GetBuilder<MyJobsPageController>(
+            builder: (controller) {
+              final jobId = jobDetailsModel.id.toString();
+              final isLoading = controller.jobLoading[jobId] ?? false;
+
+              return ElevatedButton(
+                onPressed: isLoading
+                    ? null
+                    : () async {
+                        await controller.endJob(jobId: jobId);
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondaryNavyBlue,
+                  foregroundColor: AppColors.primaryWhite,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                ),
+                child: isLoading
+                    ? SizedBox(
+                        height: 20.h,
+                        width: 20.w,
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryWhite,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Text("Finish Shift", style: TextStyle(fontSize: 16.sp)),
+              );
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.secondaryNavyBlue,
-              foregroundColor: AppColors.primaryWhite,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-            ),
-            child: Text("Finish Shift"),
           ),
         ),
       ],

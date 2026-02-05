@@ -42,35 +42,43 @@ class OnBoardingPage extends StatelessWidget {
               ),
             ),
           ),
-          // Using Align and Padding properly to handle bottom positioning
           SafeArea(
             child: Align(
-              alignment: Alignment.bottomLeft, // Align to the bottom left
+              alignment: Alignment.bottomLeft,
               child: Padding(
                 padding: EdgeInsets.all(20.w),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontSize: 36.sp,
-                          fontWeight: FontWeight.w700,
+                    Align(
+                      alignment: Alignment(0, 5),
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 36.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: "Your Business, ",
+                              style: TextStyle(color: AppColors.primaryWhite),
+                            ),
+                            TextSpan(
+                              text: "Your Career, ",
+                              style: TextStyle(color: AppColors.primaryOrange),),
+                            TextSpan(
+                              text: "Your Opportunity",
+                              style: TextStyle(color: AppColors.primaryOrange),
+                            ),
+                          ],
                         ),
-                        children: [
-                          TextSpan(
-                            text: "Your Role, ",
-                            style: TextStyle(color: AppColors.primaryWhite),
-                          ),
-                          TextSpan(
-                            text: "Your Opportunity",
-                            style: TextStyle(color: AppColors.primaryOrange),
-                          ),
-                        ],
                       ),
                     ),
+
+                    SizedBox(height: 90),
                     Text(
-                      "Connect guards with companies through trust, skill, and reliability.",
+                      "Connecting the Security Industry through trust, skill & availability ",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.primaryWhite,
@@ -99,27 +107,28 @@ class OnBoardingPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.h),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryOrange,
-                          foregroundColor: AppColors.primaryWhite,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                        ),
-                        child: Text(
-                          "Login as Company",
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
+
+                    // SizedBox(height: 16.h),
+                    // SizedBox(
+                    //   width: double.infinity,
+                    //   child: ElevatedButton(
+                    //     onPressed: () {},
+                    //     style: ElevatedButton.styleFrom(
+                    //       backgroundColor: AppColors.primaryOrange,
+                    //       foregroundColor: AppColors.primaryWhite,
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(12.r),
+                    //       ),
+                    //     ),
+                    //     child: Text(
+                    //       "Login as Company",
+                    //       style: TextStyle(
+                    //         fontSize: 16.sp,
+                    //         fontWeight: FontWeight.w600,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(height: 12.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +142,7 @@ class OnBoardingPage extends StatelessWidget {
                             Get.toNamed(AppRoutes.signupRoute);
                           },
                           child: Text(
-                            "Sign Up",
+                            "Create one here",
                             style: TextStyle(color: AppColors.primaryOrange),
                           ),
                         ),

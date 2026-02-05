@@ -50,7 +50,7 @@ class ProfilePage extends StatelessWidget {
                           _buildPersonalDetails(),
                           SizedBox(height: 21.h),
                           Text(
-                            "Others Details",
+                            "Other Details",
                             style: TextStyle(fontSize: 20.sp),
                           ),
                           SizedBox(height: 8.h),
@@ -200,7 +200,7 @@ class ProfilePage extends StatelessWidget {
               onTap: () {
                 Get.toNamed(AppRoutes.myReferralUserRoute);
               },
-              title: "My Referral user",
+              title: "Referrals",
               appAsset: AppAssets.referralIcon,
             ),
             SizedBox(height: 16.h),
@@ -323,7 +323,7 @@ class ProfilePage extends StatelessWidget {
                       arguments: controller.profileInfoModel.toJson(),
                     );
                   },
-                  title: "Edit Profile info",
+                  title: "Edit Profile Info",
                   appAsset: AppAssets.profileIcon,
                 );
               },
@@ -351,7 +351,7 @@ class ProfilePage extends StatelessWidget {
               onTap: () {
                 Get.toNamed(AppRoutes.licencesAndCertificatesRoute);
               },
-              title: "Licences & Certificates",
+              title: "Licences ",
               appAsset: AppAssets.listIcon,
             ),
             SizedBox(height: 16.h),
@@ -367,21 +367,30 @@ class ProfilePage extends StatelessWidget {
 
             _buildActionableButton(
               onTap: () {
+                Get.toNamed(AppRoutes.bankDetailsScreen);
+              },
+              title: " Bank Details for Wages ",
+              appAsset: AppAssets.cardIcon,
+            ),
+            SizedBox(height: 16.h),
+
+            _buildActionableButton(
+              onTap: () {
                 Get.toNamed(AppRoutes.cardEditPageRoute);
               },
-              title: "Card Payment Details ",
+              title: "Card Details for Subscription ",
               appAsset: AppAssets.cardIcon,
             ),
 
             SizedBox(height: 16.h),
 
-            _buildActionableButton(
-              onTap: () {
-                Get.toNamed(AppRoutes.wagesToBePaidRoute);
-              },
-              title: "Wages to be paid",
-              appAsset: AppAssets.bankIcon,
-            ),
+            // _buildActionableButton(
+            //   onTap: () {
+            //     Get.toNamed(AppRoutes.wagesToBePaidRoute);
+            //   },
+            //   title: "Wages",
+            //   appAsset: AppAssets.bankIcon,
+            // ),
             SizedBox(height: 16.h),
           ],
         ),

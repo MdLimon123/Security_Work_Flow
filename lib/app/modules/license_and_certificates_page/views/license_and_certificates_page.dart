@@ -16,7 +16,7 @@ class LicenseAndCertificatesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Licences & Certificates",
+          "Licences ",
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
@@ -93,7 +93,7 @@ class LicenseAndCertificatesPage extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "All licences & Certificates",
+          "All Licences",
           style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
         ),
         Spacer(),
@@ -109,7 +109,7 @@ class LicenseAndCertificatesPage extends StatelessWidget {
           onPressed: () {
             Get.to(AddLicensePage());
           },
-          child: Text("Add Licence"),
+          child: Text("Add License"),
         ),
       ],
     );

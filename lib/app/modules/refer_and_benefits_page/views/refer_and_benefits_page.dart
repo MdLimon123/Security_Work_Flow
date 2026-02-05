@@ -134,7 +134,7 @@ class ReferAndBenefitsPage extends StatelessWidget {
 
                 SizedBox(height: 32.h),
                 Text(
-                  "Share your referral code with your friends and got benefits.",
+                  "Share your referral code with your friends and get benefits.",
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 16.sp,

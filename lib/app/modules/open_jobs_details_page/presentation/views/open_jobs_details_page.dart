@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +6,6 @@ import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/presentation/controllers/home_page_controller.dart';
 import 'package:flutter_security_workforce/app/modules/open_jobs_details_page/data/models/job_details_model.dart';
-import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -57,18 +55,26 @@ class OpenJobsDetailsPage extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.secondaryNavyBlue,
-                          side: BorderSide(color: AppColors.secondaryNavyBlue),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
+                      child: GetBuilder(
+                        init: Get.find<HomePageController>(),
+                        builder: (controller) => OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.secondaryNavyBlue,
+                            side: BorderSide(
+                              color: AppColors.secondaryNavyBlue,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
                           ),
+                          onPressed: () {
+                            controller.createChatRoom(
+                              userId: jobDetailsModel.jobProvider!.company!.id
+                                  .toString(),
+                            );
+                          },
+                          child: Text("Message"),
                         ),
-                        onPressed: () {
-                          Get.toNamed(AppRoutes.messageInboxRoute);
-                        },
-                        child: Text("Message"),
                       ),
                     ),
                     SizedBox(width: 12.w),
@@ -126,7 +132,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
                                           const SizedBox(height: 12),
 
                                           _buildBullet(
-                                            "I hold the correct and current license(s) to perform this task.",
+                                            "I hold the correct and current preferred operatives(s) to perform this task.",
                                           ),
                                           _buildBullet(
                                             "I have no injuries preventing me from completing this or related tasks.",
@@ -168,7 +174,6 @@ class OpenJobsDetailsPage extends StatelessWidget {
                                               Expanded(
                                                 child: ElevatedButton(
                                                   onPressed: () async {
-                                                  
                                                     await controller.applyJob(
                                                       jobId: jobDetailsModel.id
                                                           .toString(),
@@ -371,6 +376,19 @@ class OpenJobsDetailsPage extends StatelessWidget {
         Row(
           children: [
             Text(
+              jobDetailsModel.jobProvider?.averageReliability ?? "0",
+              style: TextStyle(fontSize: 16.sp),
+            ),
+            SizedBox(width: 4.w),
+            Icon(Icons.star, color: AppColors.primaryYellow, size: 16.sp),
+            SizedBox(width: 8.w),
+            Text("Payment reliability ", style: TextStyle(fontSize: 20.sp)),
+          ],
+        ),
+        SizedBox(height: 16.h),
+        Row(
+          children: [
+            Text(
               jobDetailsModel.jobProvider?.averagePayRate ?? "0",
               style: TextStyle(fontSize: 16.sp),
             ),
@@ -473,7 +491,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Duty Information",
+          "Job Information",
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
         ),
         SizedBox(height: 12.h),
@@ -588,7 +606,7 @@ class OpenJobsDetailsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Job Descriptions",
+          "Job Description",
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
         ),
         Text(

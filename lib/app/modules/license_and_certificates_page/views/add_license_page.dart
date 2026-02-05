@@ -223,7 +223,7 @@ class AddLicensePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Licence Type(s)",
+              "license Type(s)",
               style: TextStyle(
                 fontSize: 16.sp,
                 color: AppColors.secondaryNavyBlue,
@@ -284,7 +284,7 @@ class AddLicensePage extends StatelessWidget {
                               SizedBox(width: 8.w),
                               Text(
                                 controller.selectedLicenseType.isEmpty
-                                    ? "Select your State or Territory"
+                                    ? "Select your license type"
                                     : controller.selectedLicenseType,
                                 style: TextStyle(
                                   fontSize: 16,

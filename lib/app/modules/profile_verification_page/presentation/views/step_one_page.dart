@@ -18,21 +18,6 @@ class StepOnePage extends StatelessWidget {
       builder: (controller) {
         return Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  onTap: () {
-                    controller.increasePageIndex();
-                  },
-                  child: Text(
-                    "Skip",
-                    style: TextStyle(color: AppColors.primaryOrange),
-                  ),
-                ),
-              ],
-            ),
-
             Text(
               "Personal Information",
               style: TextStyle(
@@ -88,9 +73,9 @@ class StepOnePage extends StatelessWidget {
                   ),
 
             SizedBox(height: 60.h),
-            _buildFullNameInput(controller),
-            SizedBox(height: 12.h),
 
+            // _buildFullNameInput(controller),
+            // SizedBox(height: 12.h),
             _buildPhoneNumberInput(controller),
             SizedBox(height: 12.h),
 
@@ -101,6 +86,16 @@ class StepOnePage extends StatelessWidget {
             _buildNextButton(controller, context: context),
 
             SizedBox(height: 12.h),
+
+            InkWell(
+              onTap: () {
+                controller.increasePageIndex();
+              },
+              child: Text(
+                "Skip",
+                style: TextStyle(color: AppColors.primaryOrange),
+              ),
+            ),
           ],
         );
       },
@@ -228,8 +223,14 @@ class StepOnePage extends StatelessWidget {
         TextFormField(
           controller: controller.phoneTEC,
           keyboardType: TextInputType.phone,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Please Enter 10-digit mobile number";
+            }
+            return null;
+          },
           decoration: InputDecoration(
-            hintText: "Enter your phone number",
+            hintText: "Enter 10-digit mobile number:",
             hintStyle: TextStyle(color: AppColors.primaryGray),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),

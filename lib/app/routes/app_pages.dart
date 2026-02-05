@@ -6,6 +6,8 @@ import 'package:flutter_security_workforce/app/modules/auth/login_page/presentat
 import 'package:flutter_security_workforce/app/modules/auth/login_page/presentation/views/login_page.dart';
 import 'package:flutter_security_workforce/app/modules/auth/new_password_page/presentation/binding/new_password_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/auth/new_password_page/presentation/views/new_password_page.dart';
+import 'package:flutter_security_workforce/app/modules/bank/bindings/bank_details.dart';
+import 'package:flutter_security_workforce/app/modules/bank/view/bank_details_screen.dart';
 import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/binding/bottom_navbar_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/views/bottom_navbar_page.dart';
 import 'package:flutter_security_workforce/app/modules/card_edit_page/presentation/binding/card_edit_page_binding.dart';
@@ -50,6 +52,7 @@ import 'package:flutter_security_workforce/app/modules/profile_page/binding/prof
 import 'package:flutter_security_workforce/app/modules/profile_page/views/profile_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/binding/profile_verification_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/profile_verification_page.dart';
+import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/verification_screen.dart';
 import 'package:flutter_security_workforce/app/modules/refer_and_benefits_page/binding/refer_and_benefits_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/refer_and_benefits_page/views/refer_and_benefits_page.dart';
 import 'package:flutter_security_workforce/app/modules/search_page/binding/search_page_binding.dart';
@@ -283,6 +286,17 @@ class AppPages {
       name: AppRoutes.messageInboxRoute,
       page: () => MessageInbox(),
       binding: MessagePageBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.verificationScreen,
+     page: ()=> VerificationScreen(),
+  ),
+
+    GetPage(
+      name: AppRoutes.bankDetailsScreen,
+      page: () => BankDetailsScreen(),
+      binding: BankDetailsBindings(),
     ),
   ];
 }

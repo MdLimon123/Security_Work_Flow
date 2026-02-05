@@ -299,6 +299,27 @@ class EditProfileInfoPage extends StatelessWidget {
               itemBuilder: (context) => [
                 const PopupMenuItem(value: "English", child: Text("English")),
                 // const PopupMenuItem(value: "English", child: Text("English")),
+                const PopupMenuItem(
+                  value: "Spanish",
+                  child: Text("Spanish (Latin American or Castilian)"),
+                ),
+                const PopupMenuItem(
+                  value: "Mandarin Chinese",
+                  child: Text("Mandarin Chinese (Simplified or Traditional)"),
+                ),
+                const PopupMenuItem(value: "Hindi", child: Text("Hindi")),
+                const PopupMenuItem(value: "Arabic", child: Text("Arabic")),
+                const PopupMenuItem(
+                  value: "French",
+                  child: Text("French (France or Canada)"),
+                ),
+                const PopupMenuItem(
+                  value: "Portuguese",
+                  child: Text("Portuguese (Brazil or Portugal)"),
+                ),
+                const PopupMenuItem(value: "Russian", child: Text("Russian")),
+                const PopupMenuItem(value: "Bengali", child: Text("Bengali")),
+                const PopupMenuItem(value: "Japanese", child: Text("Japanese")),
               ],
               child: Container(
                 padding: const EdgeInsets.symmetric(

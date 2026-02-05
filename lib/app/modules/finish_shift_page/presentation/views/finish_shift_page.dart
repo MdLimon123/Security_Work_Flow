@@ -20,7 +20,7 @@ class FinishShiftPage extends StatelessWidget {
           ),
         ],
         title: Text(
-          "Rate this Operative",
+          "Rate This Company",
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
@@ -132,7 +132,9 @@ class FinishShiftPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.r),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              
+            },
             child: Text(
               "Submit",
               style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),

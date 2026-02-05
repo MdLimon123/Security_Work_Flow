@@ -63,13 +63,13 @@ class VerifyRegistrationOtpPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don’t received code? ",
+                      "Didn’t receive a code?",
                       style: TextStyle(color: AppColors.primaryBlack),
                     ),
                     InkWell(
                       onTap: () {},
                       child: Text(
-                        "Resend Now",
+                        " Resend Now",
                         style: TextStyle(color: AppColors.primaryOrange),
                       ),
                     ),

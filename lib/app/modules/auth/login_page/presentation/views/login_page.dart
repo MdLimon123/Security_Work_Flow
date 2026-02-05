@@ -23,7 +23,27 @@ class LoginPage extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(child: Image.asset(AppAssets.securiverseIcon)),
+                    // Center(child: Image.asset(AppAssets.securiverseIcon,
+                    //     width: 148, height: 148)),
+                    Center(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          double imageSize;
+
+                          if (constraints.maxWidth > 600) {
+                            imageSize = 250;
+                          } else {
+                            imageSize = 148;
+                          }
+
+                          return Image.asset(
+                            AppAssets.securiverseIcon,
+                            width: imageSize,
+                            height: imageSize,
+                          );
+                        },
+                      ),
+                    ),
 
                     SizedBox(height: 56.h),
 
@@ -41,7 +61,7 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: "your Account",
+                            text: "Your Account",
                             style: TextStyle(color: AppColors.primaryOrange),
                           ),
                         ],
@@ -134,7 +154,7 @@ class LoginPage extends StatelessWidget {
                             Get.toNamed(AppRoutes.signupRoute);
                           },
                           child: Text(
-                            "Sign up",
+                            "Create one here",
                             style: TextStyle(
                               color: AppColors.primaryOrange,
                               fontWeight: FontWeight.w500,

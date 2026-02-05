@@ -265,21 +265,54 @@ class MyJobsPage extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: 16.w),
+
                               Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.r),
-                                    ),
-                                    backgroundColor:
-                                        AppColors.secondaryNavyBlue,
-                                    foregroundColor: AppColors.primaryWhite,
-                                  ),
-                                  onPressed: () {},
-                                  child: Text(
-                                    "Start Shift",
-                                    style: TextStyle(fontSize: 16.sp),
-                                  ),
+                                child: GetBuilder<MyJobsPageController>(
+                                  builder: (controller) {
+                                    final jobId =
+                                        controller
+                                            .myJobListModel
+                                            .results
+                                            ?.myJobs?[index]
+                                            .id
+                                            .toString() ??
+                                        "";
+                                    final isLoading =
+                                        controller.jobLoading[jobId] ?? false;
+
+                                    return ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12.r,
+                                          ),
+                                        ),
+                                        backgroundColor:
+                                            AppColors.secondaryNavyBlue,
+                                        foregroundColor: AppColors.primaryWhite,
+                                      ),
+                                      onPressed: isLoading
+                                          ? null
+                                          : () async {
+                                              await controller.startJob(
+                                                jobId: jobId,
+                                              );
+                                            },
+                                      child: isLoading
+                                          ? SizedBox(
+                                              height: 20.h,
+                                              width: 20.w,
+                                              child: CircularProgressIndicator(
+                                                color: AppColors.primaryWhite,
+                                                strokeWidth: 2,
+                                              ),
+                                            )
+                                          : Text(
+                                              "Start Shift",
+                                              style: TextStyle(fontSize: 16.sp),
+                                            ),
+                                    );
+                                  },
                                 ),
                               ),
                             ],

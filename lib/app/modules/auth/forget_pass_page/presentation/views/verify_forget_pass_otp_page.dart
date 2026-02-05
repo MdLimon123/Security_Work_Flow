@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_security_workforce/app/modules/auth/forget_pass_page/presentation/controllers/forget_password_page_controller.dart';
 import 'package:flutter_security_workforce/app/modules/auth/forget_pass_page/presentation/controllers/verify_forget_pass_otp_page_controller.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
@@ -63,11 +64,15 @@ class VerifyForgetPassOtpPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don’t received code? ",
+                      "Didn’t receive a code? ",
                       style: TextStyle(color: AppColors.primaryBlack),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.find<ForgetPasswordPageController>().forgetPass(
+                          context: context,
+                        );
+                      },
                       child: Text(
                         "Resend Now",
                         style: TextStyle(color: AppColors.primaryOrange),

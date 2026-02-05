@@ -51,7 +51,7 @@ class MessagePage extends StatelessWidget {
           return ListView.separated(
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              String formattedTime = "";
+              // String formattedTime = "";
               try {
                 if (controller
                         .chatlistModel
@@ -59,14 +59,7 @@ class MessagePage extends StatelessWidget {
                         .lastMessage
                         ?.createdAt !=
                     null) {
-                  final createdAt = DateTime.parse(
-                    controller
-                        .chatlistModel
-                        .data![index]
-                        .lastMessage!
-                        .createdAt!,
-                  );
-                  formattedTime = DateFormat('ha').format(createdAt);
+                  // formattedTime = DateFormat('ha').format(controller.chatlistModel.data?[index].lastMessage!.createdAt!);
                 }
               } catch (e) {
                 // Handle parsing error if needed
@@ -125,7 +118,20 @@ class MessagePage extends StatelessWidget {
                               ),
                               Spacer(),
                               Text(
-                                formattedTime,
+                                controller
+                                            .chatlistModel
+                                            .data?[index]
+                                            .lastMessage
+                                            ?.createdAt !=
+                                        null
+                                    ? DateFormat('hh:mm a').format(
+                                        controller
+                                            .chatlistModel
+                                            .data![index]
+                                            .lastMessage!
+                                            .createdAt!,
+                                      )
+                                    : '',
                                 style: TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w500,

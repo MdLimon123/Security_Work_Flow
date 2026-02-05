@@ -19,20 +19,7 @@ class StepTwoPage extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  onTap: () {
-                    controller.increasePageIndex();
-                  },
-                  child: Text(
-                    "Skip",
-                    style: TextStyle(color: AppColors.primaryOrange),
-                  ),
-                ),
-              ],
-            ),
+      
 
             Text(
               "Personal Information",
@@ -45,7 +32,7 @@ class StepTwoPage extends StatelessWidget {
 
             SizedBox(height: 32.h),
 
-            _buildLanguageInput(controller),
+            _buildLanguageInput(controller, context),
 
             SizedBox(height: 12.h),
 
@@ -268,7 +255,10 @@ class StepTwoPage extends StatelessWidget {
     );
   }
 
-  Column _buildLanguageInput(ProfileVerificationPageController controller) {
+  Column _buildLanguageInput(
+    ProfileVerificationPageController controller,
+    BuildContext context,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -276,15 +266,71 @@ class StepTwoPage extends StatelessWidget {
           "Language",
           style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
-        PopupMenuButton<String>(
-          color: AppColors.primaryWhite,
-          onSelected: (value) {
-            controller.setLanguage(value);
+        GestureDetector(
+          onTap: () async {
+            // Open dialog for multi-select
+            final selectedLanguages = await showDialog<List<String>>(
+              context: context,
+              builder: (context) {
+                List<String> languages = [
+                  "English",
+                  "Spanish",
+                  "Mandarin Chinese",
+                  "Hindi",
+                  "Arabic",
+                  "French",
+                  "Portuguese",
+                  "Russian",
+                  "Bengali",
+                  "Japanese",
+                ];
+                List<String> tempSelected = List.from(
+                  controller.selectedLanguages,
+                ); // copy current selection
+
+                return AlertDialog(
+                  title: Text("Select Fluent Languages"),
+                  content: StatefulBuilder(
+                    builder: (context, setState) {
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: languages.map((lang) {
+                            return CheckboxListTile(
+                              title: Text(lang),
+                              value: tempSelected.contains(lang),
+                              onChanged: (checked) {
+                                setState(() {
+                                  if (checked == true) {
+                                    tempSelected.add(lang);
+                                  } else {
+                                    tempSelected.remove(lang);
+                                  }
+                                });
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, null),
+                      child: Text("Cancel"),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, tempSelected),
+                      child: Text("OK"),
+                    ),
+                  ],
+                );
+              },
+            );
+
+            if (selectedLanguages != null) {
+              controller.setLanguages(selectedLanguages);
+            }
           },
-          itemBuilder: (context) => [
-            const PopupMenuItem(value: "English", child: Text("English")),
-            // const PopupMenuItem(value: "English", child: Text("English")),
-          ],
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
@@ -294,17 +340,18 @@ class StepTwoPage extends StatelessWidget {
             child: Row(
               children: [
                 Icon(Icons.keyboard_arrow_down, color: AppColors.primaryGray),
-
                 SizedBox(width: 8.w),
-                Text(
-                  controller.selectedLanguage.isEmpty
-                      ? "Select your language"
-                      : controller.selectedLanguage,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: controller.selectedLanguage.isEmpty
-                        ? AppColors.primaryGray
-                        : Colors.black,
+                Expanded(
+                  child: Text(
+                    controller.selectedLanguages.isEmpty
+                        ? "Select Fluent Languages"
+                        : controller.selectedLanguages.join(", "),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: controller.selectedLanguages.isEmpty
+                          ? AppColors.primaryGray
+                          : Colors.black,
+                    ),
                   ),
                 ),
               ],
@@ -314,4 +361,74 @@ class StepTwoPage extends StatelessWidget {
       ],
     );
   }
+
+
+
+  // Column _buildLanguageInput(ProfileVerificationPageController controller) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         "Language",
+  //         style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
+  //       ),
+  //       PopupMenuButton<String>(
+  //         color: AppColors.primaryWhite,
+  //         onSelected: (value) {
+  //           controller.setLanguage(value);
+  //         },
+  //         itemBuilder: (context) => [
+  //           const PopupMenuItem(value: "English", child: Text("English")),
+
+  //           const PopupMenuItem(
+  //             value: "Spanish",
+  //             child: Text("Spanish (Latin American or Castilian)"),
+  //           ),
+  //           const PopupMenuItem(
+  //             value: "Mandarin Chinese",
+  //             child: Text("Mandarin Chinese (Simplified or Traditional)"),
+  //           ),
+  //           const PopupMenuItem(value: "Hindi", child: Text("Hindi")),
+  //           const PopupMenuItem(value: "Arabic", child: Text("Arabic")),
+  //           const PopupMenuItem(
+  //             value: "French",
+  //             child: Text("French (France or Canada)"),
+  //           ),
+  //           const PopupMenuItem(
+  //             value: "Portuguese",
+  //             child: Text("Portuguese (Brazil or Portugal)"),
+  //           ),
+  //           const PopupMenuItem(value: "Russian", child: Text("Russian")),
+  //           const PopupMenuItem(value: "Bengali", child: Text("Bengali")),
+  //           const PopupMenuItem(value: "Japanese", child: Text("Japanese")),
+  //         ],
+  //         child: Container(
+  //           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(12),
+  //             border: Border.all(color: AppColors.secondaryWhite),
+  //           ),
+  //           child: Row(
+  //             children: [
+  //               Icon(Icons.keyboard_arrow_down, color: AppColors.primaryGray),
+
+  //               SizedBox(width: 8.w),
+  //               Text(
+  //                 controller.selectedLanguage.isEmpty
+  //                     ? "Select Fluent Languages"
+  //                     : controller.selectedLanguage,
+  //                 style: TextStyle(
+  //                   fontSize: 16,
+  //                   color: controller.selectedLanguage.isEmpty
+  //                       ? AppColors.primaryGray
+  //                       : Colors.black,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }

@@ -37,6 +37,8 @@ class MessageInbox extends StatelessWidget {
             ),
 
             // Messages list
+
+
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
@@ -79,6 +81,7 @@ class MessageInbox extends StatelessWidget {
 
                 return ListView.builder(
                   controller: controller.scrollController,
+            
                   padding: EdgeInsets.symmetric(
                     horizontal: 20.w,
                     vertical: 16.h,
@@ -89,13 +92,13 @@ class MessageInbox extends StatelessWidget {
                     final showDate =
                         index == 0 ||
                         !_isSameDay(
-                          message.timestamp,
-                          controller.messages[index - 1].timestamp,
+                          message.createdAt,
+                          controller.messages[index - 1].createdAt,
                         );
 
                     return Column(
                       children: [
-                        if (showDate) _buildDateSeparator(message.timestamp),
+                        if (showDate) _buildDateSeparator(message.createdAt),
                         if (showDate) SizedBox(height: 16.h),
                         _buildMessageBubble(message),
                         SizedBox(height: 12.h),
@@ -106,6 +109,9 @@ class MessageInbox extends StatelessWidget {
               }),
             ),
 
+         
+         
+         
             // Message input
             _buildMessageInput(),
           ],
@@ -236,7 +242,7 @@ class MessageInbox extends StatelessWidget {
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    DateFormat('h:mm a').format(message.timestamp),
+                    DateFormat('h:mm a').format(message.createdAt),
                     style: TextStyle(
                       color: AppColors.primaryWhite.withValues(alpha: 0.7),
                       fontSize: 10.sp,
@@ -281,7 +287,7 @@ class MessageInbox extends StatelessWidget {
                   Text(message.text, style: TextStyle(fontSize: 14.sp)),
                   SizedBox(height: 4.h),
                   Text(
-                    DateFormat('h:mm a').format(message.timestamp),
+                    DateFormat('h:mm a').format(message.createdAt),
                     style: TextStyle(
                       color: AppColors.secondaryTextColor,
                       fontSize: 10.sp,
@@ -296,6 +302,8 @@ class MessageInbox extends StatelessWidget {
       );
     }
   }
+
+
 
   Widget _buildMessageInput() {
     return Container(

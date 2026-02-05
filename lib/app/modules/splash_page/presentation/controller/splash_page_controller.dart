@@ -31,4 +31,58 @@ class SplashPageController extends GetxController {
     await Future.delayed(Duration(seconds: 2));
     Get.offAllNamed(AppRoutes.onBoardingGetStartedRoute);
   }
+
+  // Future<void> _moveToNextPage() async {
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+  //   final loginData = sharedPreferences.getString(AppKeys.loginKey);
+
+  //   if (loginData != null) {
+  //     LoginResponseModel loginResponseModel = LoginResponseModel.fromJson(
+  //       jsonDecode(loginData),
+  //     );
+
+  //     await Future.delayed(const Duration(seconds: 1));
+
+  //     if (loginResponseModel.verified ?? false) {
+
+  //       Get.offAllNamed(AppRoutes.bottomNavbarRoute);
+  //     } else {
+
+  //       Get.offAllNamed(
+  //         AppRoutes.verificationScreen,
+
+  //       );
+  //     }
+  //     return;
+  //   }
+
+  //   await Future.delayed(const Duration(seconds: 2));
+  //   Get.offAllNamed(AppRoutes.onBoardingGetStartedRoute);
+  // }
+
+
+  // Future<void> _moveToNextPage() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final token = prefs.getString(AppKeys.accessTokenKey);
+  //   final loginData = prefs.getString(AppKeys.loginKey);
+
+  //   await Future.delayed(const Duration(seconds: 1));
+
+  //   // 🔹 No token or no saved login → Onboarding
+  //   if (token == null || token.trim().isEmpty || loginData == null) {
+  //     Get.offAllNamed(AppRoutes.onBoardingGetStartedRoute);
+  //     return;
+  //   }
+
+  //   // 🔹 Parse saved login response
+  //   final loginResponse = LoginResponseModel.fromJson(jsonDecode(loginData));
+
+  //   // 🔹 Already logged in → check verified status
+  //   if (loginResponse.verified ?? false) {
+  //     Get.offAllNamed(AppRoutes.bottomNavbarRoute);
+  //   } else {
+  //     Get.offAllNamed(AppRoutes.onBoardingGetStartedRoute);
+  //   }
+  // }
 }

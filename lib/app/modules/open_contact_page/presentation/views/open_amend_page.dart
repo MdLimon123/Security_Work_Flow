@@ -373,97 +373,57 @@ class OpenAmendPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Text(
-                      "Signature Statues :",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                  Text(
+                    "Status :",
+                    style: TextStyle(color: AppColors.secondaryTextColor),
                   ),
-                  Expanded(
-                    child: Text(
-                      amendEngagements.signaturePartyB ?? "Pending",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primaryYellow,
-                      ),
-                    ),
+                  Builder(
+                    builder: (_) {
+                      bool isSigned =
+                          amendEngagements.signaturePartyB != null &&
+                          amendEngagements.signaturePartyB!.isNotEmpty;
+
+                      return Chip(
+                        backgroundColor: isSigned
+                            ? AppColors.primaryGreen.withValues(alpha: 0.1)
+                            : Colors.orange.withValues(alpha: 0.1),
+                        label: Text(
+                          isSigned ? "Signed" : "Pending",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: isSigned
+                                ? AppColors.primaryGreen
+                                : Colors.orange,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
 
-              // SizedBox(height: 8.h),
+              SizedBox(height: 8.h),
 
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Expanded(
-              //       child: Text(
-              //         "Signature Timestamp  :",
-              //         style: TextStyle(
-              //           fontSize: 16.sp,
-              //           fontWeight: FontWeight.w500,
-              //         ),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Text(
-              //         "14 Oct 2025, 18.03",
-              //         textAlign: TextAlign.end,
-              //         style: TextStyle(
-              //           fontSize: 16.sp,
-              //           fontWeight: FontWeight.w500,
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              SizedBox(height: 32.h),
               Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(color: AppColors.primaryBorderColor),
-                  ),
-                  child: Image.asset(
-                    width: Get.width / 1.5,
-                    height: 57.h,
-                    AppAssets.signatureImg,
-                  ),
-                ),
+                child: amendEngagements.signaturePartyB == null
+                    ? const SizedBox()
+                    : Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
+                            color: AppColors.primaryBorderColor,
+                          ),
+                        ),
+                        child: Image.network(
+                          "http://10.10.12.15:8001${amendEngagements.signaturePartyB}",
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, __, ___) => const SizedBox(),
+                        ),
+                      ),
               ),
             ],
           ),
         ),
-
-        // SizedBox(height: 32.h),
-
-        // Center(
-        //   child: SizedBox(
-        //     width: 148.w,
-        //     height: 41.h,
-        //     child: ElevatedButton(
-        //       onPressed: () {
-        //         showDialog(
-        //           context: context,
-        //           builder: (context) => const SignatureDialogWidget(),
-        //         );
-        //       },
-        //       style: ElevatedButton.styleFrom(
-        //         backgroundColor: AppColors.secondaryNavyBlue,
-        //         foregroundColor: AppColors.primaryWhite,
-        //         shape: RoundedRectangleBorder(
-        //           borderRadius: BorderRadiusGeometry.circular(12.r),
-        //         ),
-        //       ),
-        //       child: Text("Sign", style: TextStyle(fontSize: 16.sp)),
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
@@ -517,31 +477,56 @@ class OpenAmendPage extends StatelessWidget {
               ),
 
               SizedBox(height: 8.h),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Text(
-                      "Signature Statues :",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                  Text(
+                    "Status :",
+                    style: TextStyle(color: AppColors.secondaryTextColor),
                   ),
-                  Expanded(
-                    child: Text(
-                      "${amendEngagements.signaturePartyA}",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primaryGreen,
-                      ),
-                    ),
+                  Builder(
+                    builder: (_) {
+                      bool isSigned =
+                          amendEngagements.signaturePartyA != null &&
+                          amendEngagements.signaturePartyA!.isNotEmpty;
+
+                      return Chip(
+                        backgroundColor: isSigned
+                            ? AppColors.primaryGreen.withValues(alpha: 0.1)
+                            : Colors.orange.withValues(alpha: 0.1),
+                        label: Text(
+                          isSigned ? "Signed" : "Pending",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: isSigned
+                                ? AppColors.primaryGreen
+                                : Colors.orange,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
+              ),
+
+              SizedBox(height: 8.h),
+
+              Center(
+                child: amendEngagements.signaturePartyB == null
+                    ? const SizedBox()
+                    : Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
+                            color: AppColors.primaryBorderColor,
+                          ),
+                        ),
+                        child: Image.network(
+                          "http://10.10.12.15:8001${amendEngagements.signaturePartyA}",
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, _, _) => const SizedBox(),
+                        ),
+                      ),
               ),
 
               SizedBox(height: 8.h),

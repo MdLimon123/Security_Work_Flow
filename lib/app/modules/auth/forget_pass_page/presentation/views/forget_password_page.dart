@@ -31,11 +31,11 @@ class ForgetPasswordPage extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: "Forget passowrd? ",
+                        text: "Forget Password? ",
                         style: TextStyle(color: AppColors.secondaryNavyBlue),
                       ),
                       TextSpan(
-                        text: "enter your email",
+                        text: "Enter Your Email",
                         style: TextStyle(color: AppColors.primaryOrange),
                       ),
                     ],

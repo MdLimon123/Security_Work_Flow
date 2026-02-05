@@ -86,7 +86,7 @@ class OtherAccrediationsPage extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "All licences & Certificates",
+          "All Other Accreditations",
           style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
         ),
         Spacer(),
@@ -102,7 +102,7 @@ class OtherAccrediationsPage extends StatelessWidget {
           onPressed: () {
             Get.to(AddLicensePage());
           },
-          child: Text("Add Licence"),
+          child: Text("Add Accreditation"),
         ),
       ],
     );

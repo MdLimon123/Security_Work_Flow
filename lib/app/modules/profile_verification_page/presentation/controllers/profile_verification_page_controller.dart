@@ -10,7 +10,6 @@ import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:flutter_security_workforce/app/modules/auth/login_page/data/models/login_response_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_accreditations_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_licence_type_model.dart';
-import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_five_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_four_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_one_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_three_page.dart';
@@ -26,7 +25,7 @@ class ProfileVerificationPageController extends GetxController {
     StepTwoPage(),
     StepThreePage(),
     StepFourPage(),
-    StepFivePage(),
+    //StepFivePage(),
     InReviewMessagePage(),
   ];
 
@@ -49,8 +48,16 @@ class ProfileVerificationPageController extends GetxController {
   FilePickerResult? accreditationFile;
 
   ListOfLicenceTypeModel listOfLicenceTypeModel = ListOfLicenceTypeModel();
+
+  List<LicenceTypes> filteredLicenceTypes = [];
+  List<String> selectedLicenseTypes = [];
+  List<String> licenceTypeNumbers = [];
+
+  List<String> selectedAccreditationTypes = [];
   ListOfAccreditationsModel listOfAccreditationsModel =
       ListOfAccreditationsModel();
+
+  String selectedStateOrTerritory = "";
 
   String licenceTypeNumber = "1";
 
@@ -70,15 +77,66 @@ class ProfileVerificationPageController extends GetxController {
 
   String selectedGender = "";
 
-  String selectedLanguage = "";
+  List<String> selectedLanguages = [];
 
   String selectedYearsOfExperience = "";
 
-  String selectedStateOrTerritory = "";
-
-  String selectedLicenseType = "";
-
   String selectedAccreditation = "";
+
+  Future<void> getAccreditionType() async {
+    try {
+      DioClient dioClient = DioClient();
+      dynamic data = await dioClient.get(ApiEndpoints.accreditationTypeListUrl);
+      listOfAccreditationsModel = ListOfAccreditationsModel.fromJson(data);
+
+      print(
+        "Total Accreditation Loaded: ${listOfAccreditationsModel.certificateTypes?.length}",
+      );
+    } catch (e) {
+      print("Error: $e");
+      Get.showSnackbar(
+        GetSnackBar(
+          message: "Failed to load accreditation types: $e",
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
+  Future<void> fetchLicenceTypes() async {
+    try {
+      isLoading = true;
+      update();
+
+      DioClient dioClient = DioClient();
+      dynamic data = await dioClient.get(ApiEndpoints.licenceTypeListUrl);
+      listOfLicenceTypeModel = ListOfLicenceTypeModel.fromJson(data);
+
+      print(
+        "Total Licences Loaded: ${listOfLicenceTypeModel.licenceTypes?.length}",
+      );
+
+      if (listOfLicenceTypeModel.licenceTypes != null &&
+          listOfLicenceTypeModel.licenceTypes!.isNotEmpty) {
+        final firstState =
+            listOfLicenceTypeModel.licenceTypes!.first.stateOrTerritory;
+        if (firstState != null && firstState.isNotEmpty) {
+          setStateOrTerritory(firstState);
+        }
+      }
+    } catch (e) {
+      print("Error: $e");
+      Get.showSnackbar(
+        GetSnackBar(
+          message: "Failed to load licence types: $e",
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } finally {
+      isLoading = false;
+      update();
+    }
+  }
 
   Future<void> startUploadingAnimation() async {
     fileUploaded = false;
@@ -194,8 +252,8 @@ class ProfileVerificationPageController extends GetxController {
     update();
   }
 
-  void setLanguage(String value) {
-    selectedLanguage = value;
+  void setLanguages(List<String> languages) {
+    selectedLanguages = languages;
     update();
   }
 
@@ -206,27 +264,52 @@ class ProfileVerificationPageController extends GetxController {
 
   void setStateOrTerritory(String value) {
     selectedStateOrTerritory = value;
-    // print("sajid testing ${value}");
+
+    // Filter করা - যে state select করা হয়েছে সেই state এর সব licence
+    filteredLicenceTypes =
+        listOfLicenceTypeModel.licenceTypes?.where((e) {
+          if (e.stateOrTerritory == null) return false;
+          return e.stateOrTerritory!.trim().toLowerCase() ==
+              value.trim().toLowerCase();
+        }).toList() ??
+        [];
+
+    print("✅ Selected State: $value");
+    print("✅ Filtered Licences: ${filteredLicenceTypes.length}");
+
+    // আগের selection clear করা
+    selectedLicenseTypes.clear();
+    licenceTypeNumbers.clear();
+
     update();
   }
 
-  void setSelectedLicenseType(String value) {
-    selectedLicenseType = value;
+  void toggleSelectedLicenseType(String value) {
+    if (selectedLicenseTypes.contains(value)) {
+      selectedLicenseTypes.remove(value);
+    } else {
+      selectedLicenseTypes.add(value);
+    }
 
-    for (
-      int i = 0;
-      i < (listOfLicenceTypeModel.licenceTypes?.length ?? 0);
-      i++
-    ) {
-      if (selectedLicenseType ==
-          listOfLicenceTypeModel.licenceTypes![i].title) {
-        licenceTypeNumber = listOfLicenceTypeModel.licenceTypes![i].id
-            .toString();
-        break;
+    licenceTypeNumbers.clear();
+    for (var licence in listOfLicenceTypeModel.licenceTypes ?? []) {
+      if (selectedLicenseTypes.contains(licence.title)) {
+        licenceTypeNumbers.add(licence.id.toString());
       }
     }
 
-    // print("sajid testing $licenceTypeNumber");
+    print("✅ Selected Licences: $selectedLicenseTypes");
+    print("✅ Licence IDs: $licenceTypeNumbers");
+
+    update();
+  }
+
+  void toggleSelectedAccreditation(String value) {
+    if (selectedAccreditationTypes.contains(value)) {
+      selectedAccreditationTypes.remove(value);
+    } else {
+      selectedAccreditationTypes.add(value);
+    }
 
     update();
   }
@@ -249,18 +332,6 @@ class ProfileVerificationPageController extends GetxController {
   }
 
   Future<void> submitFirstStepData({required BuildContext context}) async {
-    if (profileImage == null) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("You must upload your profile picture."),
-            backgroundColor: AppColors.primaryRed,
-          ),
-        );
-      }
-      return;
-    }
-
     nextButtonInProgress = true;
     update();
 
@@ -269,39 +340,34 @@ class ProfileVerificationPageController extends GetxController {
 
       dio.MultipartFile? profileMultiPartFile;
 
-      final path = profileImage!.files.single.path!;
-
-      profileMultiPartFile = await dio.MultipartFile.fromFile(
-        path,
-        filename: path.split('/').last,
-      );
-
-      // await dioClient.put(
-      //   ApiEndpoints.profileUpdateUrl,
-      //   data: {
-      //     "first_name": fullNameTEC.text.trim(),
-      //     "phone": phoneTEC.text.trim(),
-      //     "gender": selectedGender,
-      //     "image": profileMultiPartFile,
-      //   },
-      // );
+      if (profileImage != null) {
+        final path = profileImage!.files.single.path!;
+        profileMultiPartFile = await dio.MultipartFile.fromFile(
+          path,
+          filename: path.split('/').last,
+        );
+      }
 
       final formData = dio.FormData.fromMap({
         "account_holder_name": fullNameTEC.text.trim(),
         "first_name": fullNameTEC.text.trim(),
         "phone": phoneTEC.text.trim(),
         "gender": selectedGender,
-        "image": profileMultiPartFile,
+        if (profileMultiPartFile != null) "image": profileMultiPartFile,
       });
 
+      // API call
       dynamic data = await dioClient.put(
         ApiEndpoints.profileUpdateUrl,
         data: formData,
       );
 
-      // print("Sajid testing ${data["data"]}");
-
-      selectedLanguage = data?["data"]?["language"] ?? "";
+      selectedLanguages = (data?["data"]?["languages"] ?? "")
+          .toString()
+          .split(",")
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
       selectedYearsOfExperience =
           data?["data"]?["exprience_in_years"]?.toString() ?? "";
       summaryTEC.text = data?["data"]?["exprience_summary"] ?? "";
@@ -316,9 +382,6 @@ class ProfileVerificationPageController extends GetxController {
         );
 
         increasePageIndex();
-        nextButtonInProgress = false;
-        update();
-        return;
       }
     } on AppException catch (e) {
       if (context.mounted) {
@@ -329,10 +392,6 @@ class ProfileVerificationPageController extends GetxController {
           ),
         );
       }
-
-      nextButtonInProgress = false;
-      update();
-      return;
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -342,14 +401,10 @@ class ProfileVerificationPageController extends GetxController {
           ),
         );
       }
-
+    } finally {
       nextButtonInProgress = false;
       update();
-      return;
     }
-
-    nextButtonInProgress = false;
-    increasePageIndex();
   }
 
   Future<void> submitSecondStepData({required BuildContext context}) async {
@@ -362,10 +417,10 @@ class ProfileVerificationPageController extends GetxController {
       await dioClient.put(
         ApiEndpoints.profileUpdateUrl,
         data: {
-          "language": selectedLanguage,
           "exprience_in_years": selectedYearsOfExperience,
           "exprience_summary": summaryTEC.text,
           "user_redus": prefRadius.toString(),
+          "languages": selectedLanguages.join(', '),
         },
       );
 
@@ -431,10 +486,12 @@ class ProfileVerificationPageController extends GetxController {
 
       final formData = dio.FormData.fromMap({
         "state_or_territory": selectedStateOrTerritory,
-        "licence_type": licenceTypeNumber,
+        "licence_types": licenceTypeNumbers.map((e) => int.parse(e)).toList(),
         "expire_date": licenseExpireTEC.text.trim(),
         "licence_images": multipartImages,
       });
+
+      print("sajid testing ===========>${formData.fields}");
 
       await dioClient.post(ApiEndpoints.addLicenceUrl, data: formData);
 
@@ -488,6 +545,16 @@ class ProfileVerificationPageController extends GetxController {
       return;
     }
 
+    if (selectedAccreditationTypes.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Please select at least one accreditation type"),
+          backgroundColor: AppColors.primaryRed,
+        ),
+      );
+      return;
+    }
+
     nextButtonInProgress = true;
     update();
 
@@ -495,31 +562,25 @@ class ProfileVerificationPageController extends GetxController {
       DioClient dioClient = DioClient();
 
       List<dio.MultipartFile> multipartImages = [];
-
       for (var file in accreditationFile!.files) {
         multipartImages.add(
           await dio.MultipartFile.fromFile(file.path!, filename: file.name),
         );
       }
 
-      String accreditationType = "1";
+      List<String> accreditationIds = [];
+      for (var selected in selectedAccreditationTypes) {
+        final matched = listOfAccreditationsModel.certificateTypes
+            ?.where((e) => e.title == selected)
+            .toList();
 
-      for (
-        int i = 0;
-        i < (listOfAccreditationsModel.certificateTypes?.length ?? 0);
-        i++
-      ) {
-        if (listOfAccreditationsModel.certificateTypes?[i].title ==
-            selectedAccreditation) {
-          accreditationType =
-              listOfAccreditationsModel.certificateTypes?[i].id.toString() ??
-              "1";
-          break;
+        if (matched != null && matched.isNotEmpty && matched[0].id != null) {
+          accreditationIds.add(matched[0].id.toString());
         }
       }
 
       final formData = dio.FormData.fromMap({
-        "accreditation_type": accreditationType,
+        "accreditation_types": accreditationIds,
         "expire_date": accreditationExpireTEC.text.trim(),
         "accreditation": multipartImages,
       });
@@ -534,6 +595,8 @@ class ProfileVerificationPageController extends GetxController {
           ),
         );
       }
+
+      Get.offAllNamed(AppRoutes.loginRoute);
     } on AppException catch (e) {
       nextButtonInProgress = false;
       update();
@@ -564,53 +627,100 @@ class ProfileVerificationPageController extends GetxController {
     increasePageIndex();
   }
 
-  Future<void> submitFifthStepData({required BuildContext context}) async {
-    nextButtonInProgress = true;
-    update();
+  // Future<void> submitFourthStepData({required BuildContext context}) async {
+  //   if (accreditationFile == null) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text("Must upload accreditation files"),
+  //         backgroundColor: AppColors.primaryRed,
+  //       ),
+  //     );
+  //     return;
+  //   }
 
-    try {
-      DioClient dioClient = DioClient();
+  //   nextButtonInProgress = true;
+  //   update();
 
-      await dioClient.put(
-        ApiEndpoints.profileUpdateUrl,
-        data: {
-          "bank_name": bankNameTEC.text.toString().trim(),
-          "account_holder_name": accountHolderNameTEC.text.toString().trim(),
-          "account_no": accountNumberTEC.text.toString().trim(),
-          "bank_branch": bsbNumberTEC.text.toString().trim(),
-        },
-      );
+  //   try {
+  //     DioClient dioClient = DioClient();
 
-      Get.offAllNamed(AppRoutes.bottomNavbarRoute);
-    } on AppException catch (e) {
-      log(e.message);
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.message),
-            backgroundColor: AppColors.primaryRed,
-          ),
-        );
-      }
-      nextButtonInProgress = false;
-      update();
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString()),
-            backgroundColor: AppColors.primaryRed,
-          ),
-        );
-      }
-      nextButtonInProgress = false;
-      update();
-    }
-  }
+  //     List<dio.MultipartFile> multipartImages = [];
+
+  //     for (var file in accreditationFile!.files) {
+  //       multipartImages.add(
+  //         await dio.MultipartFile.fromFile(file.path!, filename: file.name),
+  //       );
+  //     }
+
+  //     String accreditationType = "1";
+
+  //     for (
+  //       int i = 0;
+  //       i < (listOfAccreditationsModel.certificateTypes?.length ?? 0);
+  //       i++
+  //     ) {
+  //       if (listOfAccreditationsModel.certificateTypes?[i].title ==
+  //           selectedAccreditation) {
+  //         accreditationType =
+  //             listOfAccreditationsModel.certificateTypes?[i].id.toString() ??
+  //             "1";
+  //         break;
+  //       }
+  //     }
+
+  //     final formData = dio.FormData.fromMap({
+  //       "accreditation_types": accreditationType,
+  //       "expire_date": accreditationExpireTEC.text.trim(),
+  //       "accreditation": multipartImages,
+  //     });
+
+  //     await dioClient.post(ApiEndpoints.accreditationUrl, data: formData);
+
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text("Updated"),
+  //           backgroundColor: AppColors.primaryGreen,
+  //         ),
+  //       );
+  //     }
+  //     Get.offAllNamed(AppRoutes.loginRoute);
+  //   } on AppException catch (e) {
+  //     nextButtonInProgress = false;
+  //     update();
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(e.message),
+  //           backgroundColor: AppColors.primaryRed,
+  //         ),
+  //       );
+  //     }
+  //     return;
+  //   } catch (e) {
+  //     nextButtonInProgress = false;
+  //     update();
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(e.toString()),
+  //           backgroundColor: AppColors.primaryRed,
+  //         ),
+  //       );
+  //     }
+  //     return;
+  //   }
+
+  //   nextButtonInProgress = false;
+  //   increasePageIndex();
+  // }
 
   @override
   void onInit() async {
     super.onInit();
+
+    fetchLicenceTypes();
+    getAccreditionType();
 
     fullNameTEC.text =
         Get.arguments["guard_details"]["candidate"]["first_name"] ?? "";
@@ -618,33 +728,24 @@ class ProfileVerificationPageController extends GetxController {
     selectedGender =
         Get.arguments["guard_details"]["candidate"]["gender"] ?? "";
 
-    selectedLanguage =
-        Get.arguments["guard_details"]["candidate"]["language"] ?? "";
+    // selectedLanguages =
+    //     Get.arguments["guard_details"]["candidate"]["languages"] ?? "";
 
-    loginResponseModel = LoginResponseModel.fromJson(Get.arguments);
-
-    // print("sajid testing ${loginResponseModel.toJson()}");
-
-    DioClient dioClient = DioClient();
-
-    try {
-      dynamic data = await dioClient.get(ApiEndpoints.licenceTypeListUrl);
-
-      listOfLicenceTypeModel = ListOfLicenceTypeModel.fromJson(data);
-
-      dynamic data2 = await dioClient.get(
-        ApiEndpoints.accreditationTypeListUrl,
-      );
-
-      listOfAccreditationsModel = ListOfAccreditationsModel.fromJson(data2);
-    } on AppException catch (e) {
-      Get.showSnackbar((GetSnackBar(message: e.message)));
-    } catch (e) {
-      Get.showSnackbar((GetSnackBar(message: e.toString())));
+    final languagesFromApi =
+        Get.arguments["guard_details"]["candidate"]["languages"] ?? "";
+    if (languagesFromApi is String && languagesFromApi.isNotEmpty) {
+      selectedLanguages = languagesFromApi
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
+    } else if (languagesFromApi is List) {
+      selectedLanguages = List<String>.from(languagesFromApi);
     }
-
-    update();
+    loginResponseModel = LoginResponseModel.fromJson(Get.arguments);
   }
+
+  bool isLoading = false;
 
   @override
   void onClose() {

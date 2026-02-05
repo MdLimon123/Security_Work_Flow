@@ -17,24 +17,9 @@ class StepThreePage extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  onTap: () {
-                    controller.increasePageIndex();
-                  },
-                  child: Text(
-                    "Skip",
-                    style: TextStyle(color: AppColors.primaryOrange),
-                  ),
-                ),
-              ],
-            ),
-
             Center(
               child: Text(
-                "Licences & Certifications",
+                "Licences",
                 style: TextStyle(
                   fontSize: 24.sp,
                   color: AppColors.secondaryNavyBlue,
@@ -51,6 +36,7 @@ class StepThreePage extends StatelessWidget {
 
             _buildLicenseTypeInput(controller),
 
+            _buildLicenseExpireInput(controller),
             SizedBox(height: 16.h),
 
             Column(
@@ -96,11 +82,21 @@ class StepThreePage extends StatelessWidget {
                     ],
                   ),
 
-                _buildLicenseExpireInput(controller),
-
                 SizedBox(height: 20.h),
                 _buildNextButton(controller, context: context),
                 SizedBox(height: 12.h),
+
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      controller.increasePageIndex();
+                    },
+                    child: Text(
+                      "Skip",
+                      style: TextStyle(color: AppColors.primaryOrange),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
@@ -119,12 +115,14 @@ class StepThreePage extends StatelessWidget {
           "Licence Expiry Date",
           style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
+
         SizedBox(height: 8.h),
+
         TextFormField(
-          keyboardType: TextInputType.datetime,
           controller: controller.licenseExpireTEC,
+          readOnly: true,
           decoration: InputDecoration(
-            hintText: "2000-01-30",
+            hintText: "YYYY-MM-DD",
             hintStyle: TextStyle(color: AppColors.primaryGray),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
@@ -135,6 +133,21 @@ class StepThreePage extends StatelessWidget {
               borderSide: BorderSide(color: AppColors.secondaryWhite),
             ),
           ),
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+              context: Get.context!,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1900),
+              lastDate: DateTime(2100),
+            );
+
+            if (pickedDate != null) {
+              controller.licenseExpireTEC.text =
+                  "${pickedDate.year.toString().padLeft(4, '0')}-"
+                  "${pickedDate.month.toString().padLeft(2, '0')}-"
+                  "${pickedDate.day.toString().padLeft(2, '0')}";
+            }
+          },
         ),
       ],
     );
@@ -176,28 +189,6 @@ class StepThreePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Spacer(),
-                  // Row(
-                  //   children: [
-                  //     InkWell(
-                  //       onTap: () {},
-                  //       child: SvgPicture.asset(
-                  //         AppAssets.pauseIcon,
-                  //         width: 24.w,
-                  //         height: 24.h,
-                  //       ),
-                  //     ),
-                  //     SizedBox(width: 4.w),
-                  //     InkWell(
-                  //       onTap: () {},
-                  //       child: SvgPicture.asset(
-                  //         AppAssets.cancelIcon,
-                  //         width: 24.w,
-                  //         height: 24.h,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                 ],
               ),
 
@@ -226,56 +217,65 @@ class StepThreePage extends StatelessWidget {
   Column _buildStateOrTerritoryInput(
     ProfileVerificationPageController controller,
   ) {
+    final states = [
+      "New South Wales",
+      "Victoria",
+      "Queensland",
+      "Western Australia",
+      "South Australia",
+      "Tasmania",
+      "Northern Territory",
+      "Australian Capital Territory",
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "State or Territory",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
+          style: TextStyle(fontSize: 16, color: Color(0xFF002147)),
         ),
-        PopupMenuButton<String>(
-          color: AppColors.primaryWhite,
-          onSelected: (value) {
-            controller.setStateOrTerritory(value);
-          },
-          itemBuilder: (context) => [
-            PopupMenuItem(value: "NSW", child: Text("NSW (New South Wales)")),
-            PopupMenuItem(value: "VIC", child: Text("VIC (Victoria)")),
-            PopupMenuItem(value: "WA", child: Text("WA (Western Australia)")),
-            PopupMenuItem(value: "QLD", child: Text("QLD (Queensland)")),
-            PopupMenuItem(value: "SA", child: Text("SA (South Australia)")),
-            PopupMenuItem(
-              value: "ACT",
-              child: Text("ACT (Australian Capital Territory)"),
-            ),
-            PopupMenuItem(value: "NT", child: Text("NT (Northern Territory)")),
-            PopupMenuItem(value: "TAS", child: Text("TAS (Tasmania)")),
-          ],
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.secondaryWhite),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.keyboard_arrow_down, color: AppColors.primaryGray),
-
-                SizedBox(width: 8.w),
-                Text(
-                  controller.selectedStateOrTerritory.isEmpty
-                      ? "Select your State or Territory"
-                      : controller.selectedStateOrTerritory,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: controller.selectedStateOrTerritory.isEmpty
-                        ? AppColors.primaryGray
-                        : Colors.black,
-                  ),
+        const SizedBox(height: 8),
+        GetBuilder<ProfileVerificationPageController>(
+          builder: (_) {
+            if (controller.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return PopupMenuButton<String>(
+              onSelected: controller.setStateOrTerritory,
+              itemBuilder: (_) => states
+                  .map((e) => PopupMenuItem(value: e, child: Text(e)))
+                  .toList(),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
                 ),
-              ],
-            ),
-          ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.keyboard_arrow_down),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        controller.selectedStateOrTerritory.isEmpty
+                            ? "Select State or Territory"
+                            : controller.selectedStateOrTerritory,
+                        style: TextStyle(
+                          color: controller.selectedStateOrTerritory.isEmpty
+                              ? Colors.grey
+                              : Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ],
     );
@@ -285,60 +285,77 @@ class StepThreePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Licence Type(s)",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
-        ),
-        PopupMenuButton<String>(
-          color: AppColors.primaryWhite,
-          onSelected: (value) {
-            controller.setSelectedLicenseType(value);
-          },
-          itemBuilder: (context) => [
-            for (
-              int i = 0;
-              i < controller.listOfLicenceTypeModel.licenceTypes!.length;
-              i++
-            )
-              PopupMenuItem(
-                value:
-                    controller.listOfLicenceTypeModel.licenceTypes?[i].title ??
-                    "0",
-                child: Text(
-                  controller.listOfLicenceTypeModel.licenceTypes?[i].title ??
-                      "",
-                ),
-              ),
-          ],
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.secondaryWhite),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.keyboard_arrow_down, color: AppColors.primaryGray),
-
-                SizedBox(width: 8.w),
-                Text(
-                  controller.selectedLicenseType.isEmpty
-                      ? "Select your State or Territory"
-                      : controller.selectedLicenseType,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: controller.selectedLicenseType.isEmpty
-                        ? AppColors.primaryGray
-                        : Colors.black,
-                  ),
-                ),
-              ],
-            ),
+        const SizedBox(height: 16),
+        const Text(
+          "Select Licence Type(s):",
+          style: TextStyle(
+            fontSize: 16,
+            color: Color(0xFF002147),
+            fontWeight: FontWeight.w500,
           ),
         ),
+        const SizedBox(height: 12),
+
+        GetBuilder<ProfileVerificationPageController>(
+          builder: (c) {
+            if (c.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            final items = c.filteredLicenceTypes;
+
+            if (items.isEmpty) {
+              return Text(
+                c.selectedStateOrTerritory.isEmpty
+                    ? "Please select a State or Territory to see licences"
+                    : "No licences found for ${c.selectedStateOrTerritory}. Please check API data.",
+                style: const TextStyle(color: Colors.red),
+              );
+            }
+
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: items.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 16,
+                mainAxisExtent: 60,
+              ),
+              itemBuilder: (context, index) {
+                final item = items[index];
+
+                return InkWell(
+                  onTap: () => c.toggleSelectedLicenseType(item.title!),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: c.selectedLicenseTypes.contains(item.title),
+                        onChanged: (_) =>
+                            c.toggleSelectedLicenseType(item.title!),
+                      ),
+                      Expanded(
+                        child: Text(
+                          item.title ?? "",
+                          maxLines: 3,
+                          softWrap: true,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
+
+        const SizedBox(height: 12),
       ],
     );
   }
+
+
 
   SizedBox _buildNextButton(
     ProfileVerificationPageController controller, {
@@ -353,6 +370,9 @@ class StepThreePage extends StatelessWidget {
             controller: controller,
           );
           // controller.increasePageIndex();
+          print(
+            controller.licenceTypeNumbers.map((e) => int.parse(e)).toList(),
+          );
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.secondaryNavyBlue,

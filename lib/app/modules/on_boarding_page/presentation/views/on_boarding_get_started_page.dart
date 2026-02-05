@@ -11,40 +11,33 @@ class OnBoardingGetStartedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.secondaryNavyBlue,
-              foregroundColor: AppColors.primaryWhite,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-            ),
-            onPressed: () {
-              Get.toNamed(AppRoutes.onBoardingRoute);
-            },
-            child: Text(
-              "Get Started",
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-            ),
-          ),
-        ),
-      ),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                AppAssets.securiverseIcon,
-                width: 148.w,
-                height: 148.h,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  double imageSize;
+
+                  if (constraints.maxWidth > 600) {
+                    imageSize = 250;
+                  } else {
+                    imageSize = 148;
+                  }
+
+                  return Image.asset(
+                    AppAssets.securiverseIcon,
+                    width: imageSize,
+                    height: imageSize,
+                  );
+                },
               ),
-              SizedBox(height: 24.h),
-              Text(
+            ),
+            SizedBox(height: 24.h),
+            Center(
+              child: Text(
                 "Securiverse",
                 style: TextStyle(
                   fontSize: 48.sp,
@@ -52,7 +45,9 @@ class OnBoardingGetStartedPage extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              Text(
+            ),
+            Center(
+              child: Text(
                 "Opportunity. On Demand",
                 style: TextStyle(
                   fontSize: 16.sp,
@@ -60,8 +55,47 @@ class OnBoardingGetStartedPage extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-            ],
-          ),
+            ),
+            // SizedBox(height: 20),
+            // Center(
+            //   child: Text(
+            //     "Take control of Your Career. Earn money on Your Terms .Create Your Account now!",
+
+            //     style: TextStyle(
+            //       fontSize: 16.sp,
+            //       color: AppColors.primarySteelBlue,
+            //       fontWeight: FontWeight.w700,
+            //     ),
+            //     textAlign: TextAlign.center,
+            //   ),
+            // ),
+
+            SizedBox(height: 70),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: InkWell(
+                onTap: () {
+                  Get.toNamed(AppRoutes.loginRoute);
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(color: AppColors.primaryOrange),
+                  child: Center(
+                    child: Text(
+                      "Get Started",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primaryWhite,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

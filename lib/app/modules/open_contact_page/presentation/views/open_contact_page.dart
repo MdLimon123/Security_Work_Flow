@@ -70,7 +70,7 @@ class OpenContactPage extends StatelessWidget {
                           ? AppColors.primaryGreen.withOpacity(0.1)
                           : Colors.orange.withOpacity(0.1),
                       label: Text(
-                        isSigned ? "Signed" : "Pendings",
+                        isSigned ? "Signed" : "Pending",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: isSigned
@@ -283,7 +283,7 @@ class OpenContactPage extends StatelessWidget {
                             ? AppColors.primaryGreen.withValues(alpha: 0.1)
                             : Colors.orange.withValues(alpha: 0.1),
                         label: Text(
-                          isSigned ? "Signed" : "Pendings",
+                          isSigned ? "Signed" : "Pending",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: isSigned
@@ -299,7 +299,23 @@ class OpenContactPage extends StatelessWidget {
 
               SizedBox(height: 8.h),
 
-           
+              Center(
+                child: engagementListData.signaturePartyB == null
+                    ? const SizedBox()
+                    : Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
+                            color: AppColors.primaryBorderColor,
+                          ),
+                        ),
+                        child: Image.network(
+                          "http://10.10.12.15:8001${engagementListData.signaturePartyB}",
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, __, ___) => const SizedBox(),
+                        ),
+                      ),
+              ),
             ],
           ),
         ),
@@ -429,7 +445,7 @@ class OpenContactPage extends StatelessWidget {
                     border: Border.all(color: AppColors.primaryBorderColor),
                   ),
                   child: Image.network(
-                    "http://10.10.12.15:8001${engagementListData.signaturePartyB}",
+                    "http://10.10.12.15:8001${engagementListData.signaturePartyA}",
                     fit: BoxFit.contain,
                     errorBuilder: (_, __, ___) => const SizedBox(),
                   ),

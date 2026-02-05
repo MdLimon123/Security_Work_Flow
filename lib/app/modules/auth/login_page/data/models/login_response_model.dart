@@ -11,6 +11,7 @@ class LoginResponseModel {
     bool? success,
     bool? verified,
     String? message,
+    bool? isProfileCompleted,
     String? access,
     String? refresh,
     GuardDetails? guardDetails,
@@ -18,6 +19,7 @@ class LoginResponseModel {
     _success = success;
     _verified = verified;
     _message = message;
+    _isProfileCompleted = isProfileCompleted;
     _access = access;
     _refresh = refresh;
     _guardDetails = guardDetails;
@@ -28,6 +30,7 @@ class LoginResponseModel {
     _verified = json['verified'];
     _message = json['message'];
     _access = json['access'];
+    _isProfileCompleted = json['is_profile_completed'];
     _refresh = json['refresh'];
     _guardDetails = json['guard_details'] != null
         ? GuardDetails.fromJson(json['guard_details'])
@@ -40,12 +43,14 @@ class LoginResponseModel {
   String? _access;
   String? _refresh;
   GuardDetails? _guardDetails;
+  bool? _isProfileCompleted;
 
   bool? get success => _success;
   bool? get verified => _verified;
   String? get message => _message;
   String? get access => _access;
   String? get refresh => _refresh;
+  bool? get isProfileCompleted => _isProfileCompleted;
   GuardDetails? get guardDetails => _guardDetails;
 
   Map<String, dynamic> toJson() {
@@ -53,6 +58,7 @@ class LoginResponseModel {
     map['success'] = _success;
     map['verified'] = _verified;
     map['message'] = _message;
+    map['is_profile_completed'] = _isProfileCompleted;
     map['access'] = _access;
     map['refresh'] = _refresh;
 

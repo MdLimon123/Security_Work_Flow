@@ -36,4 +36,6 @@ abstract class AppRoutes {
   static const String customerSupportRoute = "/customerSupportRoute";
   static const String messageInboxRoute = "/messageInboxRoute";
   static const String openAmendRoute = "/openAmendRoute";
+  static const String verificationScreen  = "/verificationScreen";
+  static const String bankDetailsScreen = "/bankDetailsScreen";
 }

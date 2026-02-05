@@ -28,8 +28,6 @@ class ProfilePageController extends GetxController {
 
   ReferralModel referralModel = ReferralModel();
 
-
-
   void toggleNotification() {
     notificationOn = !notificationOn;
     update();
@@ -38,6 +36,7 @@ class ProfilePageController extends GetxController {
   Future<void> logout() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.remove(AppKeys.loginKey);
+    await sharedPreferences.remove(AppKeys.accessTokenKey);
     Get.offAllNamed(AppRoutes.onBoardingRoute);
   }
 
@@ -87,11 +86,10 @@ class ProfilePageController extends GetxController {
         await dioClient.get(ApiEndpoints.referralUrl),
       );
 
-         referralController.text =
-        "https://example.com/signin/?${referralModel.code}";
+      referralController.text =
+          "http://148.230.92.132:3000/sign-up?${referralModel.code}";
 
- 
-    update(); 
+      update();
     } on AppException catch (e) {
       Get.snackbar(
         "Error",

@@ -9,6 +9,7 @@ import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/data/models/dash_board_info_model.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/data/models/open_job_list_model.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/data/models/profile_info_model.dart';
+import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
@@ -88,6 +89,8 @@ class HomePageController extends GetxController {
     profileInfoLoaded = true;
     update();
   }
+
+  
 
   Future<void> _determinePosition() async {
     bool serviceEnabled;
@@ -180,6 +183,63 @@ class HomePageController extends GetxController {
     }
   }
 
+
+
+  Future<void> createChatRoom({required String userId}) async {
+    try {
+      DioClient dioClient = DioClient();
+
+      final response = await dioClient.post(
+        ApiEndpoints.createCharRoomUrl,
+        data: {
+          "user_list": [userId],
+          "group_name": "Limon Islam",
+        },
+      );
+
+      if (response['success'] == true && response['data'] != null) {
+        final chatData = response['data'];
+
+        final conversationId = chatData['id'].toString();
+        final participant = chatData['participants']?[0];
+        final participantName = participant?['first_name'] ?? 'Unknown';
+        final participantImage = participant?['image'] ?? '';
+
+   
+        Get.toNamed(
+          AppRoutes.messageInboxRoute,
+          arguments: {
+            'conversation_id': conversationId,
+            'participant_name': participantName,
+            'participant_image': participantImage,
+          },
+        );
+      } else {
+        Get.snackbar(
+          'Error',
+          'Failed to create or fetch chat room',
+          backgroundColor: AppColors.primaryRed,
+          colorText: AppColors.primaryWhite,
+        );
+      }
+    } on AppException catch (e) {
+      Get.snackbar(
+        "Error",
+        e.message,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    } catch (e) {
+      debugPrint('Error creating chat room: $e');
+      Get.snackbar(
+        "Error",
+        "Something went wrong",
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    }
+  }
+
   Future<void> applyJob({required String jobId}) async {
     applyButtonLoading = true;
     update();
@@ -189,13 +249,10 @@ class HomePageController extends GetxController {
 
       dynamic res = await dioClient.post(ApiEndpoints.applyJob(jobId: jobId));
 
-      print("result =============> ${res}");
-
       log("Apply Job Response: ${jsonEncode(res)}");
 
       Get.back();
 
-   
       Get.snackbar(
         "Success",
         "Job applied successfully",
@@ -207,7 +264,7 @@ class HomePageController extends GetxController {
         duration: const Duration(seconds: 2),
       );
     } on AppException catch (e) {
-        Get.back();
+      Get.back();
       Get.snackbar(
         "Error",
         e.message,

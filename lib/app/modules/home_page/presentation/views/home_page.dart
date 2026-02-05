@@ -16,49 +16,71 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: GetBuilder<HomePageController>(
-            builder: (controller) {
-              return controller.fullPageLoading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primaryOrange,
-                      ),
-                    )
-                  : Column(
-                      children: [
-                        GetBuilder<HomePageController>(
-                          builder: (controller) {
-                            return controller.profileInfoLoaded
-                                ? _buildAppbarSection()
-                                : Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.primaryOrange,
-                                    ),
-                                  );
-                          },
+    return WillPopScope(
+      onWillPop: () async {
+        final shouldExit = await Get.dialog<bool>(
+          AlertDialog(
+            title: Text('Exit App'),
+            content: Text('Do you want to exit the app?'),
+            actions: [
+              TextButton(
+                child: Text('No'),
+                onPressed: () => Get.back(result: false),
+              ),
+              TextButton(
+                child: Text('Yes'),
+                onPressed: () => Get.back(result: true),
+              ),
+            ],
+          ),
+          barrierDismissible: false,
+        );
+        return shouldExit ?? false;
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: GetBuilder<HomePageController>(
+              builder: (controller) {
+                return controller.fullPageLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryOrange,
                         ),
-                        SizedBox(height: 22.h),
-                        GetBuilder<HomePageController>(
-                          builder: (controller) {
-                            return controller.dashBoardInfoLoaded
-                                ? _buildDashboard()
-                                : Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.primaryOrange,
-                                    ),
-                                  );
-                          },
-                        ),
-                        _buildSeeMoreOpenJobs(),
-                        SizedBox(height: 12.h),
-                        _buildJobListing(),
-                      ],
-                    );
-            },
+                      )
+                    : Column(
+                        children: [
+                          GetBuilder<HomePageController>(
+                            builder: (controller) {
+                              return controller.profileInfoLoaded
+                                  ? _buildAppbarSection()
+                                  : Center(
+                                      child: CircularProgressIndicator(
+                                        color: AppColors.primaryOrange,
+                                      ),
+                                    );
+                            },
+                          ),
+                          SizedBox(height: 22.h),
+                          GetBuilder<HomePageController>(
+                            builder: (controller) {
+                              return controller.dashBoardInfoLoaded
+                                  ? _buildDashboard()
+                                  : Center(
+                                      child: CircularProgressIndicator(
+                                        color: AppColors.primaryOrange,
+                                      ),
+                                    );
+                            },
+                          ),
+                          _buildSeeMoreOpenJobs(),
+                          SizedBox(height: 12.h),
+                          _buildJobListing(),
+                        ],
+                      );
+              },
+            ),
           ),
         ),
       ),
@@ -70,10 +92,10 @@ class HomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildFirstStatRow(),
-        SizedBox(height: 12.h),
-        _buildSecondStatRow(),
-        SizedBox(height: 12.h),
-        _buildThirdStateRow(),
+        //   SizedBox(height: 12.h),
+        //   // _buildSecondStatRow(),
+        //   SizedBox(height: 12.h),
+        //  // _buildThirdStateRow(),
         SizedBox(height: 12.h),
       ],
     );
@@ -244,8 +266,6 @@ class HomePage extends StatelessWidget {
                                 foregroundColor: AppColors.primaryWhite,
                               ),
                               onPressed: () async {
-
-                                
                                 Get.dialog(
                                   Material(
                                     color: Colors.black45,
@@ -289,7 +309,7 @@ class HomePage extends StatelessWidget {
                                             const SizedBox(height: 12),
 
                                             _buildBullet(
-                                              "I hold the correct and current license(s) to perform this task.",
+                                              "I hold the correct and current preferred operatives(s) to perform this task.",
                                             ),
                                             _buildBullet(
                                               "I have no injuries preventing me from completing this or related tasks.",
@@ -327,7 +347,7 @@ class HomePage extends StatelessWidget {
                                                   ),
                                                 ),
                                                 const SizedBox(width: 10),
-                                                
+
                                                 Expanded(
                                                   child: ElevatedButton(
                                                     onPressed: () async {
@@ -368,8 +388,6 @@ class HomePage extends StatelessWidget {
                                                         : Text("Confirm"),
                                                   ),
                                                 ),
-
-
                                               ],
                                             ),
                                           ],
@@ -378,8 +396,6 @@ class HomePage extends StatelessWidget {
                                     ),
                                   ),
                                 );
-                             
-                             
                               },
                               child: controller.applyButtonLoading
                                   ? Center(
@@ -390,9 +406,6 @@ class HomePage extends StatelessWidget {
                                   : Text("Apply"),
                             ),
                           ),
-                       
-                       
-                       
                         ],
                       ),
                     ],
@@ -453,7 +466,198 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Row _buildThirdStateRow() {
+  // Row _buildThirdStateRow() {
+  //   return Row(
+  //     children: [
+  //       Expanded(
+  //         child: Container(
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(12.r),
+  //             border: Border.all(color: AppColors.primaryBorderColor),
+  //           ),
+  //           child: Padding(
+  //             padding: EdgeInsets.all(10.sp),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Row(
+  //                   children: [
+  //                     GetBuilder<HomePageController>(
+  //                       builder: (controller) {
+  //                         return Text(
+  //                           "${controller.dashBoardInfoModel.dashboardData?.totalUpcomingJobs ?? "N/A"}",
+  //                           style: TextStyle(
+  //                             fontSize: 26.sp,
+  //                             color: AppColors.secondaryNavyBlue,
+  //                             fontWeight: FontWeight.w600,
+  //                           ),
+  //                         );
+  //                       },
+  //                     ),
+  //                     Spacer(),
+  //                     SvgPicture.asset(AppAssets.upComingJobIcon),
+  //                   ],
+  //                 ),
+  //                 Text(
+  //                   "Upcoming Jobs",
+  //                   style: TextStyle(
+  //                     fontSize: 12.sp,
+  //                     color: AppColors.secondaryTextColor,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       SizedBox(width: 14.w),
+  //       Expanded(
+  //         child: Container(
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(12.r),
+  //             border: Border.all(color: AppColors.primaryBorderColor),
+  //           ),
+  //           child: Padding(
+  //             padding: EdgeInsets.all(10.sp),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Row(
+  //                   children: [
+  //                     Row(
+  //                       children: [
+  //                         SvgPicture.asset(AppAssets.starIcon),
+  //                         SizedBox(width: 4.w),
+  //                         GetBuilder<HomePageController>(
+  //                           builder: (controller) {
+  //                             return Text(
+  //                               controller
+  //                                       .dashBoardInfoModel
+  //                                       .dashboardData
+  //                                       ?.avgRating
+  //                                       .toString() ??
+  //                                   "N/A",
+  //                               style: TextStyle(
+  //                                 fontSize: 26.sp,
+  //                                 color: AppColors.secondaryNavyBlue,
+  //                                 fontWeight: FontWeight.w600,
+  //                               ),
+  //                             );
+  //                           },
+  //                         ),
+  //                       ],
+  //                     ),
+  //                     Spacer(),
+  //                     SvgPicture.asset(AppAssets.averageIcon),
+  //                   ],
+  //                 ),
+  //                 Text(
+  //                   "Average Rating",
+  //                   style: TextStyle(
+  //                     fontSize: 12.sp,
+  //                     color: AppColors.secondaryTextColor,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+
+  // Row _buildSecondStatRow() {
+  //   return Row(
+  //     children: [
+  //       Expanded(
+  //         child: Container(
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(12.r),
+  //             border: Border.all(color: AppColors.primaryBorderColor),
+  //           ),
+  //           child: Padding(
+  //             padding: EdgeInsets.all(10.sp),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Row(
+  //                   children: [
+  //                     GetBuilder<HomePageController>(
+  //                       builder: (controller) {
+  //                         return Text(
+  //                           "${controller.dashBoardInfoModel.dashboardData?.totalCompletedJobs ?? "N/A"}",
+  //                           style: TextStyle(
+  //                             fontSize: 26.sp,
+  //                             color: AppColors.secondaryNavyBlue,
+  //                             fontWeight: FontWeight.w600,
+  //                           ),
+  //                         );
+  //                       },
+  //                     ),
+  //                     Spacer(),
+  //                     SvgPicture.asset(AppAssets.jobCompletedIcon),
+  //                   ],
+  //                 ),
+  //                 Text(
+  //                   "Jobs Completed",
+  //                   style: TextStyle(
+  //                     color: AppColors.secondaryTextColor,
+  //                     fontSize: 12.sp,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       SizedBox(width: 14.w),
+  //       Expanded(
+  //         child: Container(
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(12.r),
+  //             border: Border.all(color: AppColors.primaryBorderColor),
+  //           ),
+  //           child: Padding(
+  //             padding: EdgeInsets.all(10.sp),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Row(
+  //                   children: [
+  //                     GetBuilder<HomePageController>(
+  //                       builder: (controller) {
+  //                         return Text(
+  //                           "${controller.dashBoardInfoModel.dashboardData?.pastJobs ?? "N/A"}",
+  //                           style: TextStyle(
+  //                             fontSize: 26.sp,
+  //                             color: AppColors.secondaryNavyBlue,
+  //                             fontWeight: FontWeight.w600,
+  //                           ),
+  //                         );
+  //                       },
+  //                     ),
+  //                     Spacer(),
+  //                     SvgPicture.asset(AppAssets.pastJobIcon),
+  //                   ],
+  //                 ),
+  //                 Text(
+  //                   "Past Jobs",
+  //                   style: TextStyle(
+  //                     color: AppColors.secondaryTextColor,
+  //                     fontSize: 12.sp,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+
+  Row _buildFirstStatRow() {
     return Row(
       children: [
         Expanded(
@@ -463,7 +667,7 @@ class HomePage extends StatelessWidget {
               border: Border.all(color: AppColors.primaryBorderColor),
             ),
             child: Padding(
-              padding: EdgeInsets.all(10.sp),
+              padding: EdgeInsets.all(8.sp),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -472,9 +676,9 @@ class HomePage extends StatelessWidget {
                       GetBuilder<HomePageController>(
                         builder: (controller) {
                           return Text(
-                            "${controller.dashBoardInfoModel.dashboardData?.totalUpcomingJobs ?? "N/A"}",
+                            "\$${controller.dashBoardInfoModel.dashboardData?.totalEarningsThisWeek ?? "N/A"}",
                             style: TextStyle(
-                              fontSize: 26.sp,
+                              fontSize: 20.sp,
                               color: AppColors.secondaryNavyBlue,
                               fontWeight: FontWeight.w600,
                             ),
@@ -482,14 +686,14 @@ class HomePage extends StatelessWidget {
                         },
                       ),
                       Spacer(),
-                      SvgPicture.asset(AppAssets.upComingJobIcon),
+                      SvgPicture.asset(AppAssets.earningThisWeekIcon),
                     ],
                   ),
                   Text(
-                    "Upcoming Jobs",
+                    "Earnings this week",
                     style: TextStyle(
-                      fontSize: 12.sp,
                       color: AppColors.secondaryTextColor,
+                      fontSize: 12.sp,
                     ),
                   ),
                 ],
@@ -497,7 +701,55 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 14.w),
+        SizedBox(width: 8.w),
+
+        Expanded(
+          child: InkWell(
+            onTap: () {
+              Get.toNamed(AppRoutes.myJobsRoute);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.r),
+                border: Border.all(color: AppColors.primaryBorderColor),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(8.sp),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        GetBuilder<HomePageController>(
+                          builder: (controller) {
+                            return Text(
+                              "${controller.dashBoardInfoModel.dashboardData?.totalUpcomingJobs ?? "N/A"}",
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                color: AppColors.secondaryNavyBlue,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            );
+                          },
+                        ),
+                        Spacer(),
+                        SvgPicture.asset(AppAssets.upComingJobIcon),
+                      ],
+                    ),
+                    Text(
+                      "My Jobs",
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: AppColors.secondaryTextColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: 8.w),
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -505,7 +757,7 @@ class HomePage extends StatelessWidget {
               border: Border.all(color: AppColors.primaryBorderColor),
             ),
             child: Padding(
-              padding: EdgeInsets.all(10.sp),
+              padding: EdgeInsets.all(8.sp),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -525,7 +777,7 @@ class HomePage extends StatelessWidget {
                                         .toString() ??
                                     "N/A",
                                 style: TextStyle(
-                                  fontSize: 26.sp,
+                                  fontSize: 20.sp,
                                   color: AppColors.secondaryNavyBlue,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -550,186 +802,48 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-      ],
-    );
-  }
 
-  Row _buildSecondStatRow() {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: AppColors.primaryBorderColor),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(10.sp),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      GetBuilder<HomePageController>(
-                        builder: (controller) {
-                          return Text(
-                            "${controller.dashBoardInfoModel.dashboardData?.totalCompletedJobs ?? "N/A"}",
-                            style: TextStyle(
-                              fontSize: 26.sp,
-                              color: AppColors.secondaryNavyBlue,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          );
-                        },
-                      ),
-                      Spacer(),
-                      SvgPicture.asset(AppAssets.jobCompletedIcon),
-                    ],
-                  ),
-                  Text(
-                    "Jobs Completed",
-                    style: TextStyle(
-                      color: AppColors.secondaryTextColor,
-                      fontSize: 12.sp,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 14.w),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: AppColors.primaryBorderColor),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(10.sp),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      GetBuilder<HomePageController>(
-                        builder: (controller) {
-                          return Text(
-                            "${controller.dashBoardInfoModel.dashboardData?.pastJobs ?? "N/A"}",
-                            style: TextStyle(
-                              fontSize: 26.sp,
-                              color: AppColors.secondaryNavyBlue,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          );
-                        },
-                      ),
-                      Spacer(),
-                      SvgPicture.asset(AppAssets.pastJobIcon),
-                    ],
-                  ),
-                  Text(
-                    "Past Jobs",
-                    style: TextStyle(
-                      color: AppColors.secondaryTextColor,
-                      fontSize: 12.sp,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Row _buildFirstStatRow() {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: AppColors.primaryBorderColor),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(10.sp),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      GetBuilder<HomePageController>(
-                        builder: (controller) {
-                          return Text(
-                            "\$${controller.dashBoardInfoModel.dashboardData?.totalEarningsThisWeek ?? "N/A"}",
-                            style: TextStyle(
-                              fontSize: 26.sp,
-                              color: AppColors.secondaryNavyBlue,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          );
-                        },
-                      ),
-                      Spacer(),
-                      SvgPicture.asset(AppAssets.earningThisWeekIcon),
-                    ],
-                  ),
-                  Text(
-                    "Earnings this week",
-                    style: TextStyle(
-                      color: AppColors.secondaryTextColor,
-                      fontSize: 12.sp,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 14.w),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: AppColors.primaryBorderColor),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(10.sp),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      GetBuilder<HomePageController>(
-                        builder: (controller) {
-                          return Text(
-                            "${controller.dashBoardInfoModel.dashboardData?.totalAppliedJobs ?? "N/A"}",
-                            style: TextStyle(
-                              fontSize: 26.sp,
-                              color: AppColors.secondaryNavyBlue,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          );
-                        },
-                      ),
-                      Spacer(),
-                      SvgPicture.asset(AppAssets.jobAppliedIcon),
-                    ],
-                  ),
-                  Text(
-                    "Jobs Applied",
-                    style: TextStyle(
-                      color: AppColors.secondaryTextColor,
-                      fontSize: 12.sp,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        // Expanded(
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(12.r),
+        //       border: Border.all(color: AppColors.primaryBorderColor),
+        //     ),
+        //     child: Padding(
+        //       padding: EdgeInsets.all(10.sp),
+        //       child: Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           Row(
+        //             children: [
+        //               GetBuilder<HomePageController>(
+        //                 builder: (controller) {
+        //                   return Text(
+        //                     "${controller.dashBoardInfoModel.dashboardData?.totalAppliedJobs ?? "N/A"}",
+        //                     style: TextStyle(
+        //                       fontSize: 26.sp,
+        //                       color: AppColors.secondaryNavyBlue,
+        //                       fontWeight: FontWeight.w600,
+        //                     ),
+        //                   );
+        //                 },
+        //               ),
+        //               Spacer(),
+        //               SvgPicture.asset(AppAssets.jobAppliedIcon),
+        //             ],
+        //           ),
+        //           Text(
+        //             "Jobs Applied",
+        //             style: TextStyle(
+        //               color: AppColors.secondaryTextColor,
+        //               fontSize: 12.sp,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
@@ -754,7 +868,7 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Hey, Glad You’re Here",
+                  "",
                   style: TextStyle(
                     fontSize: 18.sp,
                     color: AppColors.primaryBlack,

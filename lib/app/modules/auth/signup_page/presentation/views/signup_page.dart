@@ -53,13 +53,15 @@ class SignupPage extends StatelessWidget {
                         children: [
                           _buildNameInput(controller),
                           SizedBox(height: 16.h),
+                          _buildSirNmaeInput(),
+                          SizedBox(height: 16.h),
                           _buildEmailInput(controller),
                           SizedBox(height: 16.h),
                           _buildPasswordInput(controller),
                           SizedBox(height: 16.h),
                           _buildConfirmPasswordInput(controller),
-                          SizedBox(height: 16.h),
-                          _buildReferInput(controller),
+                          // SizedBox(height: 16.h),
+                          // _buildReferInput(controller),
                           SizedBox(height: 32.h),
                           _buildSignupButton(context: context),
                           SizedBox(height: 16.h),
@@ -100,16 +102,17 @@ class SignupPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Name",
+          "First Name",
           style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
         ),
         SizedBox(height: 8.h),
         TextFormField(
           controller: controller.nameTec,
           keyboardType: TextInputType.text,
+
           decoration: InputDecoration(
-            hintText: "Name",
-            hintStyle: TextStyle(color: AppColors.primaryGray),
+            hintText: "First Name as it appears on your Security Licence",
+            hintStyle: TextStyle(color: AppColors.primaryGray, fontSize: 14),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(color: AppColors.secondaryWhite),
@@ -124,20 +127,21 @@ class SignupPage extends StatelessWidget {
     );
   }
 
-  Column _buildReferInput(SignupPageController controller) {
+  Column _buildSirNmaeInput() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Refer code (optional)",
+          "Surname",
           style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
         ),
         SizedBox(height: 8.h),
         TextFormField(
-          controller: controller.referTec,
+          keyboardType: TextInputType.text,
+
           decoration: InputDecoration(
-            hintText: "Refer code",
-            hintStyle: TextStyle(color: AppColors.primaryGray),
+            hintText: "Surname as it appears on your Security Licence",
+            hintStyle: TextStyle(color: AppColors.primaryGray, fontSize: 14),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(color: AppColors.secondaryWhite),
@@ -151,6 +155,34 @@ class SignupPage extends StatelessWidget {
       ],
     );
   }
+
+  // Column _buildReferInput(SignupPageController controller) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         "Refer code (optional)",
+  //         style: TextStyle(fontSize: 16.sp, color: AppColors.primaryBlack),
+  //       ),
+  //       SizedBox(height: 8.h),
+  //       TextFormField(
+  //         controller: controller.referTec,
+  //         decoration: InputDecoration(
+  //           hintText: "Refer code",
+  //           hintStyle: TextStyle(color: AppColors.primaryGray),
+  //           enabledBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(12.r),
+  //             borderSide: BorderSide(color: AppColors.secondaryWhite),
+  //           ),
+  //           focusedBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(12.r),
+  //             borderSide: BorderSide(color: AppColors.secondaryWhite),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   SizedBox _buildSignupButton({required BuildContext context}) {
     return SizedBox(
@@ -200,11 +232,19 @@ class SignupPage extends StatelessWidget {
         TextFormField(
           controller: controller.confirmPasswordTec,
           obscureText: controller.obscureConfirmPass,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Please confirm your password";
+            }
+            if (value != controller.passwordTec.text) {
+              return "Passwords do not match";
+            }
+            return null;
+          },
           decoration: InputDecoration(
             suffixIcon: IconButton(
-              onPressed: () {
-                controller.toggleObscureConfirmPass();
-              },
+              onPressed: controller.toggleObscureConfirmPass,
               icon: Icon(
                 controller.obscureConfirmPass
                     ? Icons.visibility_off_outlined
@@ -220,6 +260,10 @@ class SignupPage extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(color: AppColors.secondaryWhite),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: Colors.red),
             ),
           ),
         ),
@@ -239,11 +283,33 @@ class SignupPage extends StatelessWidget {
         TextFormField(
           controller: controller.passwordTec,
           obscureText: controller.obscurePass,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Password is required";
+            }
+            if (value.length < 8) {
+              return "Password must be at least 8 characters long";
+            }
+            if (!RegExp(r'[A-Z]').hasMatch(value)) {
+              return "Must contain at least one uppercase letter";
+            }
+            if (!RegExp(r'[a-z]').hasMatch(value)) {
+              return "Must contain at least one lowercase letter";
+            }
+            if (!RegExp(r'[0-9]').hasMatch(value)) {
+              return "Must contain at least one number";
+            }
+            if (!RegExp(
+              r'[!@#\$&*~%^()_+\-=\[\]{};:"\\|,.<>\/?]',
+            ).hasMatch(value)) {
+              return "Must contain at least one special character";
+            }
+            return null;
+          },
           decoration: InputDecoration(
             suffixIcon: IconButton(
-              onPressed: () {
-                controller.toggleObscurePass();
-              },
+              onPressed: controller.toggleObscurePass,
               icon: Icon(
                 controller.obscurePass
                     ? Icons.visibility_off_outlined
@@ -252,6 +318,10 @@ class SignupPage extends StatelessWidget {
             ),
             hintText: "Enter your password",
             hintStyle: TextStyle(color: AppColors.primaryGray),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.secondaryWhite),
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(color: AppColors.secondaryWhite),
@@ -259,6 +329,10 @@ class SignupPage extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(color: AppColors.secondaryWhite),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: Colors.red),
             ),
           ),
         ),

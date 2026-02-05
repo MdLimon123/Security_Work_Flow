@@ -1,5 +1,5 @@
 class ApiEndpoints {
-  static const String _baseUrl = "http://10.10.12.15:8001";
+  static const String _baseUrl = "http://148.230.92.132:8001";
 
   static String get getBaseUrl => _baseUrl;
 
@@ -17,6 +17,7 @@ class ApiEndpoints {
   static const String licenceTypeListUrl = "$_baseUrl/api/jobs/licence-types/";
 
   static const String accreditationUrl = "$_baseUrl/api/accounts/certificates/";
+ static const String fetchAccreditationUrl = "$_baseUrl/api/jobs/certificate-types/";
 
   static const String accreditationTypeListUrl =
       "$_baseUrl/api/jobs/certificate-types/";
@@ -70,16 +71,32 @@ class ApiEndpoints {
 
   static const String customSupport = "$_baseUrl/api/jobs/support-message/";
   static const String customSupportSend = "$_baseUrl/api/jobs/support-message/";
-  static const String referralUrl = "$_baseUrl/api/accounts/user-refarral-code/";
+  static const String referralUrl =
+      "$_baseUrl/api/accounts/user-refarral-code/";
+
+  static String startJob({required String id}) =>
+      "$_baseUrl/api/jobs/company-engagements-details/$id/";
 
   static String acceptJobUrl({required String id}) =>
       "$_baseUrl/api/jobs/user/my-jobs/$id/";
+
+  static String endJobUrl({required String id}) =>
+      "$_baseUrl/api/jobs/company-engagements-details/$id/";
 
   static String rejectJobUrl({required String id}) =>
       "$_baseUrl/api/jobs/user/my-jobs/$id/";
   static String uploadSignatureUrl({required String id}) =>
       "$_baseUrl/api/jobs/company-engagements-details/$id/";
 
+  static String accreditationUploadUrr =
+      "$_baseUrl/api/jobs/certificate-types/";
+
+  static String notificationListUrl = "$_baseUrl/api/chat-note/notifications/";
+
+  static String licenseUploadUrr = "$_baseUrl/api/jobs/licence-types/";
+
   static String chatSocketUrl({required String token}) =>
-      "ws://10.10.12.15:8001/ws/asc/update_chat_messages/?token=$token";
+      "ws://148.230.92.132:8001/ws/asc/update_chat_messages/?token=$token";
+
+  static String createCharRoomUrl = "$_baseUrl/api/chat-note/chat-list/";
 }

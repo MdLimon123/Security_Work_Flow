@@ -14,7 +14,7 @@ class MyReferralUserPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "My Referral user",
+          " Referrals",
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,

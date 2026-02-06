@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 import '../../../../core/constants/app_colors.dart';
 import '../controllers/profile_verification_page_controller.dart';
+
 
 class StepThreePage extends StatelessWidget {
   const StepThreePage({super.key});
@@ -14,112 +14,263 @@ class StepThreePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ProfileVerificationPageController>(
       builder: (controller) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Text(
-                "Licences",
-                style: TextStyle(
-                  fontSize: 24.sp,
-                  color: AppColors.secondaryNavyBlue,
-                  fontWeight: FontWeight.w600,
+        return SingleChildScrollView(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  "Licences",
+                  style: TextStyle(
+                    fontSize: 24.sp,
+                    color: AppColors.secondaryNavyBlue,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
 
-            SizedBox(height: 32.h),
+              /// ---------------- DYNAMIC LICENCE SECTIONS ----------------
+              for (int i = 0; i < controller.licenceBlocks.length; i++)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 16.h),
+                    _buildStateOrTerritoryInput(controller, i),
+                    SizedBox(height: 16.h),
+                    _buildLicenseTypeInput(controller, i),
+                    SizedBox(height: 16.h),
+                    _buildLicenseExpireInput(controller, i),
+                    SizedBox(height: 16.h),
+                    _buildLicenceUploadSection(controller, i),
 
-            _buildStateOrTerritoryInput(controller),
-
-            SizedBox(height: 16.h),
-
-            _buildLicenseTypeInput(controller),
-
-            _buildLicenseExpireInput(controller),
-            SizedBox(height: 16.h),
-
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Licence Upload",
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: AppColors.secondaryNavyBlue,
-                  ),
+                    if (i != 0)
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => controller.removeLicence(i),
+                        ),
+                      ),
+                  ],
                 ),
 
-                GestureDetector(
-                  onTap: () async {
-                    await controller.pickLicences(context: context);
-                  },
-                  child: SvgPicture.asset(
-                    AppAssets.uploadBackFrontImageLicenseImage,
+              SizedBox(height: 16.h),
+
+              /// ---------------- ADD ANOTHER LICENCE BUTTON ----------------
+              Center(
+                child: ElevatedButton(
+                  onPressed: () => controller.addAnotherLicence(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryOrange,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
                   ),
-                ),
-
-                SizedBox(height: 8.h),
-
-                for (
-                  int i = 0;
-                  i <
-                      (controller.licenceFiles?.files == null
-                          ? 0
-                          : controller.licenceFiles!.files.length);
-                  i++
-                )
-                  Column(
-                    children: [
-                      controller.fileUploaded
-                          ? Text(
-                              controller.licenceFiles?.files[i].name ?? "",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            )
-                          : _buildUploadFileStatus(),
-                      SizedBox(height: 16.h),
-                    ],
-                  ),
-
-                SizedBox(height: 20.h),
-                _buildNextButton(controller, context: context),
-                SizedBox(height: 12.h),
-
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      controller.increasePageIndex();
-                    },
-                    child: Text(
-                      "Skip",
-                      style: TextStyle(color: AppColors.primaryOrange),
+                  child: Text(
+                    "Add Another Licence",
+                    style: TextStyle(
+                      color: AppColors.primaryWhite,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+
+              SizedBox(height: 24.h),
+
+              /// ---------------- NEXT BUTTON ----------------
+              _buildNextButton(controller, context: context),
+              SizedBox(height: 12.h),
+
+              /// ---------------- SKIP BUTTON ----------------
+              Center(
+                child: InkWell(
+                  onTap: () => controller.increasePageIndex(),
+                  child: Text(
+                    "Skip",
+                    style: TextStyle(color: AppColors.primaryOrange),
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
   }
 
+  /// ---------------- STATE OR TERRITORY INPUT ----------------
+  Column _buildStateOrTerritoryInput(
+    ProfileVerificationPageController controller,
+    int index,
+  ) {
+    final states = [
+      "New South Wales",
+      "Victoria",
+      "Queensland",
+      "Western Australia",
+      "South Australia",
+      "Tasmania",
+      "Northern Territory",
+      "Australian Capital Territory",
+    ];
+
+    final block = controller.licenceBlocks[index];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "State or Territory",
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: Color(0xFF002147),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        SizedBox(height: 8.h),
+        PopupMenuButton<String>(
+          onSelected: (value) => controller.setStateOrTerritory(index, value),
+          itemBuilder: (_) => states
+              .map((e) => PopupMenuItem(value: e, child: Text(e)))
+              .toList(),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Color(0xFFE1E1E1)),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.keyboard_arrow_down),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    block.selectedStateOrTerritory.isEmpty
+                        ? "Select State or Territory"
+                        : block.selectedStateOrTerritory,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: Color(0xFF878787),
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// ---------------- LICENSE TYPE INPUT ----------------
+  Column _buildLicenseTypeInput(
+    ProfileVerificationPageController controller,
+    int index,
+  ) {
+    final block = controller.licenceBlocks[index];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Select Licence Type(s):",
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: Color(0xFF002147),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        SizedBox(height: 12.h),
+        GetBuilder<ProfileVerificationPageController>(
+          builder: (_) {
+            if (controller.isLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            final items = block.filteredLicenceTypes;
+
+            if (items.isEmpty) {
+              return Text(
+                block.selectedStateOrTerritory.isEmpty
+                    ? "Please select a State or Territory to see licences"
+                    : "No licences found for ${block.selectedStateOrTerritory}.",
+                style: TextStyle(color: Colors.red),
+              );
+            }
+
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: items.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 16,
+                mainAxisExtent: 60,
+              ),
+              itemBuilder: (context, idx) {
+                final item = items[idx];
+                return InkWell(
+                  onTap: () =>
+                      controller.toggleSelectedLicenseType(item.title!, index),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Checkbox(
+                        value: block.selectedLicenseTypes.contains(item.title),
+                        onChanged: (_) => controller.toggleSelectedLicenseType(
+                          item.title!,
+                          index,
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          item.title ?? "",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Color(0xFF6D6D6D),
+                            fontWeight: FontWeight.w500,
+                          ),
+                          softWrap: true,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  /// ---------------- LICENSE EXPIRY INPUT ----------------
   Column _buildLicenseExpireInput(
     ProfileVerificationPageController controller,
+    int index,
   ) {
+    final block = controller.licenceBlocks[index];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "Licence Expiry Date",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: Color(0xFF002147),
+            fontWeight: FontWeight.w500,
+          ),
         ),
-
         SizedBox(height: 8.h),
-
         TextFormField(
-          controller: controller.licenseExpireTEC,
+          controller: block.expiryTEC,
           readOnly: true,
           decoration: InputDecoration(
             hintText: "YYYY-MM-DD",
@@ -142,7 +293,7 @@ class StepThreePage extends StatelessWidget {
             );
 
             if (pickedDate != null) {
-              controller.licenseExpireTEC.text =
+              block.expiryTEC.text =
                   "${pickedDate.year.toString().padLeft(4, '0')}-"
                   "${pickedDate.month.toString().padLeft(2, '0')}-"
                   "${pickedDate.day.toString().padLeft(2, '0')}";
@@ -153,7 +304,51 @@ class StepThreePage extends StatelessWidget {
     );
   }
 
-  Visibility _buildUploadFileStatus() {
+  /// ---------------- LICENCE UPLOAD ----------------
+  Column _buildLicenceUploadSection(
+    ProfileVerificationPageController controller,
+    int index,
+  ) {
+    final block = controller.licenceBlocks[index];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Licence Upload",
+          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
+        ),
+        SizedBox(height: 8.h),
+        GestureDetector(
+          onTap: () =>
+              controller.pickLicences(context: Get.context!, index: index),
+          child: SvgPicture.asset(AppAssets.uploadBackFrontImageLicenseImage),
+        ),
+        SizedBox(height: 8.h),
+        for (int i = 0; i < (block.licenceFiles?.files.length ?? 0); i++)
+          Column(
+            children: [
+              block.fileUploaded
+                  ? Text(
+                      block.licenceFiles?.files[i].name ?? "",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  : _buildUploadFileStatus(controller, index),
+              SizedBox(height: 16.h),
+            ],
+          ),
+      ],
+    );
+  }
+
+  /// ---------------- UPLOAD STATUS ----------------
+  Visibility _buildUploadFileStatus(
+    ProfileVerificationPageController controller,
+    int index,
+  ) {
+    final block = controller.licenceBlocks[index];
+
     return Visibility(
       visible: true,
       child: Container(
@@ -177,9 +372,9 @@ class StepThreePage extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                         GetBuilder<ProfileVerificationPageController>(
-                          builder: (controller) {
+                          builder: (_) {
                             return Text(
-                              "${controller.uploadingPercent}%  • ${controller.uploadSeconds} seconds remaining",
+                              "${block.uploadingPercent}%  • ${block.uploadSeconds} seconds remaining",
                               style: TextStyle(
                                 color: AppColors.secondaryTextColor,
                               ),
@@ -191,14 +386,13 @@ class StepThreePage extends StatelessWidget {
                   ),
                 ],
               ),
-
               SizedBox(height: 8.h),
               SizedBox(
                 width: double.infinity,
                 child: GetBuilder<ProfileVerificationPageController>(
-                  builder: (controller) {
+                  builder: (_) {
                     return LinearProgressIndicator(
-                      value: controller.uploadingPercent / 100,
+                      value: block.uploadingPercent / 100,
                       minHeight: 8.sp,
                       borderRadius: BorderRadius.circular(6.r),
                       color: AppColors.primaryBlue,
@@ -214,149 +408,7 @@ class StepThreePage extends StatelessWidget {
     );
   }
 
-  Column _buildStateOrTerritoryInput(
-    ProfileVerificationPageController controller,
-  ) {
-    final states = [
-      "New South Wales",
-      "Victoria",
-      "Queensland",
-      "Western Australia",
-      "South Australia",
-      "Tasmania",
-      "Northern Territory",
-      "Australian Capital Territory",
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "State or Territory",
-          style: TextStyle(fontSize: 16, color: Color(0xFF002147)),
-        ),
-        const SizedBox(height: 8),
-        GetBuilder<ProfileVerificationPageController>(
-          builder: (_) {
-            if (controller.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return PopupMenuButton<String>(
-              onSelected: controller.setStateOrTerritory,
-              itemBuilder: (_) => states
-                  .map((e) => PopupMenuItem(value: e, child: Text(e)))
-                  .toList(),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 14,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.keyboard_arrow_down),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        controller.selectedStateOrTerritory.isEmpty
-                            ? "Select State or Territory"
-                            : controller.selectedStateOrTerritory,
-                        style: TextStyle(
-                          color: controller.selectedStateOrTerritory.isEmpty
-                              ? Colors.grey
-                              : Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  Column _buildLicenseTypeInput(ProfileVerificationPageController controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 16),
-        const Text(
-          "Select Licence Type(s):",
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFF002147),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 12),
-
-        GetBuilder<ProfileVerificationPageController>(
-          builder: (c) {
-            if (c.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-
-            final items = c.filteredLicenceTypes;
-
-            if (items.isEmpty) {
-              return Text(
-                c.selectedStateOrTerritory.isEmpty
-                    ? "Please select a State or Territory to see licences"
-                    : "No licences found for ${c.selectedStateOrTerritory}. Please check API data.",
-                style: const TextStyle(color: Colors.red),
-              );
-            }
-
-            return GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: items.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 16,
-                mainAxisExtent: 60,
-              ),
-              itemBuilder: (context, index) {
-                final item = items[index];
-
-                return InkWell(
-                  onTap: () => c.toggleSelectedLicenseType(item.title!),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: c.selectedLicenseTypes.contains(item.title),
-                        onChanged: (_) =>
-                            c.toggleSelectedLicenseType(item.title!),
-                      ),
-                      Expanded(
-                        child: Text(
-                          item.title ?? "",
-                          maxLines: 3,
-                          softWrap: true,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-          },
-        ),
-
-        const SizedBox(height: 12),
-      ],
-    );
-  }
-
-
-
+  /// ---------------- NEXT BUTTON ----------------
   SizedBox _buildNextButton(
     ProfileVerificationPageController controller, {
     required BuildContext context,
@@ -365,14 +417,7 @@ class StepThreePage extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () async {
-          await controller.submitThirdStepData(
-            context: context,
-            controller: controller,
-          );
-          // controller.increasePageIndex();
-          print(
-            controller.licenceTypeNumbers.map((e) => int.parse(e)).toList(),
-          );
+          await controller.submitThirdStepData(context: context);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.secondaryNavyBlue,

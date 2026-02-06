@@ -13,6 +13,7 @@ class SignupPageController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   final TextEditingController nameTec = TextEditingController();
+    TextEditingController surnameTec = TextEditingController();
   final TextEditingController emailTec = TextEditingController();
   final TextEditingController passwordTec = TextEditingController();
   final TextEditingController confirmPasswordTec = TextEditingController();
@@ -67,7 +68,7 @@ class SignupPageController extends GetxController {
           referCode: referTec.text.isEmpty ? null : referTec.text,
         ),
         data: SignupInputDataModel(
-          firstName: nameTec.text,
+          firstName: "${nameTec.text} ${surnameTec.text}",
           email: emailTec.text,
           password: passwordTec.text,
         ).toJson(),

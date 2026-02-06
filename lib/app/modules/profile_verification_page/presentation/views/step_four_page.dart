@@ -86,17 +86,17 @@ class StepFourPage extends StatelessWidget {
             SizedBox(height: 20.h),
             _buildNextButton(controller, context: context),
             SizedBox(height: 12.h),
-            // Center(
-            //   child: InkWell(
-            //     onTap: () {
-            //       controller.increasePageIndex();
-            //     },
-            //     child: Text(
-            //       "Skip",
-            //       style: TextStyle(color: AppColors.primaryOrange),
-            //     ),
-            //   ),
-            // ),
+            Center(
+              child: InkWell(
+                onTap: () {
+                  controller.increasePageIndex();
+                },
+                child: Text(
+                  "Skip",
+                  style: TextStyle(color: AppColors.primaryOrange),
+                ),
+              ),
+            ),
           ],
         );
       },

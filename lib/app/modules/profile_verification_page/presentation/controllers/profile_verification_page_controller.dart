@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:dio/dio.dart' as dio;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:flutter_security_workforce/app/modules/auth/login_page/data/models/login_response_model.dart';
+import 'package:flutter_security_workforce/app/modules/auth/login_page/presentation/views/login_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_accreditations_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_licence_type_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_four_page.dart';
@@ -17,7 +17,22 @@ import 'package:flutter_security_workforce/app/modules/profile_verification_page
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 import '../../data/models/verification_details_model.dart';
-import '../views/in_review_message_page.dart';
+
+class LicenceBlockModel {
+  String selectedStateOrTerritory = "";
+  List<String> selectedLicenseTypes = [];
+  List<String> licenceTypeNumbers = [];
+  List<LicenceTypes> filteredLicenceTypes = [];
+  TextEditingController expiryTEC = TextEditingController();
+  FilePickerResult? licenceFiles;
+
+  /// NEW FIELDS FOR UPLOAD ANIMATION
+  int uploadingPercent = 0;
+  int uploadSeconds = 0;
+
+  /// Optional: to know if files are uploaded
+  bool fileUploaded = false;
+}
 
 class ProfileVerificationPageController extends GetxController {
   List<Widget> pages = [
@@ -25,8 +40,11 @@ class ProfileVerificationPageController extends GetxController {
     StepTwoPage(),
     StepThreePage(),
     StepFourPage(),
+
+    LoginPage(),
+
     //StepFivePage(),
-    InReviewMessagePage(),
+    //InReviewMessagePage(),
   ];
 
   late LoginResponseModel loginResponseModel;
@@ -52,6 +70,9 @@ class ProfileVerificationPageController extends GetxController {
   List<LicenceTypes> filteredLicenceTypes = [];
   List<String> selectedLicenseTypes = [];
   List<String> licenceTypeNumbers = [];
+
+  /// new
+  List<LicenceBlockModel> licenceBlocks = [LicenceBlockModel()];
 
   List<String> selectedAccreditationTypes = [];
   ListOfAccreditationsModel listOfAccreditationsModel =
@@ -103,6 +124,8 @@ class ProfileVerificationPageController extends GetxController {
     }
   }
 
+  List<LicenceBlockModel> licences = [LicenceBlockModel()];
+
   Future<void> fetchLicenceTypes() async {
     try {
       isLoading = true;
@@ -118,10 +141,12 @@ class ProfileVerificationPageController extends GetxController {
 
       if (listOfLicenceTypeModel.licenceTypes != null &&
           listOfLicenceTypeModel.licenceTypes!.isNotEmpty) {
-        final firstState =
-            listOfLicenceTypeModel.licenceTypes!.first.stateOrTerritory;
-        if (firstState != null && firstState.isNotEmpty) {
-          setStateOrTerritory(firstState);
+        for (int i = 0; i < licences.length; i++) {
+          final firstState =
+              listOfLicenceTypeModel.licenceTypes!.first.stateOrTerritory;
+          if (firstState != null && firstState.isNotEmpty) {
+            setStateOrTerritory(i, firstState);
+          }
         }
       }
     } catch (e) {
@@ -138,7 +163,110 @@ class ProfileVerificationPageController extends GetxController {
     }
   }
 
-  Future<void> startUploadingAnimation() async {
+  /// add new
+
+  void addAnotherLicence() {
+    licenceBlocks.add(LicenceBlockModel());
+    update();
+  }
+
+  /// add new
+
+  void removeLicence(int index) {
+    licenceBlocks.removeAt(index);
+    update();
+  }
+
+  /// STATE SELECT
+  void setStateOrTerritory(int index, String value) {
+    final block = licenceBlocks[index];
+
+    block.selectedStateOrTerritory = value;
+
+    block.filteredLicenceTypes =
+        listOfLicenceTypeModel.licenceTypes
+            ?.where(
+              (e) =>
+                  e.stateOrTerritory != null &&
+                  e.stateOrTerritory!.trim().toLowerCase() ==
+                      value.trim().toLowerCase(),
+            )
+            .toList() ??
+        [];
+
+    block.selectedLicenseTypes.clear();
+    block.licenceTypeNumbers.clear();
+
+    print("✅ [$index] State: $value");
+    print("✅ [$index] Filtered: ${block.filteredLicenceTypes.length}");
+
+    update();
+  }
+
+  void toggleSelectedLicenseType(String value, int index) {
+    final block = licenceBlocks[index];
+
+    if (block.selectedLicenseTypes.contains(value)) {
+      block.selectedLicenseTypes.remove(value);
+    } else {
+      block.selectedLicenseTypes.add(value);
+    }
+
+    block.licenceTypeNumbers.clear();
+    for (var licence in listOfLicenceTypeModel.licenceTypes ?? []) {
+      if (block.selectedLicenseTypes.contains(licence.title)) {
+        block.licenceTypeNumbers.add(licence.id.toString());
+      }
+    }
+
+    print("✅ [$index] Selected: ${block.selectedLicenseTypes}");
+    print("✅ [$index] IDs: ${block.licenceTypeNumbers}");
+
+    update();
+  }
+
+  Future<void> pickLicences({
+    required BuildContext context,
+    required int index,
+  }) async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: true,
+    );
+
+    if (result == null || result.files.length != 2) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Select exactly 2 images"),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+      return;
+    }
+
+    licenceBlocks[index].licenceFiles = result;
+
+    await startUploadingAnimation(index);
+
+    update();
+  }
+
+  Future<void> startUploadingAnimation(int index) async {
+    licenceBlocks[index].uploadingPercent = 0;
+    licenceBlocks[index].uploadSeconds = 5;
+    update();
+
+    for (int i = 1; i <= 5; i++) {
+      await Future.delayed(const Duration(seconds: 1));
+      licenceBlocks[index].uploadingPercent += 20;
+      licenceBlocks[index].uploadSeconds--;
+      update();
+    }
+  }
+
+  Future<void> startUploadingAnimation1() async {
     fileUploaded = false;
     update();
 
@@ -159,43 +287,6 @@ class ProfileVerificationPageController extends GetxController {
 
   Future<void> pickPicture() async {
     profileImage = await FilePicker.platform.pickFiles(type: FileType.image);
-    update();
-  }
-
-  Future<void> pickLicences({required BuildContext context}) async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-      allowMultiple: true,
-    );
-
-    if (result == null) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Select 2 images first"),
-            backgroundColor: AppColors.primaryRed,
-          ),
-        );
-      }
-      return;
-    }
-
-    if (result.files.length != 2) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Select 2 images"),
-            backgroundColor: AppColors.primaryRed,
-          ),
-        );
-      }
-      return;
-    }
-
-    licenceFiles = result;
-
-    await startUploadingAnimation();
-
     update();
   }
 
@@ -232,7 +323,7 @@ class ProfileVerificationPageController extends GetxController {
 
     accreditationFile = result;
 
-    await startUploadingAnimation();
+    await startUploadingAnimation1();
 
     update();
   }
@@ -259,48 +350,6 @@ class ProfileVerificationPageController extends GetxController {
 
   void setLicenceTypeNumber(String index) {
     licenceTypeNumber = index;
-    update();
-  }
-
-  void setStateOrTerritory(String value) {
-    selectedStateOrTerritory = value;
-
-    // Filter করা - যে state select করা হয়েছে সেই state এর সব licence
-    filteredLicenceTypes =
-        listOfLicenceTypeModel.licenceTypes?.where((e) {
-          if (e.stateOrTerritory == null) return false;
-          return e.stateOrTerritory!.trim().toLowerCase() ==
-              value.trim().toLowerCase();
-        }).toList() ??
-        [];
-
-    print("✅ Selected State: $value");
-    print("✅ Filtered Licences: ${filteredLicenceTypes.length}");
-
-    // আগের selection clear করা
-    selectedLicenseTypes.clear();
-    licenceTypeNumbers.clear();
-
-    update();
-  }
-
-  void toggleSelectedLicenseType(String value) {
-    if (selectedLicenseTypes.contains(value)) {
-      selectedLicenseTypes.remove(value);
-    } else {
-      selectedLicenseTypes.add(value);
-    }
-
-    licenceTypeNumbers.clear();
-    for (var licence in listOfLicenceTypeModel.licenceTypes ?? []) {
-      if (selectedLicenseTypes.contains(licence.title)) {
-        licenceTypeNumbers.add(licence.id.toString());
-      }
-    }
-
-    print("✅ Selected Licences: $selectedLicenseTypes");
-    print("✅ Licence IDs: $licenceTypeNumbers");
-
     update();
   }
 
@@ -456,66 +505,83 @@ class ProfileVerificationPageController extends GetxController {
     increasePageIndex();
   }
 
-  Future<void> submitThirdStepData({
-    required BuildContext context,
-    required ProfileVerificationPageController controller,
-  }) async {
-    if (controller.licenceFiles == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Must upload licence"),
-          backgroundColor: AppColors.primaryRed,
-        ),
-      );
-      return;
-    }
-
+  Future<void> submitThirdStepData({required BuildContext context}) async {
     nextButtonInProgress = true;
     update();
 
     try {
       DioClient dioClient = DioClient();
 
-      List<dio.MultipartFile> multipartImages = [];
+      final formData = dio.FormData();
 
-      for (var file in controller.licenceFiles!.files) {
-        multipartImages.add(
-          await dio.MultipartFile.fromFile(file.path!, filename: file.name),
+      for (int i = 0; i < licenceBlocks.length; i++) {
+        final block = licenceBlocks[i];
+
+        // Validate files
+        if (block.licenceFiles == null || block.licenceFiles!.files.isEmpty) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Please upload licence for all sections"),
+                backgroundColor: AppColors.primaryRed,
+              ),
+            );
+          }
+          nextButtonInProgress = false;
+          update();
+          return;
+        }
+
+        // Add text fields
+        formData.fields.add(
+          MapEntry("$i.state_or_territory", block.selectedStateOrTerritory),
         );
+        formData.fields.add(
+          MapEntry("$i.expire_date", block.expiryTEC.text.trim()),
+        );
+
+        // Add multiple licence types
+        for (var licenceType in block.licenceTypeNumbers) {
+          formData.fields.add(
+            MapEntry("$i.licence_types", licenceType.toString()),
+          );
+        }
+
+        // Add files individually
+        for (var file in block.licenceFiles!.files) {
+          formData.files.add(
+            MapEntry(
+              "$i.licence_images",
+              await dio.MultipartFile.fromFile(file.path!, filename: file.name),
+            ),
+          );
+        }
       }
 
-      final formData = dio.FormData.fromMap({
-        "state_or_territory": selectedStateOrTerritory,
-        "licence_types": licenceTypeNumbers.map((e) => int.parse(e)).toList(),
-        "expire_date": licenseExpireTEC.text.trim(),
-        "licence_images": multipartImages,
-      });
+      // Debug
+      print(
+        "Submitting FormData after :"
+        "${formData.fields}",
+      );
+      formData.fields.forEach((f) => print("Field: ${f.key} = ${f.value}"));
+      formData.files.forEach(
+        (f) => print("File: ${f.key} = ${f.value.filename}"),
+      );
 
-      print("sajid testing ===========>${formData.fields}");
+      print("Submitting FormData before: ${formData.fields}");
 
       await dioClient.post(ApiEndpoints.addLicenceUrl, data: formData);
+
+      print("Submitting FormData: ${formData.fields}");
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Updated"),
+            content: Text("Updated Successfully"),
             backgroundColor: AppColors.primaryGreen,
           ),
         );
       }
-    } on AppException catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.message),
-            backgroundColor: AppColors.primaryRed,
-          ),
-        );
-      }
-
-      nextButtonInProgress = false;
-      update();
-      return;
     } catch (e) {
       nextButtonInProgress = false;
       update();
@@ -531,6 +597,7 @@ class ProfileVerificationPageController extends GetxController {
     }
 
     nextButtonInProgress = false;
+    update();
     increasePageIndex();
   }
 

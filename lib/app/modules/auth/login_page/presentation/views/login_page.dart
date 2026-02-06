@@ -47,27 +47,36 @@ class LoginPage extends StatelessWidget {
 
                     SizedBox(height: 56.h),
 
-                    RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontSize: 40.sp,
-                          fontWeight: FontWeight.w700,
+                    Row(
+                      children: [
+                        Text(
+                          "Login to ",
+                          style: TextStyle(
+                            color: AppColors.secondaryNavyBlue,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
-                        children: [
-                          TextSpan(
-                            text: "Login to ",
-                            style: TextStyle(
-                              color: AppColors.secondaryNavyBlue,
-                            ),
+                        Text(
+                          "Your Account",
+                          style: TextStyle(
+                            color: AppColors.primaryOrange,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700,
                           ),
-                          TextSpan(
-                            text: "Your Account",
-                            style: TextStyle(color: AppColors.primaryOrange),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
 
+                    // RichText(
+                    //   text: TextSpan(
+                    //     style: TextStyle(
+                    //       fontSize: 40.sp,
+                    //       fontWeight: FontWeight.w700,
+                    //     ),
+                    //     children: [],
+                    //   ),
+                    // ),
                     SizedBox(height: 48.h),
 
                     _buildEmailInput(controller),

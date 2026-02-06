@@ -67,7 +67,9 @@ class VerifyRegistrationOtpPage extends StatelessWidget {
                       style: TextStyle(color: AppColors.primaryBlack),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        
+                      },
                       child: Text(
                         " Resend Now",
                         style: TextStyle(color: AppColors.primaryOrange),

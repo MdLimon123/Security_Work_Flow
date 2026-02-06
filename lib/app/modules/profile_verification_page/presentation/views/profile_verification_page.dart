@@ -31,18 +31,20 @@ class ProfileVerificationPage extends StatelessWidget {
             builder: (controller) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
+
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(
-                      errorBuilder: (context, error, stackTrace) =>
-                          Icon(Icons.error),
-                      AppAssets.getProfileVerifyProgressImg(
-                        progressCompleted: controller.pageIndex,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 35),
+                      child: SvgPicture.asset(
+                        AppAssets.getProfileVerifyProgressImg(
+                          progressCompleted: controller.pageIndex,
+                        ),
                       ),
                     ),
 
                     SizedBox(height: 34.h),
-
                     controller.pages[controller.pageIndex],
                   ],
                 ),

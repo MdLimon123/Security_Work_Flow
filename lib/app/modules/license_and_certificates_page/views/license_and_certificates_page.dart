@@ -109,7 +109,7 @@ class LicenseAndCertificatesPage extends StatelessWidget {
           onPressed: () {
             Get.to(AddLicensePage());
           },
-          child: Text("Add License"),
+          child: Text("Add Licence"),
         ),
       ],
     );

@@ -53,7 +53,7 @@ class SignupPage extends StatelessWidget {
                         children: [
                           _buildNameInput(controller),
                           SizedBox(height: 16.h),
-                          _buildSirNmaeInput(),
+                          _buildSirNmaeInput(controller),
                           SizedBox(height: 16.h),
                           _buildEmailInput(controller),
                           SizedBox(height: 16.h),
@@ -127,7 +127,7 @@ class SignupPage extends StatelessWidget {
     );
   }
 
-  Column _buildSirNmaeInput() {
+  Column _buildSirNmaeInput(SignupPageController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -138,7 +138,7 @@ class SignupPage extends StatelessWidget {
         SizedBox(height: 8.h),
         TextFormField(
           keyboardType: TextInputType.text,
-
+          controller: controller.surnameTec,
           decoration: InputDecoration(
             hintText: "Surname as it appears on your Security Licence",
             hintStyle: TextStyle(color: AppColors.primaryGray, fontSize: 14),

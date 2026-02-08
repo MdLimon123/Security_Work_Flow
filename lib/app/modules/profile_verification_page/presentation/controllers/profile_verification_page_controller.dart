@@ -7,7 +7,7 @@ import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:flutter_security_workforce/app/modules/auth/login_page/data/models/login_response_model.dart';
-import 'package:flutter_security_workforce/app/modules/auth/login_page/presentation/views/login_page.dart';
+import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/views/bottom_navbar_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_accreditations_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_licence_type_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_four_page.dart';
@@ -41,7 +41,9 @@ class ProfileVerificationPageController extends GetxController {
     StepThreePage(),
     StepFourPage(),
 
-    LoginPage(),
+    //BottomNavbarPage(),
+
+    // LoginPage(),
 
     //StepFivePage(),
     //InReviewMessagePage(),
@@ -663,7 +665,9 @@ class ProfileVerificationPageController extends GetxController {
         );
       }
 
-      Get.offAllNamed(AppRoutes.loginRoute);
+      Get.offAllNamed(AppRoutes.bottomNavbarRoute);
+
+      //Get.offAllNamed(AppRoutes.loginRoute);
     } on AppException catch (e) {
       nextButtonInProgress = false;
       update();
@@ -691,8 +695,10 @@ class ProfileVerificationPageController extends GetxController {
     }
 
     nextButtonInProgress = false;
-    increasePageIndex();
+   // increasePageIndex();
   }
+
+
 
   // Future<void> submitFourthStepData({required BuildContext context}) async {
   //   if (accreditationFile == null) {

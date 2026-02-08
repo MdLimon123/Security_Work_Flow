@@ -1,5 +1,6 @@
 class ApiEndpoints {
   static const String _baseUrl = "http://148.230.92.132:8001";
+ 
 
   static String get getBaseUrl => _baseUrl;
 
@@ -77,7 +78,11 @@ class ApiEndpoints {
   static String startJob({required String id}) =>
       "$_baseUrl/api/jobs/company-engagements-details/$id/";
 
-  static String acceptJobUrl({required String id}) =>
+ static String submitReivewUrl({required String id}) => 
+      "$_baseUrl/api/jobs/rating-on-an-eng/$id/";     
+      
+      
+        static String acceptJobUrl({required String id}) =>
       "$_baseUrl/api/jobs/user/my-jobs/$id/";
 
   static String endJobUrl({required String id}) =>

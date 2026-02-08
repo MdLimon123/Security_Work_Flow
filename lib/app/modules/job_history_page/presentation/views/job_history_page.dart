@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_security_workforce/app/core/data/models/job_details_model.dart';
 import 'package:flutter_security_workforce/app/modules/job_history_page/presentation/controllers/job_history_page_controller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -224,7 +225,16 @@ class JobHistoryPage extends StatelessWidget {
                                         ),
                                       ),
                                       onPressed: () {
-                                        Get.toNamed(AppRoutes.jobDetailsRoute);
+                                        Get.toNamed(
+                                          AppRoutes.jobDetailsRoute,
+                                          arguments: JobDetailsModel.fromJson(
+                                            controller
+                                                .jobHistoryListModel
+                                                .results
+                                                ?.myJobs?[index]
+                                                .toJson(),
+                                          ),
+                                        );
                                       },
                                       child: Text(
                                         "Details",

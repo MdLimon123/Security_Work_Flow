@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/data/models/job_details_model.dart';
 import 'package:flutter_security_workforce/app/modules/finish_shift_page/presentation/controllers/finish_shift_page_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class FinishShiftPage extends StatelessWidget {
-  const FinishShiftPage({super.key});
+  FinishShiftPage({super.key});
+
+  final JobDetailsModel jobDetailsModel = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -26,82 +29,93 @@ class FinishShiftPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "• Communication",
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
+        child: GetBuilder<FinishShiftPageController>(
+          builder: (controller) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "• Communication",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+
+                    _buildCommunicationRating(),
+
+                    SizedBox(height: 24.h),
+
+                    Text(
+                      "• Payment reliability",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+
+                    _buildPaymentRating(),
+
+                    SizedBox(height: 24.h),
+
+                    Text(
+                      "• Pay rates",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+
+                    _buildPayRates(),
+
+                    SizedBox(height: 24.h),
+
+                    Text(
+                      "• Professionalism",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+
+                    _buildProfessionalism(),
+
+                    SizedBox(height: 24.h),
+
+                    Text(
+                      "• Job Support",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+
+                    _buildJobSupport(),
+
+                    SizedBox(height: 24.h),
+
+                    _buildCommentsInput(controller),
+
+                    SizedBox(height: 46.h),
+
+                    _buildLaterAndSubmitButton(context: context, controller),
+                  ],
                 ),
-
-                _buildCommunicationRating(),
-
-                SizedBox(height: 24.h),
-
-                Text(
-                  "• Payment reliability",
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-
-                _buildPaymentRating(),
-
-                SizedBox(height: 24.h),
-
-                Text(
-                  "• Pay rates",
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-
-                _buildPayRates(),
-
-                SizedBox(height: 24.h),
-
-                Text(
-                  "• Professionalism",
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-
-                _buildProfessionalism(),
-
-                SizedBox(height: 24.h),
-
-                Text(
-                  "• Job Support",
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-
-                _buildJobSupport(),
-
-                SizedBox(height: 46.h),
-
-                _buildLaterAndSubmitButton(),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Row _buildLaterAndSubmitButton() {
+  Row _buildLaterAndSubmitButton(
+    FinishShiftPageController controller, {
+    required BuildContext context,
+  }) {
     return Row(
       children: [
         Expanded(
@@ -132,12 +146,48 @@ class FinishShiftPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.r),
               ),
             ),
-            onPressed: () {
-              
+            onPressed: () async {
+              await controller.submitRating(
+                id: jobDetailsModel.id.toString(),
+                context: context,
+              );
             },
-            child: Text(
-              "Submit",
-              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+            child: controller.isLoading
+                ? CircularProgressIndicator(color: AppColors.primaryWhite)
+                : Text(
+                    "Submit",
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _buildCommentsInput(FinishShiftPageController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Comments",
+          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+        ),
+        SizedBox(height: 10.h),
+        TextFormField(
+          controller: controller.commentTextFieldController,
+          decoration: InputDecoration(
+            hintText: "Enter your comments",
+            hintStyle: TextStyle(color: AppColors.primaryGray),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.secondaryWhite),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.secondaryWhite),
             ),
           ),
         ),

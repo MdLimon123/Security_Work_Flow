@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
+import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -89,7 +90,7 @@ class StepFourPage extends StatelessWidget {
             Center(
               child: InkWell(
                 onTap: () {
-                  controller.increasePageIndex();
+                  Get.offAllNamed(AppRoutes.bottomNavbarRoute);
                 },
                 child: Text(
                   "Skip",
@@ -303,83 +304,83 @@ class StepFourPage extends StatelessWidget {
   //     ],
   //   );
 
- 
- 
   // }
 
-  Column _buildAccreditationInput(ProfileVerificationPageController controller) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const SizedBox(height: 16),
-      const Text(
-        "Select Accreditation Type(s):",
-        style: TextStyle(
-          fontSize: 16,
-          color: Color(0xFF002147),
-          fontWeight: FontWeight.w500,
+  Column _buildAccreditationInput(
+    ProfileVerificationPageController controller,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 16),
+        const Text(
+          "Select Accreditation Type(s):",
+          style: TextStyle(
+            fontSize: 16,
+            color: Color(0xFF002147),
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ),
-      const SizedBox(height: 12),
+        const SizedBox(height: 12),
 
-      GetBuilder<ProfileVerificationPageController>(
-        builder: (c) {
-          if (c.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
+        GetBuilder<ProfileVerificationPageController>(
+          builder: (c) {
+            if (c.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-          final items = c.listOfAccreditationsModel.certificateTypes ?? [];
+            final items = c.listOfAccreditationsModel.certificateTypes ?? [];
 
-          if (items.isEmpty) {
-            return const Text(
-              "No accreditation types found. Please check API data.",
-              style: TextStyle(color: Colors.red),
-            );
-          }
-
-          return GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: items.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 16,
-              mainAxisExtent: 60,
-            ),
-            itemBuilder: (context, index) {
-              final item = items[index];
-
-              return InkWell(
-                onTap: () => c.toggleSelectedAccreditation(item.title!),
-                child: Row(
-                  children: [
-                    Checkbox(
-                      value: c.selectedAccreditationTypes.contains(item.title),
-                      onChanged: (_) => c.toggleSelectedAccreditation(item.title!),
-                    ),
-                    Expanded(
-                      child: Text(
-                        item.title ?? "",
-                        maxLines: 3,
-                        softWrap: true,
-                      ),
-                    ),
-                  ],
-                ),
+            if (items.isEmpty) {
+              return const Text(
+                "No accreditation types found. Please check API data.",
+                style: TextStyle(color: Colors.red),
               );
-            },
-          );
-        },
-      ),
+            }
 
-      const SizedBox(height: 12),
-    ],
-  );
-}
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: items.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 16,
+                mainAxisExtent: 60,
+              ),
+              itemBuilder: (context, index) {
+                final item = items[index];
 
+                return InkWell(
+                  onTap: () => c.toggleSelectedAccreditation(item.title!),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: c.selectedAccreditationTypes.contains(
+                          item.title,
+                        ),
+                        onChanged: (_) =>
+                            c.toggleSelectedAccreditation(item.title!),
+                      ),
+                      Expanded(
+                        child: Text(
+                          item.title ?? "",
+                          maxLines: 3,
+                          softWrap: true,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
 
-
+        const SizedBox(height: 12),
+      ],
+    );
+  }
 
   Visibility _buildUploadFileStatus() {
     return Visibility(

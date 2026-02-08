@@ -1,3 +1,4 @@
+import 'package:flutter_security_workforce/app/core/data/models/job_details_model.dart';
 import 'package:flutter_security_workforce/app/modules/auth/forget_pass_page/presentation/binding/forget_password_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/auth/forget_pass_page/presentation/binding/verify_forget_pass_otp_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/auth/forget_pass_page/presentation/views/forget_password_page.dart';
@@ -24,6 +25,7 @@ import 'package:flutter_security_workforce/app/modules/finish_shift_page/present
 import 'package:flutter_security_workforce/app/modules/finish_shift_page/presentation/views/finish_shift_page.dart';
 import 'package:flutter_security_workforce/app/modules/job_details_page/presentation/binding/job_details_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/job_details_page/presentation/views/job_details_page.dart';
+import 'package:flutter_security_workforce/app/modules/job_history_page/models/job_history_list_model.dart';
 import 'package:flutter_security_workforce/app/modules/job_history_page/presentation/binding/job_history_page_binding.dart';
 import 'package:flutter_security_workforce/app/modules/job_history_page/presentation/views/job_history_page.dart';
 import 'package:flutter_security_workforce/app/modules/license_and_certificates_page/binding/license_and_certificates_page_binding.dart';
@@ -290,8 +292,8 @@ class AppPages {
 
     GetPage(
       name: AppRoutes.verificationScreen,
-     page: ()=> VerificationScreen(),
-  ),
+      page: () => VerificationScreen(),
+    ),
 
     GetPage(
       name: AppRoutes.bankDetailsScreen,

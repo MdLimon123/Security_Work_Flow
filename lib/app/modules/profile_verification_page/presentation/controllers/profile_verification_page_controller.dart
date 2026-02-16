@@ -227,6 +227,34 @@ class ProfileVerificationPageController extends GetxController {
     update();
   }
 
+  // Future<void> pickLicences({
+  //   required BuildContext context,
+  //   required int index,
+  // }) async {
+  //   final result = await FilePicker.platform.pickFiles(
+  //     type: FileType.image,
+  //     allowMultiple: true,
+  //   );
+
+  //   if (result == null || result.files.length != 2) {
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text("Select exactly 2 images"),
+  //           backgroundColor: Colors.red,
+  //         ),
+  //       );
+  //     }
+  //     return;
+  //   }
+
+  //   licenceBlocks[index].licenceFiles = result;
+
+  //   await startUploadingAnimation(index);
+
+  //   update();
+  // }
+
   Future<void> pickLicences({
     required BuildContext context,
     required int index,
@@ -236,6 +264,7 @@ class ProfileVerificationPageController extends GetxController {
       allowMultiple: true,
     );
 
+    // Ensure exactly 2 files are selected
     if (result == null || result.files.length != 2) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -248,11 +277,35 @@ class ProfileVerificationPageController extends GetxController {
       return;
     }
 
+    // Assign new files to the block
     licenceBlocks[index].licenceFiles = result;
 
+    // Reset upload state before starting animation
+    licenceBlocks[index].fileUploaded = false;
+    licenceBlocks[index].uploadingPercent = 0;
+    licenceBlocks[index].uploadSeconds = 5;
+    update(); // Refresh UI to show "Uploading..." section
+
+    // Start animation
     await startUploadingAnimation(index);
 
+    // Mark upload completed
+    licenceBlocks[index].fileUploaded = true;
     update();
+  }
+
+  /// add new remove
+  void removeLicenceFile(int blockIndex, int fileIndex) {
+    final block = licenceBlocks[blockIndex];
+    if (block.licenceFiles != null &&
+        block.licenceFiles!.files.length > fileIndex) {
+      block.licenceFiles!.files.removeAt(fileIndex);
+      // Reset upload state
+      block.fileUploaded = false;
+      block.uploadingPercent = 0;
+      block.uploadSeconds = 0;
+      update();
+    }
   }
 
   Future<void> startUploadingAnimation(int index) async {
@@ -266,6 +319,10 @@ class ProfileVerificationPageController extends GetxController {
       licenceBlocks[index].uploadSeconds--;
       update();
     }
+
+    // Mark upload as completed
+    licenceBlocks[index].fileUploaded = true;
+    update();
   }
 
   Future<void> startUploadingAnimation1() async {
@@ -695,10 +752,8 @@ class ProfileVerificationPageController extends GetxController {
     }
 
     nextButtonInProgress = false;
-   // increasePageIndex();
+    // increasePageIndex();
   }
-
-
 
   // Future<void> submitFourthStepData({required BuildContext context}) async {
   //   if (accreditationFile == null) {

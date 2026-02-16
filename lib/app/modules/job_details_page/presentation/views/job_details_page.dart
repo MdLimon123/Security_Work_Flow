@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/constants/formate_date.dart';
+import 'package:flutter_security_workforce/app/core/constants/formate_time.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/presentation/controllers/home_page_controller.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/controllers/my_jobs_page_controller.dart';
 import 'package:flutter_security_workforce/app/core/data/models/job_details_model.dart';
@@ -12,9 +14,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class JobDetailsPage extends StatelessWidget {
- 
-   JobDetailsPage({super.key,});
-
+  JobDetailsPage({super.key});
 
   final JobDetailsModel jobDetailsModel = Get.arguments;
 
@@ -203,7 +203,7 @@ class JobDetailsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Duty Information",
+          "Job Information",
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
         ),
 
@@ -238,12 +238,12 @@ class JobDetailsPage extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Duty date :",
+                      "Job date :",
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     Spacer(),
                     Text(
-                      jobDetailsModel.jobDetails?.jobDate ?? "",
+                      formatDate(jobDetailsModel.jobDetails?.jobDate),
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -260,7 +260,10 @@ class JobDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "${jobDetailsModel.jobDetails?.startTime}",
+                      formatUtcToLocal(
+                        jobDetailsModel.jobDetails?.jobDate,
+                        jobDetailsModel.jobDetails?.startTime,
+                      ),
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -277,7 +280,10 @@ class JobDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      "${jobDetailsModel.jobDetails?.endTime}",
+                      formatUtcToLocal(
+                        jobDetailsModel.jobDetails?.jobDate,
+                        jobDetailsModel.jobDetails?.endTime,
+                      ),
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -370,7 +376,7 @@ class JobDetailsPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.r),
               ),
               label: Text(
-                "On duty",
+                "${jobDetailsModel.operativeTrackers}",
                 style: TextStyle(color: AppColors.primaryGreen),
               ),
               color: WidgetStatePropertyAll(

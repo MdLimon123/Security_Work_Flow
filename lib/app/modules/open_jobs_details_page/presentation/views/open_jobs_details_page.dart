@@ -669,14 +669,14 @@ class OpenJobsDetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Expiry Date",
+              "Shift Start Date",
               style: TextStyle(
                 fontSize: 14.sp,
                 color: AppColors.secondaryTextColor,
               ),
             ),
             Text(
-              "${jobDetailsModel.jobExpire ?? "N/A"}",
+              jobDetailsModel.jobDate ?? "N/A",
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,

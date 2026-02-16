@@ -32,6 +32,7 @@ class JobHistoryPage extends StatelessWidget {
         ],
       ),
       body: SafeArea(
+
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: GetBuilder<JobHistoryPageController>(
@@ -264,6 +265,9 @@ class JobHistoryPage extends StatelessWidget {
             },
           ),
         ),
+      
+     
+     
       ),
     );
   }

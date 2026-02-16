@@ -402,7 +402,7 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
 
     await controller.submitSignature(id: widget.id, file: fileToUpload!);
 
-    Navigator.pop(context);
+    Get.back();
   }
 }
 

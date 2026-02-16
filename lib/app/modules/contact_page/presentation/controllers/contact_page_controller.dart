@@ -192,11 +192,7 @@ class ContactPageController extends GetxController {
       });
 
       await dioClient
-          .put(
-            ApiEndpoints.uploadSignatureUrl(id: id),
-            data: formData,
-   
-          )
+          .put(ApiEndpoints.uploadSignatureUrl(id: id), data: formData)
           .then((value) {
             Get.snackbar(
               "Success",
@@ -206,6 +202,10 @@ class ContactPageController extends GetxController {
               snackPosition: SnackPosition.BOTTOM,
             );
           });
+
+      fetchContactList();
+
+
     } on AppException catch (e) {
       Get.snackbar(
         "Error",
@@ -218,6 +218,4 @@ class ContactPageController extends GetxController {
     uploadSignatureLoading.value = false;
     update();
   }
-
-
 }

@@ -97,8 +97,7 @@ class FinishShiftPage extends StatelessWidget {
 
                     SizedBox(height: 24.h),
 
-                    _buildCommentsInput(controller),
-
+                    //_buildCommentsInput(controller),
                     SizedBox(height: 46.h),
 
                     _buildLaterAndSubmitButton(context: context, controller),
@@ -111,6 +110,61 @@ class FinishShiftPage extends StatelessWidget {
       ),
     );
   }
+
+  // Row _buildLaterAndSubmitButton(
+  //   FinishShiftPageController controller, {
+  //   required BuildContext context,
+  // }) {
+  //   return Row(
+  //     children: [
+  //       Expanded(
+  //         child: OutlinedButton(
+  //           style: OutlinedButton.styleFrom(
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(16.r),
+  //               side: BorderSide(color: AppColors.secondaryNavyBlue),
+  //             ),
+  //           ),
+  //           onPressed: () {},
+  //           child: Text(
+  //             "Later",
+  //             style: TextStyle(
+  //               color: AppColors.secondaryNavyBlue,
+  //               fontSize: 18.sp,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       SizedBox(width: 30.w),
+  //       Expanded(
+  //         child: ElevatedButton(
+  //           style: ElevatedButton.styleFrom(
+  //             backgroundColor: AppColors.secondaryNavyBlue,
+  //             foregroundColor: AppColors.primaryWhite,
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(16.r),
+  //             ),
+  //           ),
+  //           onPressed: () async {
+  //             await controller.submitRating(
+  //               id: jobDetailsModel.id.toString(),
+  //               context: context,
+  //             );
+  //           },
+  //           child: controller.isLoading
+  //               ? CircularProgressIndicator(color: AppColors.primaryWhite)
+  //               : Text(
+  //                   "Submit",
+  //                   style: TextStyle(
+  //                     fontSize: 18.sp,
+  //                     fontWeight: FontWeight.w600,
+  //                   ),
+  //                 ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Row _buildLaterAndSubmitButton(
     FinishShiftPageController controller, {
@@ -138,29 +192,35 @@ class FinishShiftPage extends StatelessWidget {
         ),
         SizedBox(width: 30.w),
         Expanded(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.secondaryNavyBlue,
-              foregroundColor: AppColors.primaryWhite,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.r),
+          child: Obx(
+            () => ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: controller.isRating.value
+                    ? Colors.grey
+                    : AppColors.secondaryNavyBlue,
+                foregroundColor: AppColors.primaryWhite,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
               ),
-            ),
-            onPressed: () async {
-              await controller.submitRating(
-                id: jobDetailsModel.id.toString(),
-                context: context,
-              );
-            },
-            child: controller.isLoading
-                ? CircularProgressIndicator(color: AppColors.primaryWhite)
-                : Text(
-                    "Submit",
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
+              onPressed: controller.isRating.value
+                  ? null
+                  : () async {
+                      await controller.submitRating(
+                        id: jobDetailsModel.id.toString(),
+                        context: context,
+                      );
+                    },
+              child: controller.isLoading
+                  ? CircularProgressIndicator(color: AppColors.primaryWhite)
+                  : Text(
+                      "Submit",
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
+            ),
           ),
         ),
       ],

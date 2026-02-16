@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/constants/formate_date.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/data/engagement_list_model.dart';
 import 'package:flutter_security_workforce/app/modules/open_contact_page/presentation/widgets/signature_dialog_widget.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
@@ -416,7 +417,7 @@ class OpenContactPage extends StatelessWidget {
                             ? AppColors.primaryGreen.withValues(alpha: 0.1)
                             : Colors.orange.withValues(alpha: 0.1),
                         label: Text(
-                          isSigned ? "Signed" : "Pendings",
+                          isSigned ? "Signed" : "Pending",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: isSigned
@@ -720,7 +721,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "${engagementListData.jobDetails!.jobDate}",
+                        formatDate(engagementListData.jobDetails!.jobDate),
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -835,7 +836,7 @@ class OpenContactPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Party A — Employer",
+          "Party B - Worker",
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 18.sp,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/constants/formate_date.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/data/amend_contract_model.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/presentation/controllers/contact_page_controller.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
@@ -871,7 +872,7 @@ class OpenAmendPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "${amendEngagements.amendJobDetails!.jobDate}",
+                        formatDate(amendEngagements.amendJobDetails!.jobDate),
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -979,7 +980,7 @@ class OpenAmendPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Party A — Employer",
+          "Party B - Worker",
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 18.sp,

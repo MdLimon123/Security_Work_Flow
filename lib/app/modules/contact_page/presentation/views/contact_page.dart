@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/constants/formate_date.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/data/amend_contract_model.dart';
 import 'package:flutter_security_workforce/app/modules/contact_page/data/engagement_list_model.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
@@ -163,6 +164,8 @@ class ContactPage extends StatelessWidget {
     );
   }
 
+
+
   Widget _buildAmendContractItem(AmendEngagements amend) {
     return Container(
       decoration: BoxDecoration(
@@ -222,7 +225,7 @@ class ContactPage extends StatelessWidget {
                 style: TextStyle(color: AppColors.secondaryTextColor),
               ),
               Text(
-                amend.amendJobDetails?.jobDate ?? "",
+                formatDate(amend.amendJobDetails?.jobDate),
                 style: TextStyle(fontSize: 12),
               ),
             ],
@@ -332,7 +335,7 @@ class ContactPage extends StatelessWidget {
                 style: TextStyle(color: AppColors.secondaryTextColor),
               ),
               Text(
-                contract.jobDetails?.jobDate ?? "",
+                formatDate(contract.jobDetails?.jobDate),
                 style: TextStyle(fontSize: 12),
               ),
             ],
@@ -357,7 +360,7 @@ class ContactPage extends StatelessWidget {
                         ? AppColors.primaryGreen.withOpacity(0.1)
                         : Colors.orange.withOpacity(0.1),
                     label: Text(
-                      isSigned ? "Signed" : "Pendings",
+                      isSigned ? "Signed" : "Pending",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: isSigned

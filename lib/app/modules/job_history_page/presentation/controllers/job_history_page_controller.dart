@@ -6,11 +6,12 @@ import 'package:flutter_security_workforce/app/modules/job_history_page/models/j
 import 'package:get/get.dart';
 
 class JobHistoryPageController extends GetxController {
+  
   bool pageLoading = false;
 
   JobHistoryListModel jobHistoryListModel = JobHistoryListModel();
 
-  Future<void> _fetchJobHistory() async {
+  Future<void> fetchJobHistory() async {
     pageLoading = true;
     update();
 
@@ -36,6 +37,6 @@ class JobHistoryPageController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    await _fetchJobHistory();
+    await fetchJobHistory();
   }
 }

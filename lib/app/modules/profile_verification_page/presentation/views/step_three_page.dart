@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../controllers/profile_verification_page_controller.dart';
-
 
 class StepThreePage extends StatelessWidget {
   const StepThreePage({super.key});
@@ -251,6 +251,7 @@ class StepThreePage extends StatelessWidget {
   }
 
   /// ---------------- LICENSE EXPIRY INPUT ----------------
+
   Column _buildLicenseExpireInput(
     ProfileVerificationPageController controller,
     int index,
@@ -273,7 +274,7 @@ class StepThreePage extends StatelessWidget {
           controller: block.expiryTEC,
           readOnly: true,
           decoration: InputDecoration(
-            hintText: "YYYY-MM-DD",
+            hintText: "DD-MMM-YYYY",
             hintStyle: TextStyle(color: AppColors.primaryGray),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
@@ -293,10 +294,10 @@ class StepThreePage extends StatelessWidget {
             );
 
             if (pickedDate != null) {
-              block.expiryTEC.text =
-                  "${pickedDate.year.toString().padLeft(4, '0')}-"
-                  "${pickedDate.month.toString().padLeft(2, '0')}-"
-                  "${pickedDate.day.toString().padLeft(2, '0')}";
+              String formattedDate = DateFormat(
+                "dd-MMM-yyyy",
+              ).format(pickedDate).toUpperCase();
+              block.expiryTEC.text = formattedDate; // Example: 14-DEC-2028
             }
           },
         ),
@@ -305,6 +306,44 @@ class StepThreePage extends StatelessWidget {
   }
 
   /// ---------------- LICENCE UPLOAD ----------------
+  ///
+  // Column _buildLicenceUploadSection(
+  //   ProfileVerificationPageController controller,
+  //   int index,
+  // ) {
+  //   final block = controller.licenceBlocks[index];
+
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         "Licence Upload",
+  //         style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
+  //       ),
+  //       SizedBox(height: 8.h),
+  //       GestureDetector(
+  //         onTap: () =>
+  //             controller.pickLicences(context: Get.context!, index: index),
+  //         child: SvgPicture.asset(AppAssets.uploadBackFrontImageLicenseImage),
+  //       ),
+  //       SizedBox(height: 8.h),
+  //       for (int i = 0; i < (block.licenceFiles?.files.length ?? 0); i++)
+  //         Column(
+  //           children: [
+  //             block.fileUploaded
+  //                 ? Text(
+  //                     block.licenceFiles?.files[i].name ?? "",
+  //                     maxLines: 1,
+  //                     overflow: TextOverflow.ellipsis,
+  //                   )
+  //                 : _buildUploadFileStatus(controller, index),
+  //             SizedBox(height: 16.h),
+  //           ],
+  //         ),
+  //     ],
+  //   );
+  // }
+
   Column _buildLicenceUploadSection(
     ProfileVerificationPageController controller,
     int index,
@@ -325,24 +364,100 @@ class StepThreePage extends StatelessWidget {
           child: SvgPicture.asset(AppAssets.uploadBackFrontImageLicenseImage),
         ),
         SizedBox(height: 8.h),
+        // ---------------- UPLOADED FILES ----------------
         for (int i = 0; i < (block.licenceFiles?.files.length ?? 0); i++)
-          Column(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              block.fileUploaded
-                  ? Text(
-                      block.licenceFiles?.files[i].name ?? "",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  : _buildUploadFileStatus(controller, index),
-              SizedBox(height: 16.h),
+              Expanded(
+                child: Text(
+                  block.licenceFiles?.files[i].name ?? "",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.delete, color: Colors.red),
+                onPressed: () {
+                  controller.removeLicenceFile(index, i);
+                },
+              ),
             ],
           ),
+        SizedBox(height: 16.h),
+        // ---------------- UPLOAD STATUS ----------------
+        if (block.fileUploaded == false)
+          _buildUploadFileStatus(controller, index),
       ],
     );
   }
 
   /// ---------------- UPLOAD STATUS ----------------
+  // Visibility _buildUploadFileStatus(
+  //   ProfileVerificationPageController controller,
+  //   int index,
+  // ) {
+  //   final block = controller.licenceBlocks[index];
+
+  //   return Visibility(
+  //     visible: true,
+  //     child: Container(
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(12.r),
+  //         border: Border.all(color: AppColors.primaryGray),
+  //       ),
+  //       child: Padding(
+  //         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             Row(
+  //               children: [
+  //                 Expanded(
+  //                   child: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: [
+  //                       Text(
+  //                         "Uploading...",
+  //                         style: TextStyle(fontWeight: FontWeight.w600),
+  //                       ),
+  //                       GetBuilder<ProfileVerificationPageController>(
+  //                         builder: (_) {
+  //                           return Text(
+  //                             "${block.uploadingPercent}%  • ${block.uploadSeconds} seconds remaining",
+  //                             style: TextStyle(
+  //                               color: AppColors.secondaryTextColor,
+  //                             ),
+  //                           );
+  //                         },
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //             SizedBox(height: 8.h),
+  //             SizedBox(
+  //               width: double.infinity,
+  //               child: GetBuilder<ProfileVerificationPageController>(
+  //                 builder: (_) {
+  //                   return LinearProgressIndicator(
+  //                     value: block.uploadingPercent / 100,
+  //                     minHeight: 8.sp,
+  //                     borderRadius: BorderRadius.circular(6.r),
+  //                     color: AppColors.primaryBlue,
+  //                     backgroundColor: AppColors.lightGrey,
+  //                   );
+  //                 },
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
   Visibility _buildUploadFileStatus(
     ProfileVerificationPageController controller,
     int index,

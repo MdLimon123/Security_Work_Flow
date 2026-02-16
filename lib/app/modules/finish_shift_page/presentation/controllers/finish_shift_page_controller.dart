@@ -41,6 +41,8 @@ class FinishShiftPageController extends GetxController {
     update();
   }
 
+  var isRating = false.obs;
+
   Future<void> submitRating({
     required BuildContext context,
     required String id,
@@ -60,7 +62,6 @@ class FinishShiftPageController extends GetxController {
           "professionalism": payRatesSelectedIndex,
           "reliability": professionalismSelectedIndex,
           "job_support": jobSupportSelectedIndex,
-          "text": commentTextFieldController.text,
         },
       );
 
@@ -73,6 +74,8 @@ class FinishShiftPageController extends GetxController {
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
       );
+
+       isRating.value = true;
 
       Future.delayed(const Duration(milliseconds: 500), () {
         Get.back();

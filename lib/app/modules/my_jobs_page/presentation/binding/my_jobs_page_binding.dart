@@ -5,5 +5,6 @@ class MyJobsPageBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => MyJobsPageController(), fenix: true);
+   
   }
 }

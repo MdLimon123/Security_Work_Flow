@@ -1,5 +1,5 @@
 class ApiEndpoints {
-  static const String _baseUrl = "http://148.230.92.132:8001";
+  static const String _baseUrl = "https://api.securiverse.com.au";
 
   static String get getBaseUrl => _baseUrl;
 
@@ -102,7 +102,11 @@ class ApiEndpoints {
   static String licenseUploadUrr = "$_baseUrl/api/jobs/licence-types/";
 
   static String chatSocketUrl({required String token}) =>
-      "ws://148.230.92.132:8001/ws/asc/update_chat_messages/?token=$token";
+      "wss://api.securiverse.com.au/ws/asc/update_chat_messages/?token=$token";
 
   static String createCharRoomUrl = "$_baseUrl/api/chat-note/chat-list/";
 }
+
+
+/// wss://api.securiverse.com.au/ws/asc/update_chat_messages/?token
+/// https://api.securiverse.com.au/

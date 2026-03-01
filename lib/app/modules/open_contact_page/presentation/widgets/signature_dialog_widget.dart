@@ -97,23 +97,25 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
 
             // Action Button
             if (_selectedTab != 2)
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: controller.uploadSignatureLoading.value
-                      ? null
-                      : _handleSubmit,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.secondaryNavyBlue,
-                    foregroundColor: AppColors.primaryWhite,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              Obx(
+                () => SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: controller.uploadSignatureLoading.value
+                        ? null
+                        : _handleSubmit,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.secondaryNavyBlue,
+                      foregroundColor: AppColors.primaryWhite,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
+                    child: controller.uploadSignatureLoading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text("Save & Submit"),
                   ),
-                  child: controller.uploadSignatureLoading.value
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text("Save & Submit"),
                 ),
               ),
           ],
@@ -401,8 +403,6 @@ class _SignatureDialogWidgetState extends State<SignatureDialogWidget> {
     }
 
     await controller.submitSignature(id: widget.id, file: fileToUpload!);
-
-    Get.back();
   }
 }
 

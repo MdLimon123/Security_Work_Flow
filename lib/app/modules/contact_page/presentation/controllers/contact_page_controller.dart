@@ -191,21 +191,23 @@ class ContactPageController extends GetxController {
         ),
       });
 
-      await dioClient
-          .put(ApiEndpoints.uploadSignatureUrl(id: id), data: formData)
-          .then((value) {
-            Get.snackbar(
-              "Success",
-              "Signature uploaded successfully!",
-              backgroundColor: Colors.green,
-              colorText: Colors.white,
-              snackPosition: SnackPosition.BOTTOM,
-            );
-          });
+      await dioClient.put(
+        ApiEndpoints.uploadSignatureUrl(id: id),
+        data: formData,
+      );
+
+      Get.back(); // close dialog
+      Get.back(); // close OpenContactPage
+
+      Get.snackbar(
+        "Success",
+        "Signature uploaded successfully!",
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
 
       fetchContactList();
-
-
     } on AppException catch (e) {
       Get.snackbar(
         "Error",
@@ -218,4 +220,6 @@ class ContactPageController extends GetxController {
     uploadSignatureLoading.value = false;
     update();
   }
+
+
 }

@@ -235,7 +235,22 @@ class MyJobsPage extends StatelessWidget {
 
                               Chip(
                                 label: Text(
-                                  "Complete",
+                                  (controller
+                                                  .upcomingJobModel
+                                                  .results
+                                                  ?.myJobs[index]
+                                                  .jobDetails
+                                                  .status
+                                                  .toLowerCase() ==
+                                              "untasked")
+                                      ? "Upcoming"
+                                      : controller
+                                              .upcomingJobModel
+                                              .results
+                                              ?.myJobs[index]
+                                              .jobDetails
+                                              .status ??
+                                          "N/A",
                                   style: TextStyle(
                                     color: AppColors.primaryBlue,
                                   ),

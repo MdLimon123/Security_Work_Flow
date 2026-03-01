@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/constants/formate_date.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/presentation/controllers/home_page_controller.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
@@ -151,32 +152,31 @@ class HomePage extends StatelessWidget {
 
                       Row(
                         children: [
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Posted In ",
-                                  style: TextStyle(
-                                    color: AppColors.secondaryTextColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text:
-                                      controller
-                                          .openJobListModel
-                                          .data?[index]
-                                          .jobRole ??
-                                      "N/A",
-                                  style: TextStyle(
-                                    color: AppColors.secondaryNavyBlue,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
+                          // RichText(
+                          //   text: TextSpan(
+                          //     children: [
+                          //       TextSpan(
+                          //         text: "Posted In ",
+                          //         style: TextStyle(
+                          //           color: AppColors.secondaryTextColor,
+                          //           fontWeight: FontWeight.w500,
+                          //         ),
+                          //       ),
+                          //       TextSpan(
+                          //         text:
+                          //             controller
+                          //                 .openJobListModel
+                          //                 .data?[index]
+                          //                 .jobRole ??
+                          //             "N/A",
+                          //         style: TextStyle(
+                          //           color: AppColors.secondaryNavyBlue,
+                          //           fontWeight: FontWeight.w500,
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                           Spacer(),
 
                           Column(
@@ -189,7 +189,7 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${controller.openJobListModel.data?[index].jobDate}",
+                                "${formatDate(controller.openJobListModel.data?[index].jobDate ?? "")}",
                                 style: TextStyle(
                                   color: AppColors.secondaryTextColor,
                                   fontSize: 12.sp,

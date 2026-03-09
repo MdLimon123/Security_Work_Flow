@@ -20,7 +20,8 @@ class LicenseAndCertificatesPageController extends GetxController {
   LicenceListModel licenseListModel = LicenceListModel();
   LicenceTypesModel licenceTypesModel = LicenceTypesModel();
 
-  File? licenceFile;
+  List<File> licenceFiles = [];
+  DateTime? selectedExpireDate;
 
   final TextEditingController expireDateTEC = TextEditingController();
 
@@ -30,11 +31,20 @@ class LicenseAndCertificatesPageController extends GetxController {
   }
 
   Future<void> pickLicenceFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+    );
     if (result != null) {
-      licenceFile = File(result.files.single.path!);
+      licenceFiles.addAll(
+        result.files.map((file) => File(file.path!)),
+      );
       update();
     }
+  }
+
+  void removeLicenceFile(int index) {
+    licenceFiles.removeAt(index);
+    update();
   }
 
   Future<void> submitLicence() async {
@@ -57,19 +67,46 @@ class LicenseAndCertificatesPageController extends GetxController {
       //   "sajid testing ${licenceTypesModel.licenceTypes?[licenceTypeId].id.toString()}",
       // );
 
-      FormData formData = FormData.fromMap({
-        "licence_type": licenceTypesModel.licenceTypes?[licenceTypeId].id
-            .toString(),
-        "expire_date": expireDateTEC.text,
-        "licence_images": await MultipartFile.fromFile(
-          licenceFile!.path,
-          filename: licenceFile!.uri.pathSegments.last,
-        ),
-      });
+      final formData = FormData();
 
-      await dioClient.post(ApiEndpoints.licenseUrl, data: formData);
+      final backendDate = selectedExpireDate != null
+          ? "${selectedExpireDate!.year}-${selectedExpireDate!.month.toString().padLeft(2, '0')}-${selectedExpireDate!.day.toString().padLeft(2, '0')}"
+          : "";
+      formData.fields.add(
+        MapEntry("0.expire_date", backendDate),
+      );
+
+      formData.fields.add(
+        MapEntry("0.licence_types", licenceTypesModel.licenceTypes![licenceTypeId].id.toString()),
+      );
+
+      for (var file in licenceFiles) {
+        formData.files.add(
+          MapEntry(
+            "0.licence_images",
+            await MultipartFile.fromFile(
+              file.path,
+              filename: file.uri.pathSegments.last,
+            ),
+          ),
+        );
+      }
+
+      await dioClient.post(ApiEndpoints.addLicenceUrl, data: formData);
       await _fetchLicencesList();
       await _fetchLicenceTypeList();
+
+      submitting = false;
+      update();
+
+      Get.back();
+      Get.snackbar(
+        "Success",
+        "Licence added successfully!",
+        backgroundColor: AppColors.primaryGreen,
+        colorText: AppColors.primaryWhite,
+      );
+      return;
     } on AppException catch (e) {
       Get.snackbar(
         "Error",
@@ -85,9 +122,36 @@ class LicenseAndCertificatesPageController extends GetxController {
     update();
   }
 
+  Future<void> deleteLicence({required int id}) async {
+    try {
+      DioClient dioClient = DioClient();
+      log("Deleting licence with URL: ${ApiEndpoints.deleteLicenceUrl(id: id.toString())}");
+      await dioClient.delete(ApiEndpoints.deleteLicenceUrl(id: id.toString()));
+      await _fetchLicencesList();
+      Get.snackbar(
+        "Success",
+        "Licence deleted successfully!",
+        backgroundColor: AppColors.primaryGreen,
+        colorText: AppColors.primaryWhite,
+      );
+    } on AppException catch (e) {
+      Get.snackbar(
+        "Error",
+        e.message,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    }
+  }
+
   Future<void> _fetchLicenceTypeList() async {
-    licencesListFetching = true;
-    update();
     try {
       DioClient dioClient = DioClient();
 
@@ -101,9 +165,15 @@ class LicenseAndCertificatesPageController extends GetxController {
         backgroundColor: AppColors.primaryRed,
         colorText: AppColors.primaryWhite,
       );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
     }
 
-    licencesListFetching = false;
     update();
   }
 
@@ -114,9 +184,10 @@ class LicenseAndCertificatesPageController extends GetxController {
     try {
       DioClient dioClient = DioClient();
 
-      licenseListModel = LicenceListModel.fromJson(
-        await dioClient.get(ApiEndpoints.licenseUrl),
-      );
+      final response = await dioClient.get(ApiEndpoints.licenseUrl);
+      log("Licence list API response: $response");
+      licenseListModel = LicenceListModel.fromJson(response);
+      log("Parsed licence list data count: ${licenseListModel.data?.length}");
     } on AppException catch (e) {
       Get.snackbar(
         "Error",

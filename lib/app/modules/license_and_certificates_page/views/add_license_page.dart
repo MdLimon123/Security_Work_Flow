@@ -109,23 +109,40 @@ class AddLicensePage extends StatelessWidget {
         ),
         SizedBox(height: 4.h),
 
-        GetBuilder<LicenseAndCertificatesPageController>(
-          builder: (controller) {
-            return TextField(
-              controller: controller.expireDateTEC,
-              keyboardType: TextInputType.datetime,
-              decoration: InputDecoration(
-                hintText: "2029-10-10",
-                hintStyle: TextStyle(color: AppColors.secondaryTextColor),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  borderSide: BorderSide(color: AppColors.primaryBorderColor),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  borderSide: BorderSide(color: AppColors.primaryBorderColor),
-                ),
-              ),
+        Builder(
+          builder: (context) {
+            return GetBuilder<LicenseAndCertificatesPageController>(
+              builder: (controller) {
+                return TextField(
+                  controller: controller.expireDateTEC,
+                  readOnly: true,
+                  onTap: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2100),
+                    );
+                    if (picked != null) {
+                      controller.selectedExpireDate = picked;
+                      controller.expireDateTEC.text =
+                          "${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}";
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: "DD-MM-YYYY",
+                    hintStyle: TextStyle(color: AppColors.secondaryTextColor),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(color: AppColors.primaryBorderColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(color: AppColors.primaryBorderColor),
+                    ),
+                  ),
+                );
+              },
             );
           },
         ),
@@ -133,24 +150,49 @@ class AddLicensePage extends StatelessWidget {
     );
   }
 
-  Container _buildUploading() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(color: AppColors.primaryBorderColor),
-      ),
-      child: GetBuilder<LicenseAndCertificatesPageController>(
-        builder: (controller) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            child: Text(
-              controller.licenceFile?.path ?? "",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          );
-        },
-      ),
+
+
+  Widget _buildUploading() {
+    return GetBuilder<LicenseAndCertificatesPageController>(
+      builder: (controller) {
+        if (controller.licenceFiles.isEmpty) {
+          return SizedBox.shrink();
+        }
+        return Column(
+          children: List.generate(controller.licenceFiles.length, (index) {
+            final file = controller.licenceFiles[index];
+            return Container(
+              margin: EdgeInsets.only(bottom: 8.h),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14.r),
+                border: Border.all(color: AppColors.primaryBorderColor),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        file.uri.pathSegments.last,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => controller.removeLicenceFile(index),
+                      child: Icon(
+                        Icons.close,
+                        size: 20.sp,
+                        color: AppColors.primaryRed,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+        );
+      },
     );
   }
 

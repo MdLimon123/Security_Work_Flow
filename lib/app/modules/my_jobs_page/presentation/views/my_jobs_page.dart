@@ -236,21 +236,21 @@ class MyJobsPage extends StatelessWidget {
                               Chip(
                                 label: Text(
                                   (controller
-                                                  .upcomingJobModel
-                                                  .results
-                                                  ?.myJobs[index]
-                                                  .jobDetails
-                                                  .status
-                                                  .toLowerCase() ==
-                                              "untasked")
-                                      ? "Upcoming"
-                                      : controller
                                               .upcomingJobModel
                                               .results
                                               ?.myJobs[index]
                                               .jobDetails
-                                              .status ??
-                                          "N/A",
+                                              .status
+                                              .toLowerCase() ==
+                                          "untasked")
+                                      ? "Upcoming"
+                                      : controller
+                                                .upcomingJobModel
+                                                .results
+                                                ?.myJobs[index]
+                                                .jobDetails
+                                                .status ??
+                                            "N/A",
                                   style: TextStyle(
                                     color: AppColors.primaryBlue,
                                   ),
@@ -396,7 +396,12 @@ class MyJobsPage extends StatelessWidget {
                                     children: [
                                       Text("Location"),
                                       Text(
-                                        "${controller.upcomingJobModel.results!.myJobs[index].jobDetails.address}",
+                                        controller
+                                            .upcomingJobModel
+                                            .results!
+                                            .myJobs[index]
+                                            .jobDetails
+                                            .address,
                                       ),
                                     ],
                                   ),
@@ -868,13 +873,15 @@ class MyJobsPage extends StatelessWidget {
                               Spacer(),
                               Expanded(
                                 child: Text(
-                                  controller
-                                          .myJobListModel
-                                          .results
-                                          ?.myJobs?[index]
-                                          .jobDetails
-                                          ?.jobDate ??
-                                      "",
+                                  formatDate(
+                                    controller
+                                            .myJobListModel
+                                            .results
+                                            ?.myJobs?[index]
+                                            .jobDetails
+                                            ?.jobDate ??
+                                        "",
+                                  ),
                                 ),
                               ),
                             ],
@@ -1039,6 +1046,7 @@ class MyJobsPage extends StatelessWidget {
                                       ?.myJobs?[index]
                                       .operativeTrackers !=
                                   "on_duty")
+                                // 15 মিনিট আগের চেক
                                 Expanded(
                                   child: GetBuilder<MyJobsPageController>(
                                     builder: (controller) {
@@ -1050,17 +1058,20 @@ class MyJobsPage extends StatelessWidget {
                                       final isLoading =
                                           controller.jobLoading[jobId] ?? false;
 
-                                      // Job start time
+                                      // Job start time - combine jobDate + startTime as UTC
+                                      final jobDateString =
+                                          job?.jobDetails?.jobDate ?? "";
                                       final startTimeString =
                                           job?.jobDetails?.startTime ?? "";
                                       DateTime? jobStartTime;
-                                      if (startTimeString.isNotEmpty) {
+                                      if (jobDateString.isNotEmpty &&
+                                          startTimeString.isNotEmpty) {
                                         jobStartTime = DateTime.tryParse(
-                                          startTimeString,
+                                          "${jobDateString}T${startTimeString}Z",
                                         );
                                       }
 
-                                      final now = DateTime.now();
+                                      final now = DateTime.now().toUtc();
 
                                       // 15 মিনিট আগের চেক
                                       bool isAfter15MinsBeforeStart = false;

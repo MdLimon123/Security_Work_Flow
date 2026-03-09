@@ -42,20 +42,30 @@ class OtherAccrediationsPage extends StatelessWidget {
               // _buildFileSelectedSection(),
               GetBuilder<OtherAccrediationsPageController>(
                 builder: (controller) {
+                  if (controller.fullPageLoading) {
+                    return Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryOrange,
+                        ),
+                      ),
+                    );
+                  }
                   return Expanded(
                     child: ListView.separated(
                       itemBuilder: (context, index) => Padding(
                         padding: EdgeInsets.only(left: 8.w),
                         child: Row(
                           children: [
-                            Text(
-                              " • ${controller.certificateListModel.data![index].accreditationType?.title ?? ""}",
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w500,
+                            Expanded(
+                              child: Text(
+                                " • ${controller.certificateListModel.data![index].accreditationType?.title ?? ""}",
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                            Spacer(),
                             SvgPicture.asset(
                               AppAssets.pdfIcon,
                               width: 32.w,
@@ -63,6 +73,19 @@ class OtherAccrediationsPage extends StatelessWidget {
                             ),
                             SizedBox(width: 12.w),
                             Text("assets.zip"),
+                            SizedBox(width: 12.w),
+                            InkWell(
+                              onTap: () {
+                                controller.deleteAccreditation(
+                                  id: controller.certificateListModel.data![index].id!.toInt(),
+                                );
+                              },
+                              child: Icon(
+                                Icons.delete_outline,
+                                color: AppColors.primaryRed,
+                                size: 24.sp,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -85,11 +108,13 @@ class OtherAccrediationsPage extends StatelessWidget {
   Row _buildAddLicencesAndCertificates() {
     return Row(
       children: [
-        Text(
-          "All Other Accreditations",
-          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+        Flexible(
+          child: Text(
+            "All Other Accreditations",
+            style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+          ),
         ),
-        Spacer(),
+        SizedBox(width: 8.w),
 
         ElevatedButton(
           style: ElevatedButton.styleFrom(

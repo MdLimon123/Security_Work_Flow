@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/data/models/job_details_model.dart';
@@ -132,6 +134,8 @@ class MyJobsPageController extends GetxController {
     update();
   }
 
+  Timer? _refreshTimer;
+
   Map<String, bool> jobStatus = {};
 
   Future<void> _fetchUpcomingJob() async {
@@ -190,10 +194,15 @@ class MyJobsPageController extends GetxController {
       final id = job.id.toString();
       jobLoading[id] = false;
     });
+
+    _refreshTimer = Timer.periodic(const Duration(minutes: 1), (_) {
+      update();
+    });
   }
 
   @override
   void onClose() {
+    _refreshTimer?.cancel();
     searchTEC.dispose();
     super.onClose();
   }

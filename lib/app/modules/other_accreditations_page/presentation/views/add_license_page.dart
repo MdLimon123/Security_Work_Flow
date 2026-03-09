@@ -108,24 +108,40 @@ class AddLicensePage extends StatelessWidget {
           style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
         SizedBox(height: 4.h),
-
-        GetBuilder<OtherAccrediationsPageController>(
-          builder: (controller) {
-            return TextField(
-              controller: controller.expireDateTEC,
-              keyboardType: TextInputType.datetime,
-              decoration: InputDecoration(
-                hintText: "Enter your bank account number",
-                hintStyle: TextStyle(color: AppColors.secondaryTextColor),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  borderSide: BorderSide(color: AppColors.primaryBorderColor),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  borderSide: BorderSide(color: AppColors.primaryBorderColor),
-                ),
-              ),
+        Builder(
+          builder: (context) {
+            return GetBuilder<OtherAccrediationsPageController>(
+              builder: (controller) {
+                return TextField(
+                  controller: controller.expireDateTEC,
+                  readOnly: true,
+                  onTap: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2100),
+                    );
+                    if (picked != null) {
+                      controller.selectedExpireDate = picked;
+                      controller.expireDateTEC.text =
+                          "${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}";
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: "DD-MM-YYYY",
+                    hintStyle: TextStyle(color: AppColors.secondaryTextColor),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(color: AppColors.primaryBorderColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(color: AppColors.primaryBorderColor),
+                    ),
+                  ),
+                );
+              },
             );
           },
         ),

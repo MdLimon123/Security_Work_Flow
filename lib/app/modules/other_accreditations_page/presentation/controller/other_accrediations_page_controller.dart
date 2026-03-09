@@ -20,6 +20,7 @@ class OtherAccrediationsPageController extends GetxController {
   bool submitting = false;
 
   File? certificateFile;
+  DateTime? selectedExpireDate;
 
   final TextEditingController expireDateTEC = TextEditingController();
 
@@ -96,18 +97,36 @@ class OtherAccrediationsPageController extends GetxController {
         }
       }
 
+      final backendDate = selectedExpireDate != null
+          ? "${selectedExpireDate!.year}-${selectedExpireDate!.month.toString().padLeft(2, '0')}-${selectedExpireDate!.day.toString().padLeft(2, '0')}"
+          : "";
+
       FormData formData = FormData.fromMap({
         "accreditation_type": id,
         "accreditation": await MultipartFile.fromFile(
           certificateFile!.path,
           filename: certificateFile!.uri.pathSegments.last,
         ),
-        "expire_date": expireDateTEC.text,
+        "expire_date": backendDate,
       });
 
       await dioClient.post(ApiEndpoints.accreditationUrl, data: formData);
 
       await _fetchAccreditationList();
+
+      certificateFile = null;
+      selectedExpireDate = null;
+      selectedLicenseType = "";
+
+      update();
+      Get.back();
+
+      Get.snackbar(
+        "Success",
+        "Accreditation added successfully!",
+        backgroundColor: AppColors.primaryGreen,
+        colorText: AppColors.primaryWhite,
+      );
     } on AppException catch (e) {
       log(e.message);
       Get.snackbar(
@@ -120,6 +139,34 @@ class OtherAccrediationsPageController extends GetxController {
 
     submitting = false;
     update();
+  }
+
+  Future<void> deleteAccreditation({required int id}) async {
+    try {
+      DioClient dioClient = DioClient();
+      await dioClient.delete(ApiEndpoints.deleteAccreditationUrl(id: id.toString()));
+      await _fetchAccreditationList();
+      Get.snackbar(
+        "Success",
+        "Accreditation deleted successfully!",
+        backgroundColor: AppColors.primaryGreen,
+        colorText: AppColors.primaryWhite,
+      );
+    } on AppException catch (e) {
+      Get.snackbar(
+        "Error",
+        e.message,
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        backgroundColor: AppColors.primaryRed,
+        colorText: AppColors.primaryWhite,
+      );
+    }
   }
 
   @override

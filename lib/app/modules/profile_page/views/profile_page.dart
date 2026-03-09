@@ -99,7 +99,6 @@ class ProfilePage extends StatelessWidget {
                           //   controller: controller.referralController,
                           //   decoration: InputDecoration(
                           //     filled: true,
-
                           //     contentPadding: EdgeInsets.symmetric(
                           //       horizontal: 10.w,
                           //       vertical: 12.5.h,

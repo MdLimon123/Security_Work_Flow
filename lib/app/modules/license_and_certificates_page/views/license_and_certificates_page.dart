@@ -52,34 +52,49 @@ class LicenseAndCertificatesPage extends StatelessWidget {
     return Expanded(
       child: GetBuilder<LicenseAndCertificatesPageController>(
         builder: (controller) {
+          if (controller.licencesListFetching) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primaryOrange,
+              ),
+            );
+          }
           return ListView.separated(
             itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.only(left: 8.w),
-              child: controller.licencesListFetching
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primaryOrange,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      " • ${controller.licenseListModel.data![index].licenceType?.title ?? ""}",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
                       ),
-                    )
-                  : Row(
-                      children: [
-                        Text(
-                          " • ${controller.licenseListModel.data![index].licenceType?.title ?? ""}",
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Spacer(),
-                        SvgPicture.asset(
-                          AppAssets.pdfIcon,
-                          width: 32.w,
-                          height: 32.h,
-                        ),
-                        SizedBox(width: 12.w),
-                        Text("assets.zip"),
-                      ],
                     ),
+                  ),
+                  SvgPicture.asset(
+                    AppAssets.pdfIcon,
+                    width: 32.w,
+                    height: 32.h,
+                  ),
+                  SizedBox(width: 12.w),
+                  Text("assets.zip"),
+                  SizedBox(width: 12.w),
+                  InkWell(
+                    onTap: () {
+                      controller.deleteLicence(
+                        id: controller.licenseListModel.data![index].id!.toInt(),
+                      );
+                    },
+                    child: Icon(
+                      Icons.delete_outline,
+                      color: AppColors.primaryRed,
+                      size: 24.sp,
+                    ),
+                  ),
+                ],
+              ),
             ),
             separatorBuilder: (context, index) => SizedBox(height: 16.h),
             itemCount: controller.licenseListModel.data?.length ?? 0,
@@ -88,6 +103,8 @@ class LicenseAndCertificatesPage extends StatelessWidget {
       ),
     );
   }
+
+
 
   Row _buildAddLicencesAndCertificates() {
     return Row(

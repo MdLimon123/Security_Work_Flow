@@ -3,6 +3,7 @@ import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
+import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class FinishShiftPageController extends GetxController {
@@ -74,8 +75,9 @@ class FinishShiftPageController extends GetxController {
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
       );
+      Get.toNamed(AppRoutes.bottomNavbarRoute);
 
-       isRating.value = true;
+      isRating.value = true;
 
       Future.delayed(const Duration(milliseconds: 500), () {
         Get.back();

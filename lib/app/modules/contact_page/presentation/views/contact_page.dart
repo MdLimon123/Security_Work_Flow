@@ -43,21 +43,24 @@ class ContactPage extends StatelessWidget {
                             ),
                           )
                         : controller.selectedIndex == 0
-                        ? (controller.engagementListModel.engagements!.isEmpty
+                        ? ((controller.engagementListModel.engagements ?? const <Engagement>[])
+                                .isEmpty
                               ? Center(child: Text("No contracts found"))
                               : ListView.separated(
                                   itemBuilder: (context, index) {
-                                    final contract = controller
-                                        .engagementListModel
-                                        .engagements![index];
+                                    final contract = (controller
+                                            .engagementListModel
+                                            .engagements ??
+                                        const <Engagement>[])[index];
                                     return _buildContractItem(contract);
                                   },
                                   separatorBuilder: (_, __) =>
                                       SizedBox(height: 24.h),
                                   itemCount: controller
                                       .engagementListModel
-                                      .engagements!
-                                      .length,
+                                      .engagements
+                                      ?.length ??
+                                      0,
                                 ))
                         : (controller
                                   .amendContractModel

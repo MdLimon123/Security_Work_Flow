@@ -183,33 +183,8 @@ class StepOnePage extends StatelessWidget {
     );
   }
 
-  Column _buildFullNameInput(ProfileVerificationPageController controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Full Name",
-          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
-        ),
-        SizedBox(height: 8.h),
-        TextFormField(
-          controller: controller.fullNameTEC,
-          decoration: InputDecoration(
-            hintText: "Enter your full name",
-            hintStyle: TextStyle(color: AppColors.primaryGray),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: AppColors.secondaryWhite),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: AppColors.secondaryWhite),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+
+
 
   Column _buildPhoneNumberInput(ProfileVerificationPageController controller) {
     return Column(

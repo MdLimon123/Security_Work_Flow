@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/constants/formate_date.dart';
-import 'package:flutter_security_workforce/app/core/constants/formate_time.dart';
 import 'package:flutter_security_workforce/app/modules/home_page/presentation/controllers/home_page_controller.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/presentation/controllers/my_jobs_page_controller.dart';
 import 'package:flutter_security_workforce/app/core/data/models/job_details_model.dart';
@@ -134,67 +133,80 @@ class JobDetailsPage extends StatelessWidget {
     );
   }
 
-  Row _buildMessageAndFinishSiftButton() {
-    return Row(
-      children: [
-        Expanded(
-          child: GetBuilder<HomePageController>(
-            init: Get.find<HomePageController>(),
-            builder: (controller) => OutlinedButton(
-              onPressed: () {
-                controller.createChatRoom(
-                  userId: jobDetailsModel.jobDetails!.jobProvider!.company!.id
-                      .toString(),
-                );
-              },
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: AppColors.secondaryNavyBlue),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-              ),
-              child: Text(
-                "Message",
-                style: TextStyle(color: AppColors.secondaryNavyBlue),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 16.w),
-        Expanded(
-          child: GetBuilder<MyJobsPageController>(
-            builder: (controller) {
-              final jobId = jobDetailsModel.id.toString();
-              final isLoading = controller.jobLoading[jobId] ?? false;
+  Widget _buildMessageAndFinishSiftButton() {
+    final onDuty =
+        (jobDetailsModel.operativeTrackers ?? '').trim().toLowerCase() ==
+        'on_duty';
 
-              return ElevatedButton(
-                onPressed: isLoading
-                    ? null
-                    : () async {
-                        await controller.endJob(jobId: jobId);
-                      },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.secondaryNavyBlue,
-                  foregroundColor: AppColors.primaryWhite,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
+    return GetBuilder<MyJobsPageController>(
+      builder: (myJobsController) {
+        final jobId = jobDetailsModel.id.toString();
+        final finishAlready =
+            jobId.isNotEmpty &&
+            myJobsController.inProgressFinishShiftJobIds.contains(jobId);
+        final showFinishShift = onDuty && !finishAlready;
+
+        return Row(
+          children: [
+            Expanded(
+              child: GetBuilder<HomePageController>(
+                init: Get.find<HomePageController>(),
+                builder: (controller) => OutlinedButton(
+                  onPressed: () {
+                    controller.createChatRoom(
+                      userId: jobDetailsModel
+                          .jobDetails!
+                          .jobProvider!
+                          .company!
+                          .id
+                          .toString(),
+                    );
+                  },
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: AppColors.secondaryNavyBlue),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  child: Text(
+                    "Message",
+                    style: TextStyle(color: AppColors.secondaryNavyBlue),
                   ),
                 ),
-                child: isLoading
-                    ? SizedBox(
-                        height: 20.h,
-                        width: 20.w,
-                        child: CircularProgressIndicator(
-                          color: AppColors.primaryWhite,
-                          strokeWidth: 2,
-                        ),
-                      )
-                    : Text("Finish Shift", style: TextStyle(fontSize: 16.sp)),
-              );
-            },
-          ),
-        ),
-      ],
+              ),
+            ),
+            if (showFinishShift) ...[
+              SizedBox(width: 16.w),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: (myJobsController.jobLoading[jobId] ?? false)
+                      ? null
+                      : () async {
+                          await myJobsController.endJob(jobId: jobId);
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.secondaryNavyBlue,
+                    foregroundColor: AppColors.primaryWhite,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  child: (myJobsController.jobLoading[jobId] ?? false)
+                      ? SizedBox(
+                          height: 20.h,
+                          width: 20.w,
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryWhite,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Text("Finish Shift", style: TextStyle(fontSize: 16.sp)),
+                ),
+              ),
+            ],
+          ],
+        );
+      },
     );
   }
 
@@ -260,10 +272,7 @@ class JobDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      formatUtcToLocal(
-                        jobDetailsModel.jobDetails?.jobDate,
-                        jobDetailsModel.jobDetails?.startTime,
-                      ),
+                      _formatTime24(jobDetailsModel.jobDetails?.startTime),
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -280,10 +289,7 @@ class JobDetailsPage extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      formatUtcToLocal(
-                        jobDetailsModel.jobDetails?.jobDate,
-                        jobDetailsModel.jobDetails?.endTime,
-                      ),
+                      _formatTime24(jobDetailsModel.jobDetails?.endTime),
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColors.secondaryTextColor,
@@ -333,6 +339,18 @@ class JobDetailsPage extends StatelessWidget {
     );
   }
 
+  String _formatTime24(String? time) {
+    if (time == null || time.isEmpty) return "";
+    final parts = time.split(":");
+    if (parts.length < 2) return time;
+    int hour = int.tryParse(parts[0]) ?? 0;
+    final minute = parts[1];
+    final period = hour >= 12 ? "PM" : "AM";
+    if (hour == 0) hour = 12;
+    if (hour > 12) hour -= 12;
+    return "${hour.toString().padLeft(2, '0')}:$minute $period";
+  }
+
   Row _buildCheckInOutStatus() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -345,7 +363,7 @@ class JobDetailsPage extends StatelessWidget {
               style: TextStyle(color: AppColors.secondaryTextColor),
             ),
             Text(
-              "${jobDetailsModel.jobDetails?.startTime}",
+              _formatTime24(jobDetailsModel.jobDetails?.startTime),
               style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
             ),
           ],
@@ -358,7 +376,7 @@ class JobDetailsPage extends StatelessWidget {
               style: TextStyle(color: AppColors.secondaryTextColor),
             ),
             Text(
-              "${jobDetailsModel.jobDetails?.endTime}",
+              _formatTime24(jobDetailsModel.jobDetails?.endTime),
               style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
             ),
           ],
@@ -376,7 +394,7 @@ class JobDetailsPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.r),
               ),
               label: Text(
-                "${jobDetailsModel.operativeTrackers}",
+                "${jobDetailsModel.jobDetails?.status}",
                 style: TextStyle(color: AppColors.primaryGreen),
               ),
               color: WidgetStatePropertyAll(

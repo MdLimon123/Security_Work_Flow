@@ -104,7 +104,7 @@ class AddLicensePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Licence Expiry Date",
+          "Accreditation Expiry Date",
           style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryNavyBlue),
         ),
         SizedBox(height: 4.h),
@@ -133,11 +133,15 @@ class AddLicensePage extends StatelessWidget {
                     hintStyle: TextStyle(color: AppColors.secondaryTextColor),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide(color: AppColors.primaryBorderColor),
+                      borderSide: BorderSide(
+                        color: AppColors.primaryBorderColor,
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide(color: AppColors.primaryBorderColor),
+                      borderSide: BorderSide(
+                        color: AppColors.primaryBorderColor,
+                      ),
                     ),
                   ),
                 );
@@ -200,7 +204,7 @@ class AddLicensePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Licence Upload",
+                    "Accreditation Upload",
                     style: TextStyle(
                       fontSize: 16.sp,
                       color: AppColors.secondaryNavyBlue,
@@ -219,7 +223,7 @@ class AddLicensePage extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            "Upload your licence",
+                            "Upload your accreditation",
                             style: TextStyle(fontSize: 16.sp),
                           ),
                           Spacer(),

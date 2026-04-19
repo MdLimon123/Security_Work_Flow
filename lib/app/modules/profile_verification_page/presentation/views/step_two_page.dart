@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/profile_language_options.dart';
 import '../controllers/profile_verification_page_controller.dart';
 
 class StepTwoPage extends StatelessWidget {
@@ -272,28 +273,8 @@ class StepTwoPage extends StatelessWidget {
             final selectedLanguages = await showDialog<List<String>>(
               context: context,
               builder: (context) {
-                List<String> languages = [
-                  "English",
-                  "Mandarin",
-                  "Cantonese",
-                  "Hindi",
-                  "Punjabi",
-                  "Arabic",
-                  "Vietnamese",
-                  "Filipino / Tagalog",
-                  "Spanish",
-                  "Korean",
-                  "Japanese",
-                  "Tamil",
-                  "Urdu",
-                  "Greek",
-                  "Italian",
-                  "Turkish",
-                  "Russian",
-                  "French",
-                  "German",
-                  "Swahili",
-                ];
+                List<String> languages =
+                    List<String>.from(kProfileVerificationLanguageValues);
                 List<String> tempSelected = List.from(
                   controller.selectedLanguages,
                 ); // copy current selection

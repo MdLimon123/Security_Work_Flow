@@ -43,9 +43,11 @@ class ApiEndpoints {
   static const String jobListUrl = "$_baseUrl/api/jobs/user-job-posts/";
 
   static const String licenseUrl = "$_baseUrl/api/accounts/licences/";
-  static  String deleteLicenceUrl({required String id}) => "$_baseUrl/api/accounts/licences/$id/";
+  static String deleteLicenceUrl({required String id}) =>
+      "$_baseUrl/api/accounts/licences/$id/";
 
-  static String deleteAccreditationUrl({required String id}) => "$_baseUrl/api/accounts/certificates/$id/";
+  static String deleteAccreditationUrl({required String id}) =>
+      "$_baseUrl/api/accounts/certificates/$id/";
 
   static const String locationUrl = "$_baseUrl/api/accounts/location-update/";
 

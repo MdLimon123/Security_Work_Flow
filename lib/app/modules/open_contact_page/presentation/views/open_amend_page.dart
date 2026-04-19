@@ -1315,7 +1315,7 @@ class OpenAmendPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        "Company License No. :",
+                        "Company Licence No. :",
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
@@ -1343,7 +1343,7 @@ class OpenAmendPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        "State License Held  :",
+                        "State Licence Held  :",
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w500,

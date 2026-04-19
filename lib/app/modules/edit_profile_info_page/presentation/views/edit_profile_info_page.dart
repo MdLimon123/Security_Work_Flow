@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/constants/profile_language_options.dart';
 import 'package:flutter_security_workforce/app/modules/edit_profile_info_page/presentation/controllers/edit_profile_info_page_controller.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -297,29 +298,11 @@ class EditProfileInfoPage extends StatelessWidget {
                 controller.setLanguage(value);
               },
               itemBuilder: (context) => [
-                const PopupMenuItem(value: "English", child: Text("English")),
-                // const PopupMenuItem(value: "English", child: Text("English")),
-                const PopupMenuItem(
-                  value: "Spanish",
-                  child: Text("Spanish (Latin American or Castilian)"),
-                ),
-                const PopupMenuItem(
-                  value: "Mandarin Chinese",
-                  child: Text("Mandarin Chinese (Simplified or Traditional)"),
-                ),
-                const PopupMenuItem(value: "Hindi", child: Text("Hindi")),
-                const PopupMenuItem(value: "Arabic", child: Text("Arabic")),
-                const PopupMenuItem(
-                  value: "French",
-                  child: Text("French (France or Canada)"),
-                ),
-                const PopupMenuItem(
-                  value: "Portuguese",
-                  child: Text("Portuguese (Brazil or Portugal)"),
-                ),
-                const PopupMenuItem(value: "Russian", child: Text("Russian")),
-                const PopupMenuItem(value: "Bengali", child: Text("Bengali")),
-                const PopupMenuItem(value: "Japanese", child: Text("Japanese")),
+                for (final v in kProfileEditLanguageValues)
+                  PopupMenuItem<String>(
+                    value: v,
+                    child: Text(profileLanguageDisplayLabel(v)),
+                  ),
               ],
               child: Container(
                 padding: const EdgeInsets.symmetric(
@@ -341,7 +324,9 @@ class EditProfileInfoPage extends StatelessWidget {
                     Text(
                       controller.selectedLanguage.isEmpty
                           ? "Select your language"
-                          : controller.selectedLanguage,
+                          : profileLanguageDisplayLabel(
+                              controller.selectedLanguage,
+                            ),
                       style: TextStyle(
                         fontSize: 16,
                         color: controller.selectedLanguage.isEmpty

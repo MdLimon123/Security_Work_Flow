@@ -6,7 +6,8 @@ import 'package:flutter_security_workforce/app/core/data/models/job_details_mode
 import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
-import 'package:flutter_security_workforce/app/modules/job_history_page/models/job_history_list_model.dart';
+import 'package:flutter_security_workforce/app/modules/job_history_page/models/job_history_list_model.dart'
+    hide MyJobs;
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/data/model/my_job_list_model.dart';
 import 'package:flutter_security_workforce/app/modules/my_jobs_page/data/model/upcoming_job_model.dart';
 import 'package:flutter_security_workforce/app/routes/app_routes.dart';
@@ -30,7 +31,7 @@ class MyJobsPageController extends GetxController {
 
     update();
     if (selectedIndex == 0) {
-      _fetchUpcomingJob();
+      _fetchUpcomingJob(showFullPageLoading: true);
     } else if (selectedIndex == 1) {
       _fetchMyJobList();
     } else {
@@ -41,6 +42,12 @@ class MyJobsPageController extends GetxController {
   bool pageLoading = false;
 
   Map<String, bool> jobLoading = {};
+
+  /// Upcoming-tab: job IDs where start shift API succeeded this session (gray disabled button).
+  final Set<String> upcomingShiftStartedJobIds = <String>{};
+
+  /// In-progress tab: job IDs where finish shift API succeeded this session (gray disabled button).
+  final Set<String> inProgressFinishShiftJobIds = <String>{};
 
   MyJobListModel myJobListModel = MyJobListModel();
 
@@ -79,6 +86,8 @@ class MyJobsPageController extends GetxController {
         data: {"start_shift": true},
       );
 
+      upcomingShiftStartedJobIds.add(jobId);
+
       Get.snackbar(
         "Success",
         "Shift started successfully",
@@ -109,12 +118,22 @@ class MyJobsPageController extends GetxController {
         ApiEndpoints.endJobUrl(id: jobId),
         data: {"end_shift": true},
       );
-      Get.toNamed(
-        AppRoutes.finishShiftRoute,
-        arguments: JobDetailsModel.fromJson(
-          myJobListModel.results?.myJobs?[0].toJson(),
-        ),
-      );
+
+      inProgressFinishShiftJobIds.add(jobId);
+
+      MyJobs? endedJob;
+      for (final j in myJobListModel.results?.myJobs ?? <MyJobs>[]) {
+        if (j.id?.toString() == jobId) {
+          endedJob = j;
+          break;
+        }
+      }
+      if (endedJob != null) {
+        Get.toNamed(
+          AppRoutes.finishShiftRoute,
+          arguments: JobDetailsModel.fromJson(endedJob.toJson()),
+        );
+      }
       Get.snackbar(
         "Success",
         "Shift ended successfully",
@@ -138,9 +157,11 @@ class MyJobsPageController extends GetxController {
 
   Map<String, bool> jobStatus = {};
 
-  Future<void> _fetchUpcomingJob() async {
-    pageLoading3 = true;
-    update();
+  Future<void> _fetchUpcomingJob({bool showFullPageLoading = true}) async {
+    if (showFullPageLoading) {
+      pageLoading3 = true;
+      update();
+    }
 
     try {
       DioClient dioClient = DioClient();
@@ -157,9 +178,15 @@ class MyJobsPageController extends GetxController {
       );
     }
 
-    pageLoading3 = false;
+    if (showFullPageLoading) {
+      pageLoading3 = false;
+    }
     update();
   }
+
+  /// Refetch upcoming jobs without the tab-wide loading spinner (e.g. after contract screen).
+  Future<void> refreshUpcomingJobs() =>
+      _fetchUpcomingJob(showFullPageLoading: false);
 
   Future<void> fetchJobHistory() async {
     pageLoading2 = true;
@@ -188,7 +215,7 @@ class MyJobsPageController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
 
-    await _fetchUpcomingJob();
+    await _fetchUpcomingJob(showFullPageLoading: true);
 
     myJobListModel.results?.myJobs?.forEach((job) {
       final id = job.id.toString();

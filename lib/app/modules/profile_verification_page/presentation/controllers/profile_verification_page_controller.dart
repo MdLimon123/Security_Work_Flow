@@ -7,7 +7,6 @@ import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
 import 'package:flutter_security_workforce/app/modules/auth/login_page/data/models/login_response_model.dart';
-import 'package:flutter_security_workforce/app/modules/bottom_navbar/presentation/views/bottom_navbar_page.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_accreditations_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/data/models/list_of_licence_type_model.dart';
 import 'package:flutter_security_workforce/app/modules/profile_verification_page/presentation/views/step_four_page.dart';
@@ -227,33 +226,7 @@ class ProfileVerificationPageController extends GetxController {
     update();
   }
 
-  // Future<void> pickLicences({
-  //   required BuildContext context,
-  //   required int index,
-  // }) async {
-  //   final result = await FilePicker.platform.pickFiles(
-  //     type: FileType.image,
-  //     allowMultiple: true,
-  //   );
 
-  //   if (result == null || result.files.length != 2) {
-  //     if (context.mounted) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text("Select exactly 2 images"),
-  //           backgroundColor: Colors.red,
-  //         ),
-  //       );
-  //     }
-  //     return;
-  //   }
-
-  //   licenceBlocks[index].licenceFiles = result;
-
-  //   await startUploadingAnimation(index);
-
-  //   update();
-  // }
 
   Future<void> pickLicences({
     required BuildContext context,
@@ -755,93 +728,7 @@ class ProfileVerificationPageController extends GetxController {
     // increasePageIndex();
   }
 
-  // Future<void> submitFourthStepData({required BuildContext context}) async {
-  //   if (accreditationFile == null) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text("Must upload accreditation files"),
-  //         backgroundColor: AppColors.primaryRed,
-  //       ),
-  //     );
-  //     return;
-  //   }
 
-  //   nextButtonInProgress = true;
-  //   update();
-
-  //   try {
-  //     DioClient dioClient = DioClient();
-
-  //     List<dio.MultipartFile> multipartImages = [];
-
-  //     for (var file in accreditationFile!.files) {
-  //       multipartImages.add(
-  //         await dio.MultipartFile.fromFile(file.path!, filename: file.name),
-  //       );
-  //     }
-
-  //     String accreditationType = "1";
-
-  //     for (
-  //       int i = 0;
-  //       i < (listOfAccreditationsModel.certificateTypes?.length ?? 0);
-  //       i++
-  //     ) {
-  //       if (listOfAccreditationsModel.certificateTypes?[i].title ==
-  //           selectedAccreditation) {
-  //         accreditationType =
-  //             listOfAccreditationsModel.certificateTypes?[i].id.toString() ??
-  //             "1";
-  //         break;
-  //       }
-  //     }
-
-  //     final formData = dio.FormData.fromMap({
-  //       "accreditation_types": accreditationType,
-  //       "expire_date": accreditationExpireTEC.text.trim(),
-  //       "accreditation": multipartImages,
-  //     });
-
-  //     await dioClient.post(ApiEndpoints.accreditationUrl, data: formData);
-
-  //     if (context.mounted) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text("Updated"),
-  //           backgroundColor: AppColors.primaryGreen,
-  //         ),
-  //       );
-  //     }
-  //     Get.offAllNamed(AppRoutes.loginRoute);
-  //   } on AppException catch (e) {
-  //     nextButtonInProgress = false;
-  //     update();
-  //     if (context.mounted) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(e.message),
-  //           backgroundColor: AppColors.primaryRed,
-  //         ),
-  //       );
-  //     }
-  //     return;
-  //   } catch (e) {
-  //     nextButtonInProgress = false;
-  //     update();
-  //     if (context.mounted) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(e.toString()),
-  //           backgroundColor: AppColors.primaryRed,
-  //         ),
-  //       );
-  //     }
-  //     return;
-  //   }
-
-  //   nextButtonInProgress = false;
-  //   increasePageIndex();
-  // }
 
   @override
   void onInit() async {

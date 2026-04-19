@@ -350,7 +350,7 @@ class ProfilePage extends StatelessWidget {
               onTap: () {
                 Get.toNamed(AppRoutes.licencesAndCertificatesRoute);
               },
-              title: "Licences ",
+              title: "Licence ",
               appAsset: AppAssets.listIcon,
             ),
             SizedBox(height: 16.h),

@@ -127,6 +127,8 @@ class MyJobs {
     String? newJobDuration,
     dynamic signaturePartyA,
     dynamic signaturePartyB,
+    bool? isCompanyReted,
+    bool? isGuardReted,
   }) {
     _id = id;
     _jobDetails = jobDetails;
@@ -139,6 +141,8 @@ class MyJobs {
     _newJobDuration = newJobDuration;
     _signaturePartyA = signaturePartyA;
     _signaturePartyB = signaturePartyB;
+    _isCompanyReted = isCompanyReted;
+    _isGuardReted = isGuardReted;
   }
 
   MyJobs.fromJson(dynamic json) {
@@ -155,6 +159,8 @@ class MyJobs {
     _newJobDuration = json['new_job_duration'];
     _signaturePartyA = json['signature_party_a'];
     _signaturePartyB = json['signature_party_b'];
+    _isCompanyReted = json['is_company_reted'];
+    _isGuardReted = json['is_guard_reted'];
   }
   num? _id;
   JobDetails? _jobDetails;
@@ -167,6 +173,8 @@ class MyJobs {
   String? _newJobDuration;
   dynamic _signaturePartyA;
   dynamic _signaturePartyB;
+  bool? _isCompanyReted;
+  bool? _isGuardReted;
   MyJobs copyWith({
     num? id,
     JobDetails? jobDetails,
@@ -179,6 +187,8 @@ class MyJobs {
     String? newJobDuration,
     dynamic signaturePartyA,
     dynamic signaturePartyB,
+    bool? isCompanyReted,
+    bool? isGuardReted,
   }) => MyJobs(
     id: id ?? _id,
     jobDetails: jobDetails ?? _jobDetails,
@@ -191,6 +201,8 @@ class MyJobs {
     newJobDuration: newJobDuration ?? _newJobDuration,
     signaturePartyA: signaturePartyA ?? _signaturePartyA,
     signaturePartyB: signaturePartyB ?? _signaturePartyB,
+    isCompanyReted: isCompanyReted ?? _isCompanyReted,
+    isGuardReted: isGuardReted ?? _isGuardReted,
   );
   num? get id => _id;
   JobDetails? get jobDetails => _jobDetails;
@@ -203,6 +215,8 @@ class MyJobs {
   String? get newJobDuration => _newJobDuration;
   dynamic get signaturePartyA => _signaturePartyA;
   dynamic get signaturePartyB => _signaturePartyB;
+  bool? get isCompanyReted => _isCompanyReted;
+  bool? get isGuardReted => _isGuardReted;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -219,6 +233,8 @@ class MyJobs {
     map['new_job_duration'] = _newJobDuration;
     map['signature_party_a'] = _signaturePartyA;
     map['signature_party_b'] = _signaturePartyB;
+    map['is_company_reted'] = _isCompanyReted;
+    map['is_guard_reted'] = _isGuardReted;
     return map;
   }
 }

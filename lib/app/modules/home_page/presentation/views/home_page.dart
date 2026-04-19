@@ -12,6 +12,50 @@ import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+/// Parses "HH:mm:ss" / "H:mm:ss" into a [DateTime] on a fixed base day.
+DateTime? _parseTimeString(String? raw) {
+  if (raw == null || raw.trim().isEmpty) return null;
+  final parts = raw.trim().split(':');
+  if (parts.length < 2) return null;
+  final h = int.tryParse(parts[0]);
+  final m = int.tryParse(parts[1]);
+  final s = parts.length > 2 ? int.tryParse(parts[2]) ?? 0 : 0;
+  if (h == null || m == null) return null;
+  return DateTime(2000, 1, 1, h, m, s);
+}
+
+/// Shift length in hours: [endTime] − [startTime]. If end ≤ start, treats as next day.
+double? _shiftHoursFromStartEnd(String? startTime, String? endTime) {
+  final start = _parseTimeString(startTime);
+  final end = _parseTimeString(endTime);
+  if (start == null || end == null) return null;
+  var endDt = end;
+  if (!endDt.isAfter(start)) {
+    endDt = endDt.add(const Duration(days: 1));
+  }
+  return endDt.difference(start).inMinutes / 60.0;
+}
+
+String _formatHrJobLabel(double? hours) {
+  if (hours == null || hours <= 0) return '';
+  final rounded = hours.round();
+  if ((hours - rounded).abs() < 0.05) {
+    return '${rounded}hr Job';
+  }
+  return '${hours.toStringAsFixed(1)}hr Job';
+}
+
+String? _formatJobValueTotal(double? hours, String? payRateStr) {
+  if (hours == null || hours <= 0) return null;
+  final rate = double.tryParse(payRateStr ?? '') ?? 0;
+  if (rate <= 0) return null;
+  final total = hours * rate;
+  if ((total - total.round()).abs() < 0.01) {
+    return total.round().toString();
+  }
+  return total.toStringAsFixed(2);
+}
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -110,7 +154,19 @@ class HomePage extends StatelessWidget {
           builder: (controller) {
             return ListView.separated(
               shrinkWrap: true,
-              itemBuilder: (context, index) => Container(
+              itemBuilder: (context, index) {
+                final job = controller.openJobListModel.data?[index];
+                final shiftHours = _shiftHoursFromStartEnd(
+                  job?.startTime,
+                  job?.endTime,
+                );
+                final hrJobLabel = _formatHrJobLabel(shiftHours);
+                final jobValueAmount = _formatJobValueTotal(
+                  shiftHours,
+                  job?.payRate,
+                );
+
+                return Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24.r),
                   border: Border.all(color: AppColors.primaryBorderColor),
@@ -124,10 +180,11 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CachedNetworkImage(
                             imageUrl:
-                                "${ApiEndpoints.getBaseUrl}${controller.openJobListModel.data?[index].jobProvider?.company?.image ?? ""}",
+                                "${ApiEndpoints.getBaseUrl}${job?.jobProvider?.company?.image ?? ""}",
                             errorWidget: (context, url, error) =>
                                 Icon(Icons.error, color: AppColors.primaryRed),
                             width: 46.w,
@@ -137,7 +194,7 @@ class HomePage extends StatelessWidget {
                           SizedBox(width: 12.w),
                           Expanded(
                             child: Text(
-                              "${controller.openJobListModel.data?[index].jobTitle}",
+                              "${job?.jobTitle}",
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 color: AppColors.secondaryNavyBlue,
@@ -145,41 +202,41 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          if (hrJobLabel.isNotEmpty)
+                            Padding(
+                              padding: EdgeInsets.only(left: 8.w),
+                              child: Text(
+                                hrJobLabel,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: AppColors.primaryRed,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
                         ],
                       ),
 
                       SizedBox(height: 19.h),
 
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // RichText(
-                          //   text: TextSpan(
-                          //     children: [
-                          //       TextSpan(
-                          //         text: "Posted In ",
-                          //         style: TextStyle(
-                          //           color: AppColors.secondaryTextColor,
-                          //           fontWeight: FontWeight.w500,
-                          //         ),
-                          //       ),
-                          //       TextSpan(
-                          //         text:
-                          //             controller
-                          //                 .openJobListModel
-                          //                 .data?[index]
-                          //                 .jobRole ??
-                          //             "N/A",
-                          //         style: TextStyle(
-                          //           color: AppColors.secondaryNavyBlue,
-                          //           fontWeight: FontWeight.w500,
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-                          Spacer(),
+                          Expanded(
+                            child: jobValueAmount != null
+                                ? Text(
+                                    "Job value: \$$jobValueAmount",
+                                    style: TextStyle(
+                                      color: AppColors.primaryRed,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                          ),
 
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
                                 "Shift Date: ",
@@ -189,7 +246,7 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${formatDate(controller.openJobListModel.data?[index].jobDate ?? "")}",
+                                formatDate(job?.jobDate ?? ""),
                                 style: TextStyle(
                                   color: AppColors.secondaryTextColor,
                                   fontSize: 12.sp,
@@ -210,7 +267,7 @@ class HomePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "\$${controller.openJobListModel.data?[index].payRate}",
+                                "\$${job?.payRate}",
                                 style: TextStyle(
                                   fontSize: 24.sp,
                                   color: AppColors.primaryOrange,
@@ -231,10 +288,7 @@ class HomePage extends StatelessWidget {
                               onPressed: () {
                                 Get.toNamed(
                                   AppRoutes.openJobsDetailsRoute,
-                                  arguments: controller
-                                      .openJobListModel
-                                      .data?[index]
-                                      .toJson(),
+                                  arguments: job?.toJson(),
                                 );
                               },
                               style: OutlinedButton.styleFrom(
@@ -352,14 +406,11 @@ class HomePage extends StatelessWidget {
                                                   child: ElevatedButton(
                                                     onPressed: () async {
                                                       log(
-                                                        "job id ${controller.openJobListModel.data?[index].id.toString()}",
+                                                        "job id ${job?.id.toString()}",
                                                       );
                                                       await controller.applyJob(
                                                         jobId:
-                                                            controller
-                                                                .openJobListModel
-                                                                .data?[index]
-                                                                .id
+                                                            job?.id
                                                                 .toString() ??
                                                             "",
                                                       );
@@ -411,7 +462,8 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
+              );
+              },
               separatorBuilder: (context, index) => SizedBox(height: 16.h),
               itemCount: controller.openJobListModel.data?.length ?? 0,
             );
@@ -420,6 +472,9 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+
+
 
   Widget _buildBullet(String text) {
     return Padding(

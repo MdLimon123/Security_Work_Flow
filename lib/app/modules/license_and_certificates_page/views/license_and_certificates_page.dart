@@ -16,7 +16,7 @@ class LicenseAndCertificatesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Licences ",
+          "Licence & Certificates",
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
@@ -54,9 +54,7 @@ class LicenseAndCertificatesPage extends StatelessWidget {
         builder: (controller) {
           if (controller.licencesListFetching) {
             return Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryOrange,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primaryOrange),
             );
           }
           return ListView.separated(
@@ -84,7 +82,8 @@ class LicenseAndCertificatesPage extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       controller.deleteLicence(
-                        id: controller.licenseListModel.data![index].id!.toInt(),
+                        id: controller.licenseListModel.data![index].id!
+                            .toInt(),
                       );
                     },
                     child: Icon(
@@ -104,13 +103,11 @@ class LicenseAndCertificatesPage extends StatelessWidget {
     );
   }
 
-
-
   Row _buildAddLicencesAndCertificates() {
     return Row(
       children: [
         Text(
-          "All Licences",
+          "All Licence",
           style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
         ),
         Spacer(),

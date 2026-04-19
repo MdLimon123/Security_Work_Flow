@@ -4,6 +4,7 @@ import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
 import 'package:flutter_security_workforce/app/core/data/models/job_details_model.dart';
 import 'package:flutter_security_workforce/app/modules/finish_shift_page/presentation/controllers/finish_shift_page_controller.dart';
+import 'package:flutter_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -180,7 +181,9 @@ class FinishShiftPage extends StatelessWidget {
                 side: BorderSide(color: AppColors.secondaryNavyBlue),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(AppRoutes.bottomNavbarRoute);
+            },
             child: Text(
               "Later",
               style: TextStyle(
@@ -220,34 +223,6 @@ class FinishShiftPage extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Column _buildCommentsInput(FinishShiftPageController controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Comments",
-          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
-        ),
-        SizedBox(height: 10.h),
-        TextFormField(
-          controller: controller.commentTextFieldController,
-          decoration: InputDecoration(
-            hintText: "Enter your comments",
-            hintStyle: TextStyle(color: AppColors.primaryGray),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: AppColors.secondaryWhite),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: AppColors.secondaryWhite),
             ),
           ),
         ),

@@ -12,7 +12,8 @@ String formatUtcToLocal(
     DateTime localDateTime = utcDateTime.toLocal();
     return DateFormat(format).format(localDateTime);
   } catch (e) {
-    return time ?? "";
+    
+    return time;
   }
 }
 

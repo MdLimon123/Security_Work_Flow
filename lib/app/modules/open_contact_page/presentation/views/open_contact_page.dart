@@ -253,7 +253,8 @@ class OpenContactPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      "${engagementListData.application!.candidate!.firstName}",
+                      engagementListData.application?.candidate?.firstName ??
+                          "",
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         fontSize: 16.sp,
@@ -551,7 +552,7 @@ class OpenContactPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "${engagementListData.application!.currency}",
+                        engagementListData.application?.currency ?? "AUD",
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -958,7 +959,7 @@ class OpenContactPage extends StatelessWidget {
 
                 /// Company Licence No
                 _buildRow(
-                  "Company License No. :",
+                  "Company Licence No. :",
                   licences.isNotEmpty
                       ? licences.first.licenceNo ?? 'N/A'
                       : 'N/A',
@@ -968,7 +969,7 @@ class OpenContactPage extends StatelessWidget {
 
                 /// State Licence Held
                 _buildRow(
-                  "State License Held :",
+                  "State Licence Held :",
                   licences.length > 1
                       ? licences[1].stateOrTerritory ?? 'N/A'
                       : 'N/A',

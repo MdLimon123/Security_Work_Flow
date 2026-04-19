@@ -265,7 +265,7 @@ class AddLicensePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "license Type(s)",
+              "Licence Type(s)",
               style: TextStyle(
                 fontSize: 16.sp,
                 color: AppColors.secondaryNavyBlue,

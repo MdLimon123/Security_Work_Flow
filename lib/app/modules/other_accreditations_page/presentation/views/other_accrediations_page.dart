@@ -77,7 +77,11 @@ class OtherAccrediationsPage extends StatelessWidget {
                             InkWell(
                               onTap: () {
                                 controller.deleteAccreditation(
-                                  id: controller.certificateListModel.data![index].id!.toInt(),
+                                  id: controller
+                                      .certificateListModel
+                                      .data![index]
+                                      .id!
+                                      .toInt(),
                                 );
                               },
                               child: Icon(
@@ -114,7 +118,7 @@ class OtherAccrediationsPage extends StatelessWidget {
             style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
           ),
         ),
-        SizedBox(width: 8.w),
+        SizedBox(width: 20.w),
 
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -124,10 +128,14 @@ class OtherAccrediationsPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.r),
             ),
           ),
+
           onPressed: () {
             Get.to(AddLicensePage());
           },
-          child: Text("Add Accreditation"),
+          child: Text(
+            "Add Accreditation",
+            style: TextStyle(color: AppColors.primaryWhite, fontSize: 12.sp),
+          ),
         ),
       ],
     );

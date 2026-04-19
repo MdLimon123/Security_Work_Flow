@@ -5,26 +5,27 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter_security_workforce/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('MyApp builds without throwing', (WidgetTester tester) async {
+    // Prevent SplashPageController from reading real storage in tests.
+    SharedPreferences.setMockInitialValues({});
+
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Allow SplashPageController delayed navigation to complete,
+    // otherwise Flutter test framework fails due to pending timers.
+    await tester.pump(const Duration(seconds: 3));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // If GetMaterialApp builds, the route/navigation setup succeeded.
+    expect(find.byType(GetMaterialApp), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // No framework exception should have been thrown during the last pump.
+    expect(tester.takeException(), isNull);
   });
 }

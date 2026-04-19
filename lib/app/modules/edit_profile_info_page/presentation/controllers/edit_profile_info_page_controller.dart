@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
+import 'package:flutter_security_workforce/app/core/constants/profile_language_options.dart';
 import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
 import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
@@ -125,7 +126,9 @@ class EditProfileInfoPageController extends GetxController {
     fullNameTEC.text = profileInfoModel.data?.accountHolderName ?? "";
     phoneNumTEC.text = profileInfoModel.data?.phone ?? "";
     addressTEC.text = profileInfoModel.data?.address ?? "";
-    selectedLanguage = profileInfoModel.data?.language ?? "English";
+    selectedLanguage = normalizeProfileLanguageValue(
+      profileInfoModel.data?.language,
+    );
     selectedGender = profileInfoModel.data?.gender ?? "";
     preferredJobRadius = profileInfoModel.data?.userRedus?.toDouble() ?? 0.0;
 

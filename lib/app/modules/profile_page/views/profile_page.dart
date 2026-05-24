@@ -112,6 +112,7 @@ class ProfilePage extends StatelessWidget {
                           //     ),
                           //   ),
                           // ),
+                       
                           Row(
                             children: [
                               Text(

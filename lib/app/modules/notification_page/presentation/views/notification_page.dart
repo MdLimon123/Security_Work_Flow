@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/modules/notification_page/presentation/controllers/notification_page_controller.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_assets.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/modules/notification_page/presentation/controllers/notification_page_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 

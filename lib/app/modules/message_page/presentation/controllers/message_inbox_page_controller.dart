@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_keys.dart';
-import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
-import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
-import 'package:flutter_security_workforce/app/core/network/socket_api.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_keys.dart';
+import 'package:securiverse_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:securiverse_security_workforce/app/core/network/dio_client.dart';
+import 'package:securiverse_security_workforce/app/core/network/socket_api.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

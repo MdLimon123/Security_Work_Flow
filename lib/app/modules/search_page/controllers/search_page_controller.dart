@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
-import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
-import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
-import 'package:flutter_security_workforce/app/modules/home_page/data/models/open_job_list_model.dart';
-import 'package:flutter_security_workforce/app/modules/search_page/data/model/accreditation_model.dart';
-import 'package:flutter_security_workforce/app/modules/search_page/data/model/license_model.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/core/errors/app_exceptions.dart';
+import 'package:securiverse_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:securiverse_security_workforce/app/core/network/dio_client.dart';
+import 'package:securiverse_security_workforce/app/modules/home_page/data/models/open_job_list_model.dart';
+import 'package:securiverse_security_workforce/app/modules/search_page/data/model/accreditation_model.dart';
+import 'package:securiverse_security_workforce/app/modules/search_page/data/model/license_model.dart';
 import 'package:get/get.dart';
 
 class SearchPageController extends GetxController {

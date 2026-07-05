@@ -4,11 +4,11 @@ import 'package:another_xlider/models/tooltip/tooltip.dart';
 import 'package:another_xlider/models/trackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/core/constants/profile_language_options.dart';
-import 'package:flutter_security_workforce/app/modules/edit_profile_info_page/presentation/controllers/edit_profile_info_page_controller.dart';
-import 'package:flutter_security_workforce/app/routes/app_routes.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_assets.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/core/constants/profile_language_options.dart';
+import 'package:securiverse_security_workforce/app/modules/edit_profile_info_page/presentation/controllers/edit_profile_info_page_controller.dart';
+import 'package:securiverse_security_workforce/app/routes/app_routes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 

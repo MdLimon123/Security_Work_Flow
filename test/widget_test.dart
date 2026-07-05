@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:flutter_security_workforce/main.dart';
+import 'package:securiverse_security_workforce/main.dart';
 
 void main() {
   testWidgets('MyApp builds without throwing', (WidgetTester tester) async {

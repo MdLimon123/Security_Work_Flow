@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/core/constants/profile_language_options.dart';
-import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
-import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
-import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
-import 'package:flutter_security_workforce/app/modules/profile_page/controllers/profile_page_controller.dart';
-import 'package:flutter_security_workforce/app/modules/profile_page/data/models/profile_info_model.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/core/constants/profile_language_options.dart';
+import 'package:securiverse_security_workforce/app/core/errors/app_exceptions.dart';
+import 'package:securiverse_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:securiverse_security_workforce/app/core/network/dio_client.dart';
+import 'package:securiverse_security_workforce/app/modules/profile_page/controllers/profile_page_controller.dart';
+import 'package:securiverse_security_workforce/app/modules/profile_page/data/models/profile_info_model.dart';
 import 'package:get/get.dart' hide MultipartFile, FormData;
 
 class EditProfileInfoPageController extends GetxController {

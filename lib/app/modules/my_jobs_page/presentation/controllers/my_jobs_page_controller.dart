@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/core/data/models/job_details_model.dart';
-import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
-import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
-import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
-import 'package:flutter_security_workforce/app/modules/job_history_page/models/job_history_list_model.dart'
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/core/data/models/job_details_model.dart';
+import 'package:securiverse_security_workforce/app/core/errors/app_exceptions.dart';
+import 'package:securiverse_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:securiverse_security_workforce/app/core/network/dio_client.dart';
+import 'package:securiverse_security_workforce/app/modules/job_history_page/models/job_history_list_model.dart'
     hide MyJobs;
-import 'package:flutter_security_workforce/app/modules/my_jobs_page/data/model/my_job_list_model.dart';
-import 'package:flutter_security_workforce/app/modules/my_jobs_page/data/model/upcoming_job_model.dart';
-import 'package:flutter_security_workforce/app/routes/app_routes.dart';
+import 'package:securiverse_security_workforce/app/modules/my_jobs_page/data/model/my_job_list_model.dart';
+import 'package:securiverse_security_workforce/app/modules/my_jobs_page/data/model/upcoming_job_model.dart';
+import 'package:securiverse_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class MyJobsPageController extends GetxController {

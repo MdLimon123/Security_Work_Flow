@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:securiverse_security_workforce/app/core/network/api_endpoints.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class SocketApi {

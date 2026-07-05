@@ -28,5 +28,17 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSLocationUsageDescription</key>
+	<string>This app needs access to location to determine your position.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires camera access to scan QR codes and take photos.</string>
+	<!-- Required - Photo Library -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires photo library access to upload and save images.</string>
+	<!-- Optional but recommended - Location -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app uses your location to provide relevant security features.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app uses your location in the background to monitor security alerts.</string>
 </dict>
 </plist>

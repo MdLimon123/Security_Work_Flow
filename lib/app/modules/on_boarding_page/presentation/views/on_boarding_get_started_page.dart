@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/routes/app_routes.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_assets.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class OnBoardingGetStartedPage extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
-import 'package:flutter_security_workforce/app/modules/message_page/presentation/controllers/message_page_controller.dart';
-import 'package:flutter_security_workforce/app/routes/app_routes.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:securiverse_security_workforce/app/modules/message_page/presentation/controllers/message_page_controller.dart';
+import 'package:securiverse_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 

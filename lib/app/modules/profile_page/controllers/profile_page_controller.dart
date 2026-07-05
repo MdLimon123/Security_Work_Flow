@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_keys.dart';
-import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
-import 'package:flutter_security_workforce/app/core/network/api_endpoints.dart';
-import 'package:flutter_security_workforce/app/core/network/dio_client.dart';
-import 'package:flutter_security_workforce/app/modules/customer_support_page/presentation/model/custom_suppport_message_model.dart';
-import 'package:flutter_security_workforce/app/modules/profile_page/data/models/profile_info_model.dart';
-import 'package:flutter_security_workforce/app/modules/profile_page/data/models/referral_model.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_keys.dart';
+import 'package:securiverse_security_workforce/app/core/errors/app_exceptions.dart';
+import 'package:securiverse_security_workforce/app/core/network/api_endpoints.dart';
+import 'package:securiverse_security_workforce/app/core/network/dio_client.dart';
+import 'package:securiverse_security_workforce/app/modules/customer_support_page/presentation/model/custom_suppport_message_model.dart';
+import 'package:securiverse_security_workforce/app/modules/profile_page/data/models/profile_info_model.dart';
+import 'package:securiverse_security_workforce/app/modules/profile_page/data/models/referral_model.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

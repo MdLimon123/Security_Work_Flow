@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_security_workforce/app/modules/contact_page/presentation/controllers/contact_page_controller.dart';
+import 'package:securiverse_security_workforce/app/modules/contact_page/presentation/controllers/contact_page_controller.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 

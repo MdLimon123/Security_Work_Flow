@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/modules/card_edit_page/presentation/controllers/card_edit_page_controller.dart';
-import 'package:flutter_security_workforce/app/routes/app_routes.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/modules/card_edit_page/presentation/controllers/card_edit_page_controller.dart';
+import 'package:securiverse_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class CardEditPage extends StatelessWidget {

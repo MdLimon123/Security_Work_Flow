@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/core/errors/app_exceptions.dart';
-import 'package:flutter_security_workforce/app/routes/app_routes.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/core/errors/app_exceptions.dart';
+import 'package:securiverse_security_workforce/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/network/api_endpoints.dart';

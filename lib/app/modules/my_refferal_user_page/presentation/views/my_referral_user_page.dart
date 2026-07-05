@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/modules/my_refferal_user_page/presentation/controllers/my_referral_user_page_controller.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/modules/my_refferal_user_page/presentation/controllers/my_referral_user_page_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../../routes/app_routes.dart';

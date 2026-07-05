@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_colors.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_keys.dart';
-import 'package:flutter_security_workforce/app/core/controllers/location_controller.dart';
-import 'package:flutter_security_workforce/app/core/network/socket_api.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_colors.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_keys.dart';
+import 'package:securiverse_security_workforce/app/core/controllers/location_controller.dart';
+import 'package:securiverse_security_workforce/app/core/network/socket_api.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';

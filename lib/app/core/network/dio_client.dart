@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_keys.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../errors/app_exceptions.dart';

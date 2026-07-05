@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_security_workforce/app/core/constants/app_assets.dart';
+import 'package:securiverse_security_workforce/app/core/constants/app_assets.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 

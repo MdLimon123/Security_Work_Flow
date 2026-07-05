@@ -1,4 +1,4 @@
-import 'package:flutter_security_workforce/app/modules/subscription_page/controllers/subscription_page_controller.dart';
+import 'package:securiverse_security_workforce/app/modules/subscription_page/controllers/subscription_page_controller.dart';
 import 'package:get/get.dart';
 
 class SubscriptionPageBinding extends Bindings {
